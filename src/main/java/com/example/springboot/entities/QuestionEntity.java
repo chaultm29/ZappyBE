@@ -1,12 +1,19 @@
 package com.example.springboot.entities;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Question")
+@Table(name = "question")
 public class QuestionEntity {
 	@Id
 	@Column(name = "question_id")
@@ -20,9 +27,20 @@ public class QuestionEntity {
 
 	@Column(name = "level")
 	private String level;
+	
+	@OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
+	private Set<AnswerEntity> answerEntities;
+	
+	@ManyToOne
+	@JoinColumn(name = "type_id")	
+
+	private QuestionTypeEntity questionTypeEntity;
+	
+	@ManyToMany(mappedBy = "questionEntities")
+	private Set<RoomEntity> roomEntities;
+
 
 	public QuestionEntity() {
-		super();
 	}
 
 	public QuestionEntity(Long id, String image_link, String question, String level) {

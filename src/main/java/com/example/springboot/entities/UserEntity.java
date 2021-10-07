@@ -16,7 +16,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "User")
+@Table(name = "user")
 public class UserEntity {
 
 	@Id
@@ -40,14 +40,13 @@ public class UserEntity {
 	@JoinColumn(name = "account_id")
 	private AccountEntity accountEntity;
 
-//	@ManyToMany
-//	@JoinTable(name = "user_kanji", 
-//			joinColumns = @JoinColumn(name = "user_id"), 
-//			inverseJoinColumns = @JoinColumn(name = "kanji_id"))
-//	private Set<KanjiEntity> kanjiEntity;
+	@ManyToMany
+	@JoinTable(name = "user_kanji", 
+			joinColumns = @JoinColumn(name = "user_id"), 
+			inverseJoinColumns = @JoinColumn(name = "kanji_id"))
+	private Set<KanjiEntity> kanjiEntities;
 
 	public UserEntity() {
-		super();
 	}
 
 	public UserEntity(Long id, String fullName, int phone, String email, Date dateOfBirth,

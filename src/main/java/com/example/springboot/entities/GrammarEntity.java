@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Grammar")
+@Table(name = "grammar")
 public class GrammarEntity {
 	@Id
 	@Column(name = "grammar_id")

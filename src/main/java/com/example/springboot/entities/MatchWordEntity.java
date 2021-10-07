@@ -9,7 +9,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Matchword")
+@Table(name = "matchword")
 public class MatchWordEntity {
 	@Id
 	@Column(name = "id")

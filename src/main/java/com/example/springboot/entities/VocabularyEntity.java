@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Vocabulary")
+@Table(name = "vocabulary")
 public class VocabularyEntity {
 	@Id
 	@Column(name = "vocabulary_id")

@@ -3,10 +3,12 @@ package com.example.springboot.entities;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Answer")
+@Table(name = "answer")
 public class AnswerEntity {
 	@Id
 	@Column(name = "answer_id")
@@ -20,9 +22,13 @@ public class AnswerEntity {
 
 	@Column(name = "answer")
 	private String answer;
+	
+
+	@ManyToOne
+	@JoinColumn(name = "question_id")
+	private QuestionEntity questionEntity;
 
 	public AnswerEntity() {
-		super();
 	}
 
 	public AnswerEntity(Long id, boolean correct, String image_link, String answer) {

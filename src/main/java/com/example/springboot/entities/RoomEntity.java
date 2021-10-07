@@ -1,12 +1,20 @@
 package com.example.springboot.entities;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Room")
+@Table(name = "room")
 public class RoomEntity {
 
 	@Id
@@ -27,6 +35,15 @@ public class RoomEntity {
 
 	@Column(name = "room_code")
 	private String roomCode;
+	
+	@ManyToMany
+	@JoinTable(name = "room_question", 
+			joinColumns = @JoinColumn(name = "room_id"), 
+			inverseJoinColumns = @JoinColumn(name = "question_id"))
+	private Set<QuestionEntity> questionEntities;
+	
+//	@ManyToOne
+//	@JoinColumn(name = )
 
 	public RoomEntity() {
 		super();

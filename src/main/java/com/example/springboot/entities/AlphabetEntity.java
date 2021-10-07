@@ -5,23 +5,23 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-//@Entity
-//@Table(name = "alphabets")
+@Entity
+@Table(name = "alphabet")
 public class AlphabetEntity {
-//	@Id
-//	@Column(name = "alphabet_id")
+	@Id
+	@Column(name = "alphabet_id")
 	private Long id;
 
-//	@Column(name = "character")
+	@Column(name = "alphabet_character")
 	private String character;
 
-//	@Column(name = "image_link")
+	@Column(name = "image_link")
 	private String imageLink;
 
-//	@Column(name = "description")
+	@Column(name = "description")
 	private String description;
 
-//	@Column(name = "is_hiragana")
+	@Column(name = "is_hiragana")
 	private String isHiragana;
 
 	public AlphabetEntity() {

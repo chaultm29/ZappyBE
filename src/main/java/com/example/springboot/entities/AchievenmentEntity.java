@@ -5,20 +5,20 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-//@Entity
-//@Table(name = "achievements")
+@Entity
+@Table(name = "achievement")
 public class AchievenmentEntity {
-//	@Id
-//	@Column(name = "achieve_id")
+	@Id
+	@Column(name = "achieve_id")
 	private Long id;
 
-//	@Column(name = "name")
+	@Column(name = "name")
 	private String name;
-	
-//	@Column(name = "desciption")
+
+	@Column(name = "desciption")
 	private String desciption;
-	
-//	@Column(name = "condition")
+
+	@Column(name = "achieve_condition")
 	private String condition;
 
 	public AchievenmentEntity() {
@@ -63,6 +63,5 @@ public class AchievenmentEntity {
 	public void setCondition(String condition) {
 		this.condition = condition;
 	}
-	
-	
+
 }
