@@ -10,8 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -40,11 +40,8 @@ public class UserEntity {
 	@JoinColumn(name = "account_id")
 	private AccountEntity accountEntity;
 
-	@ManyToMany
-	@JoinTable(name = "user_kanji", 
-			joinColumns = @JoinColumn(name = "user_id"), 
-			inverseJoinColumns = @JoinColumn(name = "kanji_id"))
-	private Set<KanjiEntity> kanjiEntities;
+	@OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
+	private Set<AchievenmentEntity> achievenmentEntities;
 
 	public UserEntity() {
 	}

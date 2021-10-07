@@ -29,7 +29,7 @@ public class GameEntity {
 	private String gameName;
 
 	@ManyToMany
-	@JoinTable(name = "game_questiontype", 
+	@JoinTable(name = "game_questiontype_rf", 
 			joinColumns = @JoinColumn(name = "game_id"), 
 			inverseJoinColumns = @JoinColumn(name = "type_id"))
 	private Set<QuestionTypeEntity> questionTypeEntities;
