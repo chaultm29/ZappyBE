@@ -5,18 +5,15 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "lessons")
+@Table(name = "lesson")
 public class LessonEntity {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "lesson_id")
 	private Long id;
 
 	@Column(name = "lesson_name")
@@ -25,21 +22,8 @@ public class LessonEntity {
 	@Column(name = "description")
 	private String description;
 	
-	@OneToMany(mappedBy = "lessonEntity", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
 	private Set<QuestionEntity> questionEntities;
-	
-	@OneToMany(mappedBy = "lessonEntity", cascade = CascadeType.ALL)
-	private Set<GrammarEntity> grammarEntities;
-	
-	@OneToMany(mappedBy = "lessonEntity", cascade = CascadeType.ALL)
-	private Set<VocabularyEntity> vocabularyEntities;
-	
-	@OneToMany(mappedBy = "lessonEntity", cascade = CascadeType.ALL)
-	private Set<KanjiEntity> kanjiEntities;
-	
-	@ManyToMany(mappedBy = "lessonEntities")
-	private Set<RoomEntity> roomEntities;
-	
 
 	public LessonEntity() {
 		super();

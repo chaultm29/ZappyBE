@@ -5,24 +5,22 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "questionTypes")
+@Table(name = "questionType")
 public class QuestionTypeEntity {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "type_id")
 	private Long id;
 
 	@Column(name = "type_name")
 	private String typeName;
 	
-	@OneToMany(mappedBy = "questionTypeEntity", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
 	private Set<QuestionEntity> questionEntities;
 	
 	@ManyToMany(mappedBy = "questionTypeEntities")

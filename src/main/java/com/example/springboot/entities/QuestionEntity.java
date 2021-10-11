@@ -5,8 +5,6 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
@@ -15,10 +13,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "questions")
+@Table(name = "question")
 public class QuestionEntity {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "question_id")
 	private Long id;
 
 	@Column(name = "image_link")
@@ -30,24 +28,16 @@ public class QuestionEntity {
 	@Column(name = "level")
 	private String level;
 	
-	@OneToMany(mappedBy = "questionEntity", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
 	private Set<AnswerEntity> answerEntities;
 	
 	@ManyToOne
 	@JoinColumn(name = "type_id")	
+
 	private QuestionTypeEntity questionTypeEntity;
-	
-	@ManyToOne
-	@JoinColumn(name = "skill_id")
-	private SkillEntity skillEntity;
-	
 	
 	@ManyToMany(mappedBy = "questionEntities")
 	private Set<RoomEntity> roomEntities;
-	
-	@ManyToOne
-	@JoinColumn(name = "lesson_id")
-	private LessonEntity lessonEntity;
 
 
 	public QuestionEntity() {

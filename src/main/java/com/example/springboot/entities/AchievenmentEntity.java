@@ -1,20 +1,17 @@
 package com.example.springboot.entities;
 
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "achievements")
+@Table(name = "achievement")
 public class AchievenmentEntity {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "achieve_id")
 	private Long id;
 
 	@Column(name = "name")
@@ -25,9 +22,6 @@ public class AchievenmentEntity {
 
 	@Column(name = "achieve_condition")
 	private String condition;
-	
-	@ManyToMany(mappedBy = "achievenmentEntities")
-	private Set<UserEntity> userEntities;
 	
 	public AchievenmentEntity() {
 	}

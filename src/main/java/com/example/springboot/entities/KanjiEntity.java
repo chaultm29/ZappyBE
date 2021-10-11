@@ -4,19 +4,14 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "kanjis")
+@Table(name = "kanji")
 public class KanjiEntity {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "kanji_id")
 	private Long id;
 
 	@Column(name = "kanji_character")
@@ -43,12 +38,6 @@ public class KanjiEntity {
 	@Column(name = "gif_link")
 	private String gifLink;
 	
-	@ManyToMany(mappedBy = "kanjiEntities")
-	private Set<UserEntity> userEntities;
-	
-	@ManyToOne
-	@JoinColumn(name = "lesson_id")
-	private LessonEntity lessonEntity;
 
 	public KanjiEntity() {
 	}

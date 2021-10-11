@@ -1,22 +1,15 @@
 package com.example.springboot.entities;
 
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "grammars")
+@Table(name = "grammar")
 public class GrammarEntity {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "grammar_id")
 	private Long id;
 
 	@Column(name = "grammar")
@@ -30,13 +23,6 @@ public class GrammarEntity {
 
 	@Column(name = "example_image_link")
 	private String exampleImageLink;
-	
-	@ManyToMany(mappedBy = "grammarEntities")
-	private Set<UserEntity> userEntities;
-	
-	@ManyToOne
-	@JoinColumn(name = "lession_id")
-	private LessonEntity lessonEntity;
 
 	public GrammarEntity() {
 		super();
