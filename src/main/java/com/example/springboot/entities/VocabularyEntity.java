@@ -1,15 +1,22 @@
 package com.example.springboot.entities;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "vocabulary")
+@Table(name = "vocabularys")
 public class VocabularyEntity {
 	@Id
-	@Column(name = "vocabulary_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@Column(name = "image_link")
@@ -29,6 +36,13 @@ public class VocabularyEntity {
 
 	@Column(name = "example_image_link")
 	private String exampleImageLink;
+	
+	@ManyToMany(mappedBy = "vocabularyEntities")
+	private Set<UserEntity> userEntities;
+	
+	@ManyToOne
+	@JoinColumn(name = "lesson_id")
+	private LessonEntity lessonEntity;
 
 	public VocabularyEntity() {
 		super();

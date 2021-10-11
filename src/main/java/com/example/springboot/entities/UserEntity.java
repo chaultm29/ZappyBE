@@ -10,18 +10,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class UserEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "user_id")
 	private Long id;
 
 	@Column(name = "fullname")
@@ -37,11 +36,39 @@ public class UserEntity {
 	private Date dateOfBirth;
 
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "account_id")
+	@JoinColumn(name = "id")
 	private AccountEntity accountEntity;
 
-	@OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
+	@ManyToMany
+	@JoinTable(name = "user_achievement_rf", 
+			joinColumns = @JoinColumn(name = "achievement_id"), 
+			inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private Set<AchievenmentEntity> achievenmentEntities;
+	
+	@ManyToMany
+	@JoinTable(name = "user_alphabet_rf", 
+			joinColumns = @JoinColumn(name = "alphabet_id"), 
+			inverseJoinColumns = @JoinColumn(name = "user_id"))
+	private Set<AlphabetEntity> alphabetEntities;
+	
+	@ManyToMany
+	@JoinTable(name = "user_kanji_rf", 
+			joinColumns = @JoinColumn(name = "kanji_id"), 
+			inverseJoinColumns = @JoinColumn(name = "user_id"))
+	private Set<KanjiEntity> kanjiEntities;
+	
+	@ManyToMany
+	@JoinTable(name = "user_vocabulary_rf", 
+			joinColumns = @JoinColumn(name = "vocabulary_id"), 
+			inverseJoinColumns = @JoinColumn(name = "user_id"))
+	private Set<VocabularyEntity> vocabularyEntities;
+	
+	@ManyToMany
+	@JoinTable(name = "user_grammar_rf", 
+			joinColumns = @JoinColumn(name = "grammar_id"), 
+			inverseJoinColumns = @JoinColumn(name = "user_id"))
+	private Set<GrammarEntity> grammarEntities;
+	
 
 	public UserEntity() {
 	}
