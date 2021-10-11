@@ -2,23 +2,23 @@ package com.example.springboot.entities;
 
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "room")
+@Table(name = "rooms")
 public class RoomEntity {
 
 	@Id
-	@Column(name = "room_id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
 	@Column(name = "room_name")
@@ -35,15 +35,28 @@ public class RoomEntity {
 
 	@Column(name = "room_code")
 	private String roomCode;
-	
+
 	@ManyToMany
-	@JoinTable(name = "room_question", 
-			joinColumns = @JoinColumn(name = "room_id"), 
-			inverseJoinColumns = @JoinColumn(name = "question_id"))
+	@JoinTable(name = "room_question_rf", 
+			joinColumns = @JoinColumn(name = "question_id"), 
+			inverseJoinColumns = @JoinColumn(name = "room_id"))
 	private Set<QuestionEntity> questionEntities;
-	
-//	@ManyToOne
-//	@JoinColumn(name = )
+
+	@ManyToMany
+	@JoinTable(name = "room_skill_rf", 
+		joinColumns = @JoinColumn(name = "skill_id"), 
+		inverseJoinColumns = @JoinColumn(name = "room_id"))
+	private Set<SkillEntity> skillEntities;
+
+	@ManyToOne
+	@JoinColumn(name = "game_id")
+	private GameEntity gameEntity;
+
+	@ManyToMany
+	@JoinTable(name = "room_lesson_rf", 
+				joinColumns = @JoinColumn(name = "lesson_id"), 
+				inverseJoinColumns = @JoinColumn(name = "room_id"))
+	private Set<LessonEntity> lessonEntities;
 
 	public RoomEntity() {
 		super();

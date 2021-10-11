@@ -2,6 +2,8 @@ package com.example.springboot.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -10,10 +12,11 @@ import javax.persistence.Table;
 import com.sun.istack.NotNull;
 
 @Entity
-@Table(name = "account")
+@Table(name = "accounts")
 public class AccountEntity {
+
 	@Id
-	@Column(name = "acccount_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@Column(name = "username")
@@ -22,7 +25,6 @@ public class AccountEntity {
 	@Column(name = "password")
 	@NotNull
 	private String password;
-	
 
 	@Column(name = "enabled")
 	private Boolean enabled;
