@@ -33,51 +33,45 @@ public class AccountController {
 	@Autowired
 	private AccountService accountService;
 
-	// get all account
+	// get all account ko cần
 	@GetMapping("/account")
-	public List<AccountEntity> getAllAccount() {
-		return (List<AccountEntity>) accountRepository.findAll();
+	public ResponseEntity<List<AccountDTO>> getAllAccount() {
+		return new ResponseEntity<List<AccountDTO>>(accountService.get(), HttpStatus.OK);
 	}
 
 	// create account rest api
 	@PostMapping("/account")
-	public ResponseEntity<AccountDTO> creatAccountEntity(@RequestBody AccountDTO accountDTO) {
-		return new ResponseEntity<AccountDTO> (accountService.save(accountDTO),
-				HttpStatus.OK);
+	public ResponseEntity<AccountDTO> createAccountEntity(@RequestBody AccountDTO accountDTO) {
+		return new ResponseEntity<AccountDTO>(accountService.save(accountDTO), HttpStatus.OK);
 	}
 
 	// get account by id rest api
 	@GetMapping("/account/{id}")
-	public ResponseEntity<AccountEntity> getAccountById(@PathVariable Long id) {
-		AccountEntity accountEntity = (AccountEntity) accountRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Account not exist with id :" + id));
-		return ResponseEntity.ok(accountEntity);
+	public ResponseEntity<AccountDTO> getAccountById(@PathVariable Long id) {
+		AccountDTO accountDTO = new AccountDTO();
+		try {
+			accountDTO = accountService.get(id);
+			return new ResponseEntity<AccountDTO>(accountDTO, HttpStatus.OK);
+		} catch (ResourceNotFoundException e) {
+			return new ResponseEntity<AccountDTO>(accountDTO, HttpStatus.NOT_FOUND);
+		}
 	}
 
 	// update account rest api
 
 	@PutMapping("/account/{id}")
-	public ResponseEntity<AccountEntity> updateAccEntity(@PathVariable Long id,
-			@RequestBody AccountEntity accountDetails) {
-		AccountEntity accountEntity = accountRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Account not exist with id :" + id));
-
-		accountEntity.setUsername(accountDetails.getUsername());
-		accountEntity.setPassword(accountDetails.getPassword());
-
-		AccountEntity updatedAccountEntity = accountRepository.save(accountEntity);
-		return ResponseEntity.ok(updatedAccountEntity);
+	public ResponseEntity<AccountDTO> updateAccEntity(@PathVariable Long id, @RequestBody AccountDTO accountDTO) {
+		return new ResponseEntity<AccountDTO>(accountService.update(id, accountDTO), HttpStatus.OK);
 	}
 
 	// delete account rest api
 	@DeleteMapping("/account/{id}")
-	public ResponseEntity<Map<String, Boolean>> deleteEmployee(@PathVariable Long id) {
-		AccountEntity accountEntity = accountRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Account not exist with id :" + id));
-
-		accountRepository.delete(accountEntity);
-		Map<String, Boolean> response = new HashMap<>();
-		response.put("deleted", Boolean.TRUE);
-		return ResponseEntity.ok(response);
+	public ResponseEntity<Boolean> deleteEmployee(@PathVariable Long id) {
+		try {
+			accountService.delete(id);
+			return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+		} catch (ResourceNotFoundException e) {
+			return new ResponseEntity<Boolean>(false, HttpStatus.NOT_FOUND);
+		}
 	}
 }

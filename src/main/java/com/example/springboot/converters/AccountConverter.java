@@ -1,5 +1,8 @@
 package com.example.springboot.converters;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import com.example.springboot.entities.AccountEntity;
@@ -27,6 +30,14 @@ public class AccountConverter {
 		accountDTO.setUsername(accountEntity.getUsername());
 		accountDTO.setPassword(accountEntity.getPassword());
 		return accountDTO;
+	}
+
+	public List<AccountDTO> toDTOs(List<AccountEntity> listEntities) {
+		ArrayList<AccountDTO> accountDTOs = new ArrayList<AccountDTO>();
+		for (AccountEntity accountEntity : listEntities) {
+			accountDTOs.add(toDTO(accountEntity));
+		}
+		return accountDTOs;
 	}
 
 }
