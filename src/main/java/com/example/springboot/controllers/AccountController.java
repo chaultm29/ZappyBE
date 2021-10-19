@@ -1,8 +1,6 @@
 package com.example.springboot.controllers;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.springboot.entities.AccountEntity;
 import com.example.springboot.exception.ResourceNotFoundException;
 import com.example.springboot.repositories.AccountRepository;
 import com.example.springboot.services.AccountService;
