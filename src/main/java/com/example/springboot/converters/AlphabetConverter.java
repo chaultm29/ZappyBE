@@ -15,7 +15,7 @@ public class AlphabetConverter {
 		AlphabetEntity alphabetEntity = new AlphabetEntity();
 		alphabetEntity.setId(alphabetDTO.getId());
 		alphabetEntity.setCharacter(alphabetDTO.getCharacter());
-		alphabetEntity.setDescription(alphabetDTO.getDesciption());
+		alphabetEntity.setDescription(alphabetDTO.getDescription());
 		alphabetEntity.setImageLink(alphabetDTO.getImageLink());
 		return alphabetEntity;
 	}
@@ -24,7 +24,7 @@ public class AlphabetConverter {
 	public AlphabetEntity toEntity(AlphabetDTO alphabetDTO, AlphabetEntity alphabetEntity) {
 		alphabetEntity.setId(alphabetDTO.getId());
 		alphabetEntity.setCharacter(alphabetDTO.getCharacter());
-		alphabetEntity.setDescription(alphabetDTO.getDesciption());
+		alphabetEntity.setDescription(alphabetDTO.getDescription());
 		alphabetEntity.setImageLink(alphabetDTO.getImageLink());
 		return alphabetEntity;
 	}
@@ -33,7 +33,7 @@ public class AlphabetConverter {
 		AlphabetDTO alphabetDTO = new AlphabetDTO();
 		alphabetDTO.setId(alphabetEntity.getId());
 		alphabetDTO.setCharacter(alphabetEntity.getCharacter());
-		alphabetDTO.setDesciption(alphabetEntity.getDescription());
+		alphabetDTO.setDescription(alphabetEntity.getDescription());
 		alphabetDTO.setImageLink(alphabetEntity.getImageLink());
 		return alphabetDTO;
 	}

@@ -12,7 +12,6 @@ import com.example.springbootdto.KanjiDTO;
 public class KanjiConverter {
 	public KanjiEntity toEntity(KanjiDTO kanjiDTO) {
 		KanjiEntity kanjiEntity = new KanjiEntity();
-		kanjiEntity.setId(kanjiDTO.getId());
 		kanjiEntity.setCharacter(kanjiDTO.getCharacter());
 		kanjiEntity.setOnyomi(kanjiDTO.getOnyomi());
 		kanjiEntity.setKunyomi(kanjiDTO.getKunyomi());
@@ -20,8 +19,7 @@ public class KanjiConverter {
 		kanjiEntity.setVietnamese(kanjiDTO.getVietnamese());
 		kanjiEntity.setDescription(kanjiDTO.getDescription());
 		kanjiEntity.setImageLink(kanjiDTO.getImageLink());
-		kanjiEntity.setId(kanjiDTO.getId());
-		kanjiEntity.setId(kanjiDTO.getId());
+		kanjiEntity.setGifLink(kanjiDTO.getGifLink());
 		return kanjiEntity;
 	}
 
@@ -34,9 +32,9 @@ public class KanjiConverter {
 		kanjiDTO.setChinese(kanjiEntity.getChinese());
 		kanjiDTO.setVietnamese(kanjiEntity.getVietnamese());
 		kanjiDTO.setDescription(kanjiEntity.getDescription());
+		kanjiDTO.setImageLink(kanjiEntity.getImageLink());
 		kanjiDTO.setGifLink(kanjiEntity.getGifLink());
-		kanjiDTO.setCharacter(kanjiEntity.getCharacter());
-		kanjiDTO.setCharacter(kanjiEntity.getCharacter());
+		kanjiDTO.setLesson_id(kanjiEntity.getLessonEntity().getId());
 		return kanjiDTO;
 	}
 

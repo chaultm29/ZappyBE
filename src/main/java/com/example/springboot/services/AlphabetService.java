@@ -30,21 +30,21 @@ public class AlphabetService {
 		List<AlphabetEntity> alphabetEntities = alphabetRepository.findAll();
 		List<AlphabetEntity> listResultHiragana = new ArrayList<>();
 		for (AlphabetEntity alphabetEntity : alphabetEntities) {
-			if (alphabetEntity.getIsHiragana()) {
+			if (alphabetEntity.getIsHiragana() == true) {
 				listResultHiragana.add(alphabetEntity);
 			}
 		}
-		return alphabetConverter.toDTOs(alphabetEntities);
+		return alphabetConverter.toDTOs(listResultHiragana);
 	}
 
 	public List<AlphabetDTO> getKatakana() {
 		List<AlphabetEntity> alphabetEntities = alphabetRepository.findAll();
 		List<AlphabetEntity> listResultKatakana = new ArrayList<>();
 		for (AlphabetEntity alphabetEntity : alphabetEntities) {
-			if (!alphabetEntity.getIsHiragana()) {
+			if (alphabetEntity.getIsHiragana() == false) {				
 				listResultKatakana.add(alphabetEntity);
 			}
 		}
-		return alphabetConverter.toDTOs(alphabetEntities);
+		return alphabetConverter.toDTOs(listResultKatakana);
 	}
 }

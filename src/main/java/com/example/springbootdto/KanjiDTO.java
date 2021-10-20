@@ -1,5 +1,7 @@
 package com.example.springbootdto;
 
+import com.example.springboot.entities.LessonEntity;
+
 public class KanjiDTO {
 	private Long id;
 	private String character;
@@ -10,6 +12,7 @@ public class KanjiDTO {
 	private String description;
 	private String imageLink;
 	private String gifLink;
+	private Long lesson_id;
 
 	public KanjiDTO() {
 		super();
@@ -17,7 +20,7 @@ public class KanjiDTO {
 	}
 
 	public KanjiDTO(Long id, String character, String onyomi, String kunyomi, String chinese, String vietnamese,
-			String description, String imageLink, String gifLink) {
+			String description, String imageLink, String gifLink, Long lesson_id) {
 		super();
 		this.id = id;
 		this.character = character;
@@ -28,6 +31,7 @@ public class KanjiDTO {
 		this.description = description;
 		this.imageLink = imageLink;
 		this.gifLink = gifLink;
+		this.lesson_id = lesson_id;
 	}
 
 	public Long getId() {
@@ -100,6 +104,14 @@ public class KanjiDTO {
 
 	public void setGifLink(String gifLink) {
 		this.gifLink = gifLink;
+	}
+
+	public Long getLesson_id() {
+		return lesson_id;
+	}
+
+	public void setLesson_id(Long lesson_id) {
+		this.lesson_id = lesson_id;
 	}
 
 }

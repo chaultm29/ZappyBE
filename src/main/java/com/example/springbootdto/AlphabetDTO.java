@@ -4,18 +4,18 @@ public class AlphabetDTO {
 
 	private Long id;
 	private String character;
-	private String desciption;
+	private String description;
 	private String imageLink;
 
 	public AlphabetDTO() {
 		super();
 	}
 
-	public AlphabetDTO(Long id, String character, String desciption, String imageLink) {
+	public AlphabetDTO(Long id, String character, String description, String imageLink) {
 		super();
 		this.id = id;
 		this.character = character;
-		this.desciption = desciption;
+		this.description = description;
 		this.imageLink = imageLink;
 	}
 
@@ -35,12 +35,12 @@ public class AlphabetDTO {
 		this.character = character;
 	}
 
-	public String getDesciption() {
-		return desciption;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setDesciption(String desciption) {
-		this.desciption = desciption;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public String getImageLink() {
@@ -50,5 +50,7 @@ public class AlphabetDTO {
 	public void setImageLink(String imageLink) {
 		this.imageLink = imageLink;
 	}
+
+	
 
 }

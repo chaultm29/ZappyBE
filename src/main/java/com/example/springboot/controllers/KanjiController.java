@@ -1,5 +1,8 @@
 package com.example.springboot.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,10 +12,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.springboot.exception.ResourceNotFoundException;
-
 import com.example.springboot.services.KanjiService;
-
+import com.example.springboot.services.LessonService;
 import com.example.springbootdto.KanjiDTO;
+import com.example.springbootdto.LessonDTO;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -22,15 +25,11 @@ public class KanjiController {
 	@Autowired
 	private KanjiService kanjiService;
 
-	@GetMapping("/account/lesson{id}")
-	public ResponseEntity<KanjiDTO> getKanjiById(@PathVariable Long id) {
-		KanjiDTO kanjiDTO = new KanjiDTO();
-		try {
-			kanjiDTO = kanjiService.get(id);
-			return new ResponseEntity<KanjiDTO>(kanjiDTO, HttpStatus.OK);
-		} catch (ResourceNotFoundException e) {
-			return new ResponseEntity<KanjiDTO>(kanjiDTO, HttpStatus.NOT_FOUND);
-		}
+	@GetMapping("/kanji/lesson/{id}")
+	public ResponseEntity<List<KanjiDTO>> getKanjiByLessonId(@PathVariable Long id) {
+		List<KanjiDTO> kanjiDTO = new ArrayList<>();
+		kanjiDTO = kanjiService.getByLessionId(id);
+		return new ResponseEntity<List<KanjiDTO>>(kanjiDTO, HttpStatus.OK);
 	}
 
 }

@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.springboot.exception.ResourceNotFoundException;
-import com.example.springboot.repositories.AccountRepository;
 import com.example.springboot.services.AccountService;
 import com.example.springbootdto.AccountDTO;
 
@@ -24,8 +23,6 @@ import com.example.springbootdto.AccountDTO;
 @RestController
 @RequestMapping("/admin")
 public class AccountController {
-	@Autowired
-	private AccountRepository accountRepository;
 
 	@Autowired
 	private AccountService accountService;

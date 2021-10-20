@@ -1,5 +1,8 @@
 package com.example.springboot.services;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,10 +23,15 @@ public class KanjiService {
 	@Autowired
 	KanjiConverter kanjiConverter;
 
-	public KanjiDTO get(Long id) {
-		KanjiEntity kanjiEntity = kanjiRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("kanji not exist with id :" + id));
-		return kanjiConverter.toDTO(kanjiEntity);
+	public List<KanjiDTO> getByLessionId(Long lesson_id) {
+		List<KanjiEntity> kanjiEntities = kanjiRepository.getByLessonId(lesson_id);
+//		List<KanjiEntity> kanjiEntitiesLesson = new ArrayList<>();
+//		for (KanjiEntity kanjiEntity : kanjiEntities) {
+//			if (kanjiEntity.getLessonEntity().getId() == lesson_id) {
+//				kanjiEntitiesLesson.add(kanjiEntity);
+//			}
+//		}
+		return kanjiConverter.toDTOs(kanjiEntities);
 	}
 
 }
