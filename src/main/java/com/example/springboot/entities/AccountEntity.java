@@ -27,7 +27,7 @@ public class AccountEntity {
 	private String password;
 
 	@Column(name = "enabled")
-	private Boolean enabled;
+	private Boolean isEnabled;
 
 	@ManyToOne
 	@JoinColumn(name = "role_id")
@@ -37,12 +37,13 @@ public class AccountEntity {
 		super();
 	}
 
-	public AccountEntity(Long id, String username, String password, Boolean enabled) {
+	public AccountEntity(Long id, String username, String password, Boolean isEnabled, RoleEntity roleEntity) {
 		super();
 		this.id = id;
 		this.username = username;
 		this.password = password;
-		this.enabled = enabled;
+		this.isEnabled = isEnabled;
+		this.roleEntity = roleEntity;
 	}
 
 	public Long getId() {
@@ -69,12 +70,20 @@ public class AccountEntity {
 		this.password = password;
 	}
 
-	public Boolean getEnabled() {
-		return enabled;
+	public Boolean getIsEnabled() {
+		return isEnabled;
 	}
 
-	public void setEnabled(Boolean enabled) {
-		this.enabled = enabled;
+	public void setIsEnabled(Boolean isEnabled) {
+		this.isEnabled = isEnabled;
+	}
+
+	public RoleEntity getRoleEntity() {
+		return roleEntity;
+	}
+
+	public void setRoleEntity(RoleEntity roleEntity) {
+		this.roleEntity = roleEntity;
 	}
 
 }

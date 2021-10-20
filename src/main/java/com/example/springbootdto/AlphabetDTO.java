@@ -1,24 +1,56 @@
 package com.example.springbootdto;
 
 public class AlphabetDTO {
-	private boolean isHiragana;
+
+	private Long id;
+	private String character;
+	private String description;
+	private String imageLink;
 
 	public AlphabetDTO() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	public AlphabetDTO(boolean isHiragana) {
+	public AlphabetDTO(Long id, String character, String description, String imageLink) {
 		super();
-		this.isHiragana = isHiragana;
+		this.id = id;
+		this.character = character;
+		this.description = description;
+		this.imageLink = imageLink;
 	}
 
-	public boolean isHiragana() {
-		return isHiragana;
+	public Long getId() {
+		return id;
 	}
 
-	public void setHiragana(boolean isHiragana) {
-		this.isHiragana = isHiragana;
+	public void setId(Long id) {
+		this.id = id;
 	}
+
+	public String getCharacter() {
+		return character;
+	}
+
+	public void setCharacter(String character) {
+		this.character = character;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getImageLink() {
+		return imageLink;
+	}
+
+	public void setImageLink(String imageLink) {
+		this.imageLink = imageLink;
+	}
+
+	
 
 }
