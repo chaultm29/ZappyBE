@@ -1,7 +1,5 @@
 package com.example.springbootdto;
 
-import com.example.springboot.entities.LessonEntity;
-
 public class KanjiDTO {
 	private Long id;
 	private String character;

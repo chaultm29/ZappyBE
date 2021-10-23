@@ -54,7 +54,7 @@ public class GrammarController {
 		GrammarEntity grammarEntity = grammarRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Grammar not exist with id :" + id));
 
-		grammarEntity.setExample(grammarDetails.getExample());
+		grammarEntity.setExampleMeaning(grammarDetails.getExampleMeaning());
 		grammarEntity.setExampleImageLink(grammarDetails.getExampleImageLink());
 		grammarEntity.setExplanation(grammarDetails.getExplanation());
 		grammarEntity.setGrammar(grammarDetails.getGrammar());

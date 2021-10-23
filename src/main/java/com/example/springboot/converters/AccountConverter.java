@@ -29,6 +29,12 @@ public class AccountConverter {
 		AccountDTO accountDTO = new AccountDTO();
 		accountDTO.setUsername(accountEntity.getUsername());
 		accountDTO.setPassword(accountEntity.getPassword());
+		accountDTO.setDateOfBirth(accountEntity.getUserEntity().getDateOfBirth());
+		accountDTO.setEmail(accountEntity.getUserEntity().getEmail());
+		accountDTO.setFullName(accountEntity.getUserEntity().getFullName());
+		accountDTO.setPhone(accountEntity.getUserEntity().getPhone());
+		accountDTO.setRole(accountEntity.getRoleEntity().getName());
+		accountDTO.setAvatar(accountEntity.getUserEntity().getAvatar());
 		return accountDTO;
 	}
 

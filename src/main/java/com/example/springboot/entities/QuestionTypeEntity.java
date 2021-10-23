@@ -24,9 +24,9 @@ public class QuestionTypeEntity {
 	
 	@OneToMany(mappedBy = "questionTypeEntity", cascade = CascadeType.ALL)
 	private Set<QuestionEntity> questionEntities;
-	
-	@ManyToMany(mappedBy = "questionTypeEntities")
-	private Set<GameEntity> gameEntities;
+//	
+//	@ManyToMany(mappedBy = "questionTypeEntities")
+//	private Set<GameEntity> gameEntities;
 
 	public QuestionTypeEntity() {
 	}

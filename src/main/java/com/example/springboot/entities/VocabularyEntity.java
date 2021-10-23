@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "vocabularys")
+@Table(name = "vocabularies")
 public class VocabularyEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,15 +31,15 @@ public class VocabularyEntity {
 	@Column(name = "example")
 	private String example;
 
-	@Column(name = "example_mean")
-	private String exampleMean;
+	@Column(name = "example_meaning")
+	private String exampleMeaning;
 
 	@Column(name = "example_image_link")
 	private String exampleImageLink;
-	
+
 	@ManyToMany(mappedBy = "vocabularyEntities")
 	private Set<UserEntity> userEntities;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "lesson_id")
 	private LessonEntity lessonEntity;
@@ -49,15 +49,17 @@ public class VocabularyEntity {
 	}
 
 	public VocabularyEntity(Long id, String imageLink, String vocabulary, String meaning, String example,
-			String exampleMean, String exampleImageLink) {
+			String exampleMeaning, String exampleImageLink, Set<UserEntity> userEntities, LessonEntity lessonEntity) {
 		super();
 		this.id = id;
 		this.imageLink = imageLink;
 		this.vocabulary = vocabulary;
 		this.meaning = meaning;
 		this.example = example;
-		this.exampleMean = exampleMean;
+		this.exampleMeaning = exampleMeaning;
 		this.exampleImageLink = exampleImageLink;
+		this.userEntities = userEntities;
+		this.lessonEntity = lessonEntity;
 	}
 
 	public Long getId() {
@@ -100,12 +102,12 @@ public class VocabularyEntity {
 		this.example = example;
 	}
 
-	public String getExampleMean() {
-		return exampleMean;
+	public String getExampleMeaning() {
+		return exampleMeaning;
 	}
 
-	public void setExampleMean(String exampleMean) {
-		this.exampleMean = exampleMean;
+	public void setExampleMeaning(String exampleMeaning) {
+		this.exampleMeaning = exampleMeaning;
 	}
 
 	public String getExampleImageLink() {
@@ -114,6 +116,22 @@ public class VocabularyEntity {
 
 	public void setExampleImageLink(String exampleImageLink) {
 		this.exampleImageLink = exampleImageLink;
+	}
+
+	public Set<UserEntity> getUserEntities() {
+		return userEntities;
+	}
+
+	public void setUserEntities(Set<UserEntity> userEntities) {
+		this.userEntities = userEntities;
+	}
+
+	public LessonEntity getLessonEntity() {
+		return lessonEntity;
+	}
+
+	public void setLessonEntity(LessonEntity lessonEntity) {
+		this.lessonEntity = lessonEntity;
 	}
 
 }
