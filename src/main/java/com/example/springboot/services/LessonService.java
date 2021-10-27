@@ -1,5 +1,7 @@
 package com.example.springboot.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,5 +23,10 @@ public class LessonService {
 		LessonEntity lessonEntity = lessonRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("lesson not exist with id :" + id));
 		return lessonConverter.toDTO(lessonEntity);
+	}
+
+	public List<LessonDTO> get() {
+		List<LessonEntity> lessonEntities = lessonRepository.findAll();
+		return lessonConverter.toDTOs(lessonEntities);
 	}
 }

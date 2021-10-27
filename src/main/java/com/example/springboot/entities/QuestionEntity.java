@@ -44,6 +44,9 @@ public class QuestionEntity {
 	@ManyToOne
 	@JoinColumn(name = "lesson_id")
 	private LessonEntity lessonEntity;
+	
+	@ManyToMany(mappedBy = "questionEntities")
+	private Set<ExamEntity> examEntities;
 
 	public QuestionEntity() {
 		super();
@@ -52,7 +55,7 @@ public class QuestionEntity {
 
 	public QuestionEntity(Long id, String image_link, String question, Set<AnswerEntity> answerEntities,
 			QuestionTypeEntity questionTypeEntity, SkillEntity skillEntity, Set<RoomEntity> roomEntities,
-			LessonEntity lessonEntity) {
+			LessonEntity lessonEntity, Set<ExamEntity> examEntities) {
 		super();
 		this.id = id;
 		this.image_link = image_link;
@@ -62,6 +65,7 @@ public class QuestionEntity {
 		this.skillEntity = skillEntity;
 		this.roomEntities = roomEntities;
 		this.lessonEntity = lessonEntity;
+		this.examEntities = examEntities;
 	}
 
 	public Long getId() {
@@ -127,5 +131,15 @@ public class QuestionEntity {
 	public void setLessonEntity(LessonEntity lessonEntity) {
 		this.lessonEntity = lessonEntity;
 	}
+
+	public Set<ExamEntity> getExamEntities() {
+		return examEntities;
+	}
+
+	public void setExamEntities(Set<ExamEntity> examEntities) {
+		this.examEntities = examEntities;
+	}
+
+	
 
 }

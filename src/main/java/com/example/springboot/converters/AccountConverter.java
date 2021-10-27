@@ -14,21 +14,21 @@ public class AccountConverter {
 	public AccountEntity toEntity(AccountDTO accountDTO) {
 		AccountEntity accountEntity = new AccountEntity();
 		accountEntity.setUsername(accountDTO.getUsername());
-		accountEntity.setPassword(accountDTO.getPassword());
+//		accountEntity.setPassword(accountDTO.getPassword());
 		return accountEntity;
 	}
 
 	// UPDATE
 	public AccountEntity toEntity(AccountDTO accountDTO, AccountEntity accountEntity) {
 		accountEntity.setUsername(accountDTO.getUsername());
-		accountEntity.setPassword(accountDTO.getPassword());
+	//	accountEntity.setPassword(accountDTO.getPassword());
 		return accountEntity;
 	}
 
 	public AccountDTO toDTO(AccountEntity accountEntity) {
 		AccountDTO accountDTO = new AccountDTO();
 		accountDTO.setUsername(accountEntity.getUsername());
-		accountDTO.setPassword(accountEntity.getPassword());
+//		accountDTO.setPassword(accountEntity.getPassword());
 		accountDTO.setDateOfBirth(accountEntity.getUserEntity().getDateOfBirth());
 		accountDTO.setEmail(accountEntity.getUserEntity().getEmail());
 		accountDTO.setFullName(accountEntity.getUserEntity().getFullName());

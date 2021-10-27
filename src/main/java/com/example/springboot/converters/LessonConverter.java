@@ -19,6 +19,7 @@ public class LessonConverter {
 	public LessonDTO toDTO(LessonEntity lessonEntity) {
 		LessonDTO lessonDTO = new LessonDTO();
 		lessonDTO.setId(lessonEntity.getId());
+		lessonDTO.setLessonName(lessonEntity.getLessonName());
 		return lessonDTO;
 	}
 

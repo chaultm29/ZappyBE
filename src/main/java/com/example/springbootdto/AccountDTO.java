@@ -4,11 +4,10 @@ import java.util.Date;
 
 public class AccountDTO {
 	private String username;
-	private String password;
 	private Date dateOfBirth;
 	private String email;
 	private String fullName;
-	private int phone;
+	private String phone;
 	private String role;
 	private String avatar;
 
@@ -16,11 +15,10 @@ public class AccountDTO {
 		super();
 	}
 
-	public AccountDTO(String username, String password, Date dateOfBirth, String email, String fullName, int phone,
+	public AccountDTO(String username, Date dateOfBirth, String email, String fullName, String phone,
 			String role, String avatar) {
 		super();
 		this.username = username;
-		this.password = password;
 		this.dateOfBirth = dateOfBirth;
 		this.email = email;
 		this.fullName = fullName;
@@ -35,14 +33,6 @@ public class AccountDTO {
 
 	public void setUsername(String username) {
 		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	public Date getDateOfBirth() {
@@ -69,11 +59,11 @@ public class AccountDTO {
 		this.fullName = fullName;
 	}
 
-	public int getPhone() {
+	public String getPhone() {
 		return phone;
 	}
 
-	public void setPhone(int phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 

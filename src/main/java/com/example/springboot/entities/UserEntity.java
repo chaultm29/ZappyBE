@@ -26,7 +26,7 @@ public class UserEntity {
 	private String fullName;
 
 	@Column(name = "phone")
-	private int phone;
+	private String phone;
 
 	@Column(name = "email")
 	private String email;
@@ -60,7 +60,7 @@ public class UserEntity {
 	public UserEntity() {
 	}
 
-	public UserEntity(Long id, String fullName, int phone, String email, Date dateOfBirth, String avatar,
+	public UserEntity(Long id, String fullName, String phone, String email, Date dateOfBirth, String avatar,
 			Set<AchievenmentEntity> achievenmentEntities, Set<AlphabetEntity> alphabetEntities,
 			Set<KanjiEntity> kanjiEntities, Set<VocabularyEntity> vocabularyEntities,
 			Set<GrammarEntity> grammarEntities) {
@@ -94,11 +94,11 @@ public class UserEntity {
 		this.fullName = fullName;
 	}
 
-	public int getPhone() {
+	public String getPhone() {
 		return phone;
 	}
 
-	public void setPhone(int phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 

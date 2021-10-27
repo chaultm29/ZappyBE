@@ -1,77 +1,33 @@
 package com.example.springboot.controllers;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.example.springboot.entities.GrammarEntity;
-import com.example.springboot.exception.ResourceNotFoundException;
-import com.example.springboot.repositories.GrammarRepository;
+import com.example.springboot.services.GrammarService;
+import com.example.springbootdto.GrammarDTO;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/student")
+@RequestMapping("/study")
 public class GrammarController {
 	@Autowired
-	private GrammarRepository grammarRepository;
+	private GrammarService grammarService;
 
-	// get all grammar
-	@GetMapping("/grammar")
-	public List<GrammarEntity> getAllGrammars() {
-		return (List<GrammarEntity>) grammarRepository.findAll();
-	}
-
-	// create grammar rest api
-	@PostMapping("/grammar")
-	public GrammarEntity createGrammar(@RequestBody GrammarEntity grammarEntity) {
-		return grammarRepository.save(grammarEntity);
-	}
-
-	// get grammar by id rest api
-	@GetMapping("/grammar/{id}")
-	public ResponseEntity<GrammarEntity> getGrammarById(@PathVariable Long id) {
-		GrammarEntity grammarEntity = grammarRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Grammar not exist with id :" + id));
-		return ResponseEntity.ok(grammarEntity);
-	}
-
-	// update grammar rest api
-	@PutMapping("/grammar/{id}")
-	public ResponseEntity<GrammarEntity> updateGrammar(@PathVariable Long id,
-			@RequestBody GrammarEntity grammarDetails) {
-		GrammarEntity grammarEntity = grammarRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Grammar not exist with id :" + id));
-
-		grammarEntity.setExampleMeaning(grammarDetails.getExampleMeaning());
-		grammarEntity.setExampleImageLink(grammarDetails.getExampleImageLink());
-		grammarEntity.setExplanation(grammarDetails.getExplanation());
-		grammarEntity.setGrammar(grammarDetails.getGrammar());
-
-		GrammarEntity updatedGrammar = grammarRepository.save(grammarEntity);
-		return ResponseEntity.ok(updatedGrammar);
-	}
-
-	// delete grammar rest api
-	@DeleteMapping("/grammar/{id}")
-	public ResponseEntity<Map<String, Boolean>> deleteGrammar(@PathVariable Long id) {
-		GrammarEntity grammarEntity = grammarRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Grammar not exist with id :" + id));
-
-		grammarRepository.delete(grammarEntity);
-		Map<String, Boolean> response = new HashMap<>();
-		response.put("deleted", Boolean.TRUE);
-		return ResponseEntity.ok(response);
+	@GetMapping("/grammar/lesson/{id}")
+	public ResponseEntity<List<GrammarDTO>> getGrammarsByLessonId(@PathVariable Long id) {
+		List<GrammarDTO> grammarDTOs = new ArrayList<>();
+		grammarDTOs = grammarService.getByLessionId(id);
+		return new ResponseEntity<List<GrammarDTO>>(grammarDTOs, HttpStatus.OK);
 	}
 }

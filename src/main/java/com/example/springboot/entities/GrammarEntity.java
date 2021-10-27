@@ -28,8 +28,8 @@ public class GrammarEntity {
 	@Column(name = "grammar_meaning")
 	private String grammarMeaning;
 
-	@Column(name = "explanation_meaning")
-	private String explanationMeaning;
+	@Column(name = "example")
+	private String example;
 
 	@Column(name = "example_meaning")
 	private String exampleMeaning;
@@ -41,21 +41,21 @@ public class GrammarEntity {
 	private Set<UserEntity> userEntities;
 
 	@ManyToOne
-	@JoinColumn(name = "lession_id")
+	@JoinColumn(name = "lesson_id")
 	private LessonEntity lessonEntity;
 
 	public GrammarEntity() {
 		super();
 	}
 
-	public GrammarEntity(Long id, String grammar, String explanation, String grammarMeaning, String explanationMeaning,
+	public GrammarEntity(Long id, String grammar, String explanation, String grammarMeaning, String example,
 			String exampleMeaning, String exampleImageLink, Set<UserEntity> userEntities, LessonEntity lessonEntity) {
 		super();
 		this.id = id;
 		this.grammar = grammar;
 		this.explanation = explanation;
 		this.grammarMeaning = grammarMeaning;
-		this.explanationMeaning = explanationMeaning;
+		this.example = example;
 		this.exampleMeaning = exampleMeaning;
 		this.exampleImageLink = exampleImageLink;
 		this.userEntities = userEntities;
@@ -94,12 +94,12 @@ public class GrammarEntity {
 		this.grammarMeaning = grammarMeaning;
 	}
 
-	public String getExplanationMeaning() {
-		return explanationMeaning;
+	public String getExample() {
+		return example;
 	}
 
-	public void setExplanationMeaning(String explanationMeaning) {
-		this.explanationMeaning = explanationMeaning;
+	public void setExample(String example) {
+		this.example = example;
 	}
 
 	public String getExampleMeaning() {
@@ -134,4 +134,5 @@ public class GrammarEntity {
 		this.lessonEntity = lessonEntity;
 	}
 
+	
 }
