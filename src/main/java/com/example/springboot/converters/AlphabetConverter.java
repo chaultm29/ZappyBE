@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.example.springboot.dto.AlphabetDTO;
 import com.example.springboot.entities.AlphabetEntity;
-import com.example.springbootdto.AlphabetDTO;
 
 @Component
 public class AlphabetConverter {

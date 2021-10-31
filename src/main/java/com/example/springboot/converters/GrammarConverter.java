@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.example.springboot.dto.GrammarDTO;
 import com.example.springboot.entities.GrammarEntity;
-import com.example.springbootdto.GrammarDTO;
 
 @Component
 public class GrammarConverter {

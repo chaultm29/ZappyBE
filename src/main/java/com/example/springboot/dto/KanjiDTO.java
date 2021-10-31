@@ -1,4 +1,4 @@
-package com.example.springbootdto;
+package com.example.springboot.dto;
 
 public class KanjiDTO {
 	private Long id;

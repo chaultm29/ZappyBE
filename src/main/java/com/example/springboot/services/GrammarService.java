@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.springboot.converters.GrammarConverter;
+import com.example.springboot.dto.GrammarDTO;
 import com.example.springboot.entities.GrammarEntity;
 import com.example.springboot.repositories.GrammarRepository;
-import com.example.springbootdto.GrammarDTO;
 
 @Service
 public class GrammarService {

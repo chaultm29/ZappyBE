@@ -1,8 +1,9 @@
-package com.example.springbootdto;
+package com.example.springboot.dto;
 
 import java.util.Date;
 
 public class AccountDTO {
+	private Long id;
 	private String username;
 	private Date dateOfBirth;
 	private String email;
@@ -15,9 +16,10 @@ public class AccountDTO {
 		super();
 	}
 
-	public AccountDTO(String username, Date dateOfBirth, String email, String fullName, String phone,
+	public AccountDTO(Long id, String username, Date dateOfBirth, String email, String fullName, String phone,
 			String role, String avatar) {
 		super();
+		this.id = id;
 		this.username = username;
 		this.dateOfBirth = dateOfBirth;
 		this.email = email;
@@ -25,6 +27,14 @@ public class AccountDTO {
 		this.phone = phone;
 		this.role = role;
 		this.avatar = avatar;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getUsername() {

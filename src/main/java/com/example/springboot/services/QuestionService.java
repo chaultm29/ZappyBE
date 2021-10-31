@@ -1,20 +1,18 @@
 package com.example.springboot.services;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.springboot.converters.QuestionConverter;
+import com.example.springboot.dto.QuestionDTO;
 import com.example.springboot.entities.QuestionEntity;
+import com.example.springboot.exception.ResourceNotFoundException;
 import com.example.springboot.repositories.QuestionRepository;
-import com.example.springbootdto.QuestionDTO;
-import com.example.springbootdto.SettingExamDTO;
 
 @Service
 public class QuestionService {
@@ -32,40 +30,100 @@ public class QuestionService {
 		List<QuestionEntity> questionEntities = questionRepository.findAll();
 		return questionConverter.toDTOs(questionEntities);
 	}
-
-	public List<QuestionDTO> get(SettingExamDTO settingExamDTO) {
-		String sb = "SELECT * FROM zappy.questions WHERE 0 = 0 ";
-		if (!settingExamDTO.getIdLessonList().isEmpty()) {
-			sb += " and ( lesson_id = " + settingExamDTO.getIdLessonList().get(0);
-			for (int i = 1; i < settingExamDTO.getIdLessonList().size(); i++) {
-				sb += " or lesson_id = " + settingExamDTO.getIdLessonList().get(i);
-			}
-			sb += " ) ";
-		}
-
-		if (!settingExamDTO.getQuestionTypeList().isEmpty()) {
-			sb += " and ( type_id = " + settingExamDTO.getQuestionTypeList().get(0);
-			for (int i = 1; i < settingExamDTO.getQuestionTypeList().size(); i++) {
-				sb += " or type_id = " + settingExamDTO.getQuestionTypeList().get(i);
-			}
-			sb += " ) ";
-		}
-
-		if (!settingExamDTO.getSkillList().isEmpty()) {
-			sb += " and ( skill_id = " + settingExamDTO.getSkillList().get(0);
-			for (int i = 1; i < settingExamDTO.getSkillList().size(); i++) {
-				sb += " or skill_id = " + settingExamDTO.getSkillList().get(i);
-			}
-			sb += " ) ";
-		}
-		sb += " ORDER BY RAND () LIMIT " + settingExamDTO.getNumberOfQuestion();
-		List<QuestionEntity> questionEntities = new ArrayList<>();
-		try {
-			Query query = entityManager.createNativeQuery(sb, QuestionEntity.class);
-			questionEntities = query.getResultList();
-		} catch (Exception e) {
-		}
-		return questionConverter.toDTOs(questionEntities);
-
+	
+	public QuestionDTO save(QuestionDTO questionDTO) {
+		QuestionEntity questionEntity = questionConverter.toEntity(questionDTO);
+		QuestionEntity afterSave = questionRepository.save(questionEntity);
+		return questionConverter.toDTO(afterSave);
 	}
+
+	
+
+	public void delete(Long id) {
+		QuestionEntity questionEntity = questionRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Question not exist with id :" + id));
+		questionRepository.delete(questionEntity);
+	}
+
+	public QuestionDTO get(Long id) {
+		QuestionEntity questionEntity = questionRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Question not exist with id :" + id));
+		return questionConverter.toDTO(questionEntity);
+	}
+
+
+
+//	public List<QuestionDTO> get(SettingExamDTO settingExamDTO) {// all dataa
+//		List<QuestionEntity> questionEntities = new ArrayList<>();
+//		List<QuestionRequireDTO> questionRequireDTOs = generateQuestionsRequire(settingExamDTO);
+//		for (QuestionRequireDTO questionRequireDTO : questionRequireDTOs) {
+//			String sb = "SELECT * FROM zappy.questions WHERE 0 = 0 ";
+//			if (questionRequireDTO.getLessonId() != -1) {
+//				sb += " and lesson_id = " + questionRequireDTO.getLessonId();
+//			}
+//
+//			if (questionRequireDTO.getSkillId() != -1) {
+//				sb += " and skill_id = " + questionRequireDTO.getSkillId();
+//			}
+//
+//			if (questionRequireDTO.getTypeId() != -1) {
+//				sb += " and type_id = " + questionRequireDTO.getTypeId();
+//			}
+//
+//			sb += " ORDER BY RAND () LIMIT 1 ";
+//			try {
+//				Query query = entityManager.createNativeQuery(sb, QuestionEntity.class);
+//				QuestionEntity question = (QuestionEntity) query.getSingleResult();
+//				questionEntities.add(question);
+//			} catch (Exception e) {
+//			}
+//		}
+//		return questionConverter.toDTOs(questionEntities);
+//
+//	}
+//
+//	private List<QuestionRequireDTO> generateQuestionsRequire(SettingExamDTO settingExamDTO) {
+//		List<QuestionRequireDTO> questionRequireDTOs = new ArrayList<>();
+//		/**
+//		 * thuật toán, tìm tb số câu của numberqustion chia theo skill số câu còn dư
+//		 * chia vào các skill bất kì 10 /3 = 3 dư 1 = [3,4,3] = [3,3,3] chia số câu theo
+//		 * lesson tb 10/4 = 2 du 2 = [3,2,2,3] = [3,2,1,3] chia theo question type 10/6
+//		 * = 1 dư 4 = [1,2,1,2,2,2] = [1,2,1,1,2,2] dùng thuật toán bt
+//		 * questionRequireDTO1 =[2,-1,4] RequireDTO2 =[1,1,2]
+//		 * 
+//		 */
+//		int totalNumber = settingExamDTO.getNumberOfQuestion();
+//		int mean = totalNumber / settingExamDTO.getSkillList().size();
+//		int arr1[] = generateArray(mean, settingExamDTO.getSkillList().size()); // mang index cac so cau hoi dã random
+////		for(int i = 0; i< totalNumber % settingExamDTO.getSkillList().size(); i++) {
+////			Random generator = new Random();
+////			int index = generator.nextInt(settingExamDTO.getSkillList().size());
+////			arr1[index] += 1;
+////		}
+//		// mang maf co all data arrGetData[]
+//		// tao mang ressult : arrResult[]
+//		for (int i = 0; i < arr1.length; i++) {
+//			// arrResult[i]=arrGetData[arr1[i]];
+//		}
+//
+//		return questionRequireDTOs;
+//	}
+//
+//	private int[] generateArray(int n, int size) {// n=3; size = 10// sai
+//		int arry[] = new int[size];
+//		for (int i = 0; i < n; i++) {
+//			Random generator = new Random();
+//			int randomIndex = generator.nextInt(size);// id =1, id=1
+//			int dem = 0;
+//			for (int j = 0; j < arry.length; j++) {
+//				if (arry[j] == randomIndex) {
+//					dem++;
+//				}
+//			}
+//			if (dem == 0) {
+//				arry[i] = randomIndex;
+//			}
+//		}
+//		return arry;// [1,2,3]
+//	}
 }

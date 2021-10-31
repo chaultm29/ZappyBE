@@ -5,10 +5,11 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.example.springboot.dto.AnswerDTO;
+import com.example.springboot.dto.QuestionDTO;
 import com.example.springboot.entities.AnswerEntity;
 import com.example.springboot.entities.QuestionEntity;
-import com.example.springbootdto.AnswerDTO;
-import com.example.springbootdto.QuestionDTO;
+
 
 @Component
 public class QuestionConverter {
@@ -25,6 +26,7 @@ public class QuestionConverter {
 		questionDTO.setQuestion(questionEntity.getQuestion());
 		questionDTO.setImgLink(questionEntity.getImage_link());
 		questionDTO.setQuestionID(questionEntity.getId());
+		questionDTO.setSkill(questionEntity.getSkillEntity().getSkillName());
 
 		List<AnswerDTO> answerDTOs = new ArrayList<AnswerDTO>();
 		for (AnswerEntity answerEntity : questionEntity.getAnswerEntities()) {

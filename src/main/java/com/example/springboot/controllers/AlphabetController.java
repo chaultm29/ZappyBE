@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.springboot.dto.AlphabetDTO;
 import com.example.springboot.services.AlphabetService;
-import com.example.springbootdto.AlphabetDTO;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController

@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.springboot.converters.LessonConverter;
+import com.example.springboot.dto.LessonDTO;
 import com.example.springboot.entities.LessonEntity;
 import com.example.springboot.exception.ResourceNotFoundException;
 import com.example.springboot.repositories.LessonRepository;
-import com.example.springbootdto.LessonDTO;
 
 @Service
 public class LessonService {

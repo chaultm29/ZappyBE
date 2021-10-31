@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.example.springboot.dto.LessonDTO;
 import com.example.springboot.entities.LessonEntity;
-import com.example.springbootdto.LessonDTO;
 
 @Component
 public class LessonConverter {

@@ -6,9 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.springboot.converters.VocabularyConverter;
+import com.example.springboot.dto.VocabularyDTO;
 import com.example.springboot.entities.VocabularyEntity;
 import com.example.springboot.repositories.VocabularyRepository;
-import com.example.springbootdto.VocabularyDTO;
+
 
 @Service
 public class VocabularyService {

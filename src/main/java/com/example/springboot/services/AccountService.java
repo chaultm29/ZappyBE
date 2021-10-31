@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.springboot.converters.AccountConverter;
+import com.example.springboot.dto.AccountDTO;
 import com.example.springboot.entities.AccountEntity;
 import com.example.springboot.exception.ResourceNotFoundException;
 import com.example.springboot.repositories.AccountRepository;
-import com.example.springbootdto.AccountDTO;
 
 @Service
 public class AccountService {

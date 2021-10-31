@@ -3,16 +3,21 @@ package com.example.springboot.converters;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.example.springboot.dto.AccountDTO;
 import com.example.springboot.entities.AccountEntity;
-import com.example.springbootdto.AccountDTO;
+import com.example.springboot.repositories.RoleRepository;
 
 @Component
 public class AccountConverter {
+	@Autowired
+	RoleRepository roleRepository;
 
 	public AccountEntity toEntity(AccountDTO accountDTO) {
 		AccountEntity accountEntity = new AccountEntity();
+		accountEntity.setId(accountDTO.getId());
 		accountEntity.setUsername(accountDTO.getUsername());
 //		accountEntity.setPassword(accountDTO.getPassword());
 		return accountEntity;
@@ -20,8 +25,9 @@ public class AccountConverter {
 
 	// UPDATE
 	public AccountEntity toEntity(AccountDTO accountDTO, AccountEntity accountEntity) {
+		accountEntity.setId(accountDTO.getId());
 		accountEntity.setUsername(accountDTO.getUsername());
-	//	accountEntity.setPassword(accountDTO.getPassword());
+		// accountEntity.setPassword(accountDTO.getPassword());
 		return accountEntity;
 	}
 
@@ -35,6 +41,7 @@ public class AccountConverter {
 		accountDTO.setPhone(accountEntity.getUserEntity().getPhone());
 		accountDTO.setRole(accountEntity.getRoleEntity().getName());
 		accountDTO.setAvatar(accountEntity.getUserEntity().getAvatar());
+		accountDTO.setId(accountEntity.getId());
 		return accountDTO;
 	}
 

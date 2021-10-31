@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.springboot.dto.AccountDTO;
 import com.example.springboot.exception.ResourceNotFoundException;
 import com.example.springboot.services.AccountService;
-import com.example.springbootdto.AccountDTO;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController

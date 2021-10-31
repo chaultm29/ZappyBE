@@ -5,8 +5,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.example.springboot.dto.VocabularyDTO;
 import com.example.springboot.entities.VocabularyEntity;
-import com.example.springbootdto.VocabularyDTO;
+
 
 @Component
 public class VocabularyConverter {

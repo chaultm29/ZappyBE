@@ -6,10 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.springboot.converters.KanjiConverter;
-
+import com.example.springboot.dto.KanjiDTO;
 import com.example.springboot.entities.KanjiEntity;
 import com.example.springboot.repositories.KanjiRepository;
-import com.example.springbootdto.KanjiDTO;
 
 @Service
 public class KanjiService {

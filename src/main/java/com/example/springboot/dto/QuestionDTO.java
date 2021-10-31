@@ -1,4 +1,4 @@
-package com.example.springbootdto;
+package com.example.springboot.dto;
 
 import java.util.List;
 
@@ -10,6 +10,7 @@ public class QuestionDTO {
 	private String type;
 	private String question;
 	private String imgLink;
+	private String skill;
 	private List<AnswerEntity> answerEntities;
 
 	public QuestionDTO() {
@@ -17,7 +18,7 @@ public class QuestionDTO {
 		// TODO Auto-generated constructor stub
 	}
 
-	public QuestionDTO(Long questionID, String lesson, String type, String question, String imgLink,
+	public QuestionDTO(Long questionID, String lesson, String type, String question, String imgLink, String skill,
 			List<AnswerEntity> answerEntities) {
 		super();
 		this.questionID = questionID;
@@ -25,6 +26,7 @@ public class QuestionDTO {
 		this.type = type;
 		this.question = question;
 		this.imgLink = imgLink;
+		this.skill = skill;
 		this.answerEntities = answerEntities;
 	}
 
@@ -66,6 +68,14 @@ public class QuestionDTO {
 
 	public void setImgLink(String imgLink) {
 		this.imgLink = imgLink;
+	}
+
+	public String getSkill() {
+		return skill;
+	}
+
+	public void setSkill(String skill) {
+		this.skill = skill;
 	}
 
 	public List<AnswerEntity> getAnswerEntities() {

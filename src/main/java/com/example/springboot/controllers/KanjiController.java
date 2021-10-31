@@ -11,11 +11,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.springboot.dto.KanjiDTO;
 import com.example.springboot.exception.ResourceNotFoundException;
 import com.example.springboot.services.KanjiService;
 import com.example.springboot.services.LessonService;
-import com.example.springbootdto.KanjiDTO;
-import com.example.springbootdto.LessonDTO;
+
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController

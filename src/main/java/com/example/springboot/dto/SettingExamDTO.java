@@ -1,4 +1,4 @@
-package com.example.springbootdto;
+package com.example.springboot.dto;
 
 import java.util.List;
 

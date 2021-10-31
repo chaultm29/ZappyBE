@@ -14,8 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.springboot.dto.GrammarDTO;
 import com.example.springboot.services.GrammarService;
-import com.example.springbootdto.GrammarDTO;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
