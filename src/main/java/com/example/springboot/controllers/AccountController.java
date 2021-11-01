@@ -19,7 +19,7 @@ import com.example.springboot.dto.AccountDTO;
 import com.example.springboot.exception.ResourceNotFoundException;
 import com.example.springboot.services.AccountService;
 
-@CrossOrigin(origins = { "http://localhost:3000", "https://www.zappy-nihongo.com" })
+@CrossOrigin(origins = { "*" })
 @RestController
 @RequestMapping("/admin")
 public class AccountController {

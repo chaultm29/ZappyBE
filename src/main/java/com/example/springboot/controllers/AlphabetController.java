@@ -13,21 +13,21 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.springboot.dto.AlphabetDTO;
 import com.example.springboot.services.AlphabetService;
 
-@CrossOrigin(origins = { "http://localhost:3000", "https://www.zappy-nihongo.com" })
+@CrossOrigin(origins = { "*" })
 @RestController
-@RequestMapping("")
+@RequestMapping("/alphabet")
 public class AlphabetController {
 	@Autowired
 	private AlphabetService alphabetService;
 
 	// get hiragana
-	@GetMapping("alphabet/hiragana")
+	@GetMapping("/hiragana")
 	public ResponseEntity<List<AlphabetDTO>> getHiragana() {
 		return new ResponseEntity<List<AlphabetDTO>>(alphabetService.getHiragana(), HttpStatus.OK);
 	}
 
 	// get katakana
-	@GetMapping("alphabet/katakana")
+	@GetMapping("/katakana")
 	public ResponseEntity<List<AlphabetDTO>> getKatakana() {
 		return new ResponseEntity<List<AlphabetDTO>>(alphabetService.getKatakana(), HttpStatus.OK);
 	}

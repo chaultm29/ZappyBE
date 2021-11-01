@@ -10,41 +10,41 @@ import org.springframework.web.bind.annotation.*;
 import com.example.springboot.dto.QuestionDTO;
 import com.example.springboot.services.QuestionService;
 
-@CrossOrigin(origins = {"http://localhost:3000", "https://www.zappy-nihongo.com"})
+@CrossOrigin(origins = {"*"})
 @RestController
-@RequestMapping()
+@RequestMapping("")
 public class QuestionController {
 
 	@Autowired
 	private QuestionService questionService;
 
-	@GetMapping("/study/exam")
+	@GetMapping("exam")
 	public ResponseEntity<List<QuestionDTO>> getListQuestionExam() {
 		return new ResponseEntity<List<QuestionDTO>>(questionService.get(), HttpStatus.OK);
 	}
 
-	@GetMapping("/question")
+	@GetMapping("question")
 	public ResponseEntity<List<QuestionDTO>> getListQuestionContentManager() {
 		return new ResponseEntity<List<QuestionDTO>>(questionService.get(), HttpStatus.OK);
 	}
 
-	@PostMapping("/question")
+	@PostMapping("question")
 	public ResponseEntity<QuestionDTO> createQuestionContentManager(@RequestBody QuestionDTO questionDTO) {
 		return new ResponseEntity<QuestionDTO>(questionService.save(questionDTO), HttpStatus.OK);
 	}
 
-	@GetMapping("/question/{id}")
+	@GetMapping("question/{id}")
 	public ResponseEntity<QuestionDTO> getQuestionContentManager(@PathVariable Long id) {
 		return new ResponseEntity<QuestionDTO>(questionService.get(id), HttpStatus.OK);
 	}
 
-	@DeleteMapping("/question/{id}")
+	@DeleteMapping("question/{id}")
 	public ResponseEntity<?> deleteQuestionContentManager(@PathVariable Long id) {
 		questionService.delete(id);
 		return new ResponseEntity(HttpStatus.OK);
 	}
 
-	@PutMapping("/question/{id}")
+	@PutMapping("question/{id}")
 	public ResponseEntity<QuestionDTO> updateQuestionContentManager(@PathVariable Long id,
 			@RequestBody QuestionDTO questionDTO) {
 		return new ResponseEntity<QuestionDTO>(questionService.update(questionDTO, id), HttpStatus.OK);
