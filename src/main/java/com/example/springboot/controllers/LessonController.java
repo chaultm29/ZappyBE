@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.springboot.dto.LessonDTO;
 import com.example.springboot.services.LessonService;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = { "http://localhost:3000", "https://www.zappy-nihongo.com" })
 @RestController
-@RequestMapping("/study")
+@RequestMapping("")
 public class LessonController {
 	@Autowired
 	private LessonService lessonService;

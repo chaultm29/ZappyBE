@@ -5,19 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.example.springboot.dto.AccountDTO;
 import com.example.springboot.dto.QuestionDTO;
 import com.example.springboot.services.QuestionService;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "https://www.zappy-nihongo.com"})
 @RestController
 @RequestMapping()
 public class QuestionController {
@@ -35,10 +28,27 @@ public class QuestionController {
 		return new ResponseEntity<List<QuestionDTO>>(questionService.get(), HttpStatus.OK);
 	}
 
-	@PostMapping("/content-mng/question")
-	public ResponseEntity<QuestionDTO> createQuestionContentManager(@RequestBody QuestionDTO questionDTO) {
-		return new ResponseEntity<QuestionDTO>(questionService.save(questionDTO), HttpStatus.OK);
+//	@PostMapping("/content-mng/question")
+//	public ResponseEntity<QuestionDTO> createQuestionContentManager(@RequestBody QuestionDTO questionDTO) {
+//		return new ResponseEntity<QuestionDTO>(questionService.save(questionDTO), HttpStatus.OK);
+//	}
+
+	@GetMapping("/content-mng/question/{id}")
+	public ResponseEntity<QuestionDTO> getQuestionContentManager(@PathVariable Long id) {
+		return new ResponseEntity<QuestionDTO>(questionService.get(id), HttpStatus.OK);
 	}
+
+	@DeleteMapping("/content-mng/question/{id}")
+	public ResponseEntity<?> deleteQuestionContentManager(@PathVariable Long id) {
+		questionService.delete(id);
+		return new ResponseEntity(HttpStatus.OK);
+	}
+
+//	@PutMapping("/content-mng/question/{id}")
+//	public ResponseEntity<QuestionDTO> updateQuestionContentManager(@PathVariable Long id,
+//			@RequestBody QuestionDTO questionDTO) {
+//		return new ResponseEntity<QuestionDTO>(questionService.update(questionDTO, id), HttpStatus.OK);
+//	}
 
 //	@PutMapping("/study/exam")
 //	public ResponseEntity<List<QuestionDTO>> getListQuestion(@RequestBody SettingExamDTO settingExamDTO) {
