@@ -33,12 +33,13 @@ public class AnswerEntity {
 	public AnswerEntity() {
 	}
 
-	public AnswerEntity(Long id, boolean correct, String image_link, String answer) {
+	public AnswerEntity(Long id, boolean correct, String image_link, String answer,QuestionEntity questionEntity ) {
 		super();
 		this.id = id;
 		this.correct = correct;
 		this.image_link = image_link;
 		this.answer = answer;
+		this.questionEntity = questionEntity;
 	}
 
 	public Long getId() {

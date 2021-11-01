@@ -23,32 +23,32 @@ public class QuestionController {
 		return new ResponseEntity<List<QuestionDTO>>(questionService.get(), HttpStatus.OK);
 	}
 
-	@GetMapping("/content-mng/question")
+	@GetMapping("/question")
 	public ResponseEntity<List<QuestionDTO>> getListQuestionContentManager() {
 		return new ResponseEntity<List<QuestionDTO>>(questionService.get(), HttpStatus.OK);
 	}
 
-//	@PostMapping("/content-mng/question")
-//	public ResponseEntity<QuestionDTO> createQuestionContentManager(@RequestBody QuestionDTO questionDTO) {
-//		return new ResponseEntity<QuestionDTO>(questionService.save(questionDTO), HttpStatus.OK);
-//	}
+	@PostMapping("/question")
+	public ResponseEntity<QuestionDTO> createQuestionContentManager(@RequestBody QuestionDTO questionDTO) {
+		return new ResponseEntity<QuestionDTO>(questionService.save(questionDTO), HttpStatus.OK);
+	}
 
-	@GetMapping("/content-mng/question/{id}")
+	@GetMapping("/question/{id}")
 	public ResponseEntity<QuestionDTO> getQuestionContentManager(@PathVariable Long id) {
 		return new ResponseEntity<QuestionDTO>(questionService.get(id), HttpStatus.OK);
 	}
 
-	@DeleteMapping("/content-mng/question/{id}")
+	@DeleteMapping("/question/{id}")
 	public ResponseEntity<?> deleteQuestionContentManager(@PathVariable Long id) {
 		questionService.delete(id);
 		return new ResponseEntity(HttpStatus.OK);
 	}
 
-//	@PutMapping("/content-mng/question/{id}")
-//	public ResponseEntity<QuestionDTO> updateQuestionContentManager(@PathVariable Long id,
-//			@RequestBody QuestionDTO questionDTO) {
-//		return new ResponseEntity<QuestionDTO>(questionService.update(questionDTO, id), HttpStatus.OK);
-//	}
+	@PutMapping("/question/{id}")
+	public ResponseEntity<QuestionDTO> updateQuestionContentManager(@PathVariable Long id,
+			@RequestBody QuestionDTO questionDTO) {
+		return new ResponseEntity<QuestionDTO>(questionService.update(questionDTO, id), HttpStatus.OK);
+	}
 
 //	@PutMapping("/study/exam")
 //	public ResponseEntity<List<QuestionDTO>> getListQuestion(@RequestBody SettingExamDTO settingExamDTO) {
