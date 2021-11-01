@@ -10,24 +10,24 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.springboot.dto.AlphabetDTO;
 import com.example.springboot.services.AlphabetService;
-import com.example.springbootdto.AlphabetDTO;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = { "http://localhost:3000", "https://www.zappy-nihongo.com" })
 @RestController
-@RequestMapping("/study")
+@RequestMapping("")
 public class AlphabetController {
 	@Autowired
 	private AlphabetService alphabetService;
 
 	// get hiragana
-	@GetMapping("/hiragana")
+	@GetMapping("alphabet/hiragana")
 	public ResponseEntity<List<AlphabetDTO>> getHiragana() {
 		return new ResponseEntity<List<AlphabetDTO>>(alphabetService.getHiragana(), HttpStatus.OK);
 	}
 
 	// get katakana
-	@GetMapping("/katakana")
+	@GetMapping("alphabet/katakana")
 	public ResponseEntity<List<AlphabetDTO>> getKatakana() {
 		return new ResponseEntity<List<AlphabetDTO>>(alphabetService.getKatakana(), HttpStatus.OK);
 	}

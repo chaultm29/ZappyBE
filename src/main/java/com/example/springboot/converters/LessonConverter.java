@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.example.springboot.dto.LessonDTO;
 import com.example.springboot.entities.LessonEntity;
-import com.example.springbootdto.LessonDTO;
 
 @Component
 public class LessonConverter {
@@ -19,6 +19,7 @@ public class LessonConverter {
 	public LessonDTO toDTO(LessonEntity lessonEntity) {
 		LessonDTO lessonDTO = new LessonDTO();
 		lessonDTO.setId(lessonEntity.getId());
+		lessonDTO.setLessonName(lessonEntity.getLessonName());
 		return lessonDTO;
 	}
 

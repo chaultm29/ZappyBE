@@ -48,9 +48,9 @@ public class RoomEntity {
 		inverseJoinColumns = @JoinColumn(name = "room_id"))
 	private Set<SkillEntity> skillEntities;
 
-	@ManyToOne
-	@JoinColumn(name = "game_id")
-	private GameEntity gameEntity;
+//	@ManyToOne
+//	@JoinColumn(name = "game_id")
+//	private GameEntity gameEntity;
 
 	@ManyToMany
 	@JoinTable(name = "room_lesson_rf", 

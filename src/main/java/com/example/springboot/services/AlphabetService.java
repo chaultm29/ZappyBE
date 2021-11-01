@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.springboot.converters.AlphabetConverter;
+import com.example.springboot.dto.AlphabetDTO;
 import com.example.springboot.entities.AlphabetEntity;
 import com.example.springboot.exception.ResourceNotFoundException;
 import com.example.springboot.repositories.AlphabetRepository;
-import com.example.springbootdto.AlphabetDTO;
 
 @Service
 public class AlphabetService {

@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.example.springboot.dto.KanjiDTO;
 import com.example.springboot.entities.KanjiEntity;
-import com.example.springbootdto.KanjiDTO;
 
 @Component
 public class KanjiConverter {

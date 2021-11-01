@@ -30,14 +30,14 @@ public class GameEntity {
 	@Column(name = "game_name")
 	private String gameName;
  
-	@ManyToMany
-	@JoinTable(name = "game_questiontype_rf", 
-			joinColumns = @JoinColumn(name = "game_id"), 
-			inverseJoinColumns = @JoinColumn(name = "type_id"))
-	private Set<QuestionTypeEntity> questionTypeEntities;
+//	@ManyToMany
+//	@JoinTable(name = "game_questiontype_rf", 
+//			joinColumns = @JoinColumn(name = "game_id"), 
+//			inverseJoinColumns = @JoinColumn(name = "type_id"))
+//	private Set<QuestionTypeEntity> questionTypeEntities;
 
-	@OneToMany(mappedBy = "gameEntity", cascade = CascadeType.ALL)
-	private Set<RoomEntity> roomEntities;
+//	@OneToMany(mappedBy = "gameEntity", cascade = CascadeType.ALL)
+//	private Set<RoomEntity> roomEntities;
 
 	public GameEntity() {
 	}
