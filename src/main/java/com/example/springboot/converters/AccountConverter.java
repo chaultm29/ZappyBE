@@ -35,12 +35,12 @@ public class AccountConverter {
 		AccountDTO accountDTO = new AccountDTO();
 		accountDTO.setUsername(accountEntity.getUsername());
 //		accountDTO.setPassword(accountEntity.getPassword());
-		accountDTO.setDateOfBirth(accountEntity.getUserEntity().getDateOfBirth());
-		accountDTO.setEmail(accountEntity.getUserEntity().getEmail());
-		accountDTO.setFullName(accountEntity.getUserEntity().getFullName());
-		accountDTO.setPhone(accountEntity.getUserEntity().getPhone());
-		accountDTO.setRole(accountEntity.getRoleEntity().getName());
-		accountDTO.setAvatar(accountEntity.getUserEntity().getAvatar());
+		accountDTO.setDateOfBirth((accountEntity.getUserEntity()!=null)?accountEntity.getUserEntity().getDateOfBirth():null);
+		accountDTO.setEmail((accountEntity.getUserEntity()!=null)?accountEntity.getUserEntity().getEmail():"");
+		accountDTO.setFullName((accountEntity.getUserEntity()!=null)?accountEntity.getUserEntity().getFullName():"");
+		accountDTO.setPhone((accountEntity.getUserEntity()!=null)?accountEntity.getUserEntity().getPhone():"");
+		accountDTO.setRole((accountEntity.getRoleEntity()!=null)?accountEntity.getRoleEntity().getName():"");
+		accountDTO.setAvatar((accountEntity.getUserEntity()!=null)?accountEntity.getUserEntity().getAvatar():"");
 		accountDTO.setId(accountEntity.getId());
 		return accountDTO;
 	}

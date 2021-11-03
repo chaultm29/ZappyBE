@@ -38,16 +38,18 @@ public class QuestionService {
 		return questionConverter.toDTOs(questionEntities);
 	}
 
-	public QuestionDTO save(QuestionDTO questionDTO) {
+	public Boolean save(QuestionDTO questionDTO) {
 		QuestionEntity questionEntity = questionConverter.toEntity(questionDTO);
 		QuestionEntity afterSave = questionRepository.save(questionEntity);
 		Set<AnswerEntity> answerEntitySet = new HashSet<>();
-		for (AnswerEntity answerEntity : questionDTO.getAnswerEntities()) {
+		for (AnswerEntity answerEntity : questionDTO.getAnswer()) {
 			answerEntitySet.add(answerRepository.save(new AnswerEntity(answerEntity.getId(), answerEntity.isCorrect(),
 					answerEntity.getImage_link(), answerEntity.getAnswer(), afterSave)));
 		}
-		afterSave.setAnswerEntities(answerEntitySet);
-		return questionConverter.toDTO(afterSave);
+		if(afterSave!=null) {
+			return true;
+		}
+		return false;
 	}
 
 	public QuestionDTO update(QuestionDTO questionDTO, Long id) {
@@ -64,7 +66,7 @@ public class QuestionService {
 		QuestionEntity afterSave = questionRepository.save(questionEntityBase);
 		Set<AnswerEntity> answerEntitySet = new HashSet<>();
 		answerRepository.deleteByIdQuestion(id);
-		for (AnswerEntity answerEntity : questionDTO.getAnswerEntities()) {
+		for (AnswerEntity answerEntity : questionDTO.getAnswer()) {
 			answerEntitySet.add(answerRepository.save(new AnswerEntity(answerEntity.getId(), answerEntity.isCorrect(),
 					answerEntity.getImage_link(), answerEntity.getAnswer(), afterSave)));
 		}

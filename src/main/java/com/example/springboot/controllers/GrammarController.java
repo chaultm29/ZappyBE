@@ -28,7 +28,7 @@ public class GrammarController {
 		return new ResponseEntity<List<GrammarDTO>>(grammarDTOs, HttpStatus.OK);
 	}
 
-	@GetMapping("/")
+	@GetMapping("")
 	public ResponseEntity<List<GrammarBaseDTO>> getAllGrammar() {
 		List<GrammarBaseDTO> listGram = new ArrayList<>();
 		listGram = grammarService.getAllGrammar();
