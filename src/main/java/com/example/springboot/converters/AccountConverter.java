@@ -19,7 +19,7 @@ public class AccountConverter {
 		AccountEntity accountEntity = new AccountEntity();
 		accountEntity.setId(accountDTO.getId());
 		accountEntity.setUsername(accountDTO.getUsername());
-//		accountEntity.setPassword(accountDTO.getPassword());
+		accountEntity.setPassword(accountDTO.getPassword());
 		return accountEntity;
 	}
 
@@ -27,20 +27,20 @@ public class AccountConverter {
 	public AccountEntity toEntity(AccountDTO accountDTO, AccountEntity accountEntity) {
 		accountEntity.setId(accountDTO.getId());
 		accountEntity.setUsername(accountDTO.getUsername());
-		// accountEntity.setPassword(accountDTO.getPassword());
+	    accountEntity.setPassword(accountDTO.getPassword());
 		return accountEntity;
 	}
 
 	public AccountDTO toDTO(AccountEntity accountEntity) {
 		AccountDTO accountDTO = new AccountDTO();
 		accountDTO.setUsername(accountEntity.getUsername());
-//		accountDTO.setPassword(accountEntity.getPassword());
-		accountDTO.setDateOfBirth((accountEntity.getUserEntity()!=null)?accountEntity.getUserEntity().getDateOfBirth():null);
-		accountDTO.setEmail((accountEntity.getUserEntity()!=null)?accountEntity.getUserEntity().getEmail():"");
-		accountDTO.setFullName((accountEntity.getUserEntity()!=null)?accountEntity.getUserEntity().getFullName():"");
-		accountDTO.setPhone((accountEntity.getUserEntity()!=null)?accountEntity.getUserEntity().getPhone():"");
-		accountDTO.setRole((accountEntity.getRoleEntity()!=null)?accountEntity.getRoleEntity().getName():"");
-		accountDTO.setAvatar((accountEntity.getUserEntity()!=null)?accountEntity.getUserEntity().getAvatar():"");
+		accountDTO.setPassword(accountEntity.getPassword());
+		accountDTO.setDateOfBirth(accountEntity.getUserEntity().getDateOfBirth());
+		accountDTO.setEmail(accountEntity.getUserEntity().getEmail());
+		accountDTO.setFullName(accountEntity.getUserEntity().getFullName());
+		accountDTO.setPhone(accountEntity.getUserEntity().getPhone());
+		accountDTO.setRoleDTO(new RoleConverter().toDTO(accountEntity.getRoleEntity()));
+		accountDTO.setAvatar(accountEntity.getUserEntity().getAvatar());
 		accountDTO.setId(accountEntity.getId());
 		return accountDTO;
 	}

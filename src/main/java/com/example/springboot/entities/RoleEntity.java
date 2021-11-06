@@ -5,6 +5,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,8 +25,19 @@ public class RoleEntity {
 	@OneToMany(mappedBy = "roleEntity", cascade = CascadeType.ALL)
 	private Set<AccountEntity> accountEntity;
 
+	@OneToMany(mappedBy = "roleEntity", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Set<RoleDetailsEntity> roleDetailsEntities;
+	
 	public RoleEntity() {
 		super();
+	}
+
+	public Set<RoleDetailsEntity> getRoleDetailsEntities() {
+		return roleDetailsEntities;
+	}
+
+	public void setRoleDetailsEntities(Set<RoleDetailsEntity> roleDetailsEntities) {
+		this.roleDetailsEntities = roleDetailsEntities;
 	}
 
 	public RoleEntity(Long id, String name) {
