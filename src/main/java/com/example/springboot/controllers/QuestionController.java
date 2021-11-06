@@ -10,14 +10,13 @@ import org.springframework.web.bind.annotation.*;
 import com.example.springboot.dto.QuestionDTO;
 import com.example.springboot.services.QuestionService;
 
-@CrossOrigin(origins = {"*"})
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("")
 public class QuestionController {
 
 	@Autowired
 	private QuestionService questionService;
-
 
 	@GetMapping("/question")
 	public ResponseEntity<List<QuestionDTO>> getListQuestionContentManager() {
@@ -45,10 +44,5 @@ public class QuestionController {
 			@RequestBody QuestionDTO questionDTO) {
 		return new ResponseEntity<QuestionDTO>(questionService.update(questionDTO, id), HttpStatus.OK);
 	}
-
-//	@PutMapping("/study/exam")
-//	public ResponseEntity<List<QuestionDTO>> getListQuestion(@RequestBody SettingExamDTO settingExamDTO) {
-//		return new ResponseEntity<List<QuestionDTO>>(questionService.get(settingExamDTO), HttpStatus.OK);
-//	}
 
 }

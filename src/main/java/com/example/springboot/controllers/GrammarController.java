@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import com.example.springboot.dto.GrammarDTO;
 import com.example.springboot.services.GrammarService;
 
-@CrossOrigin(origins = { "*" })
+@CrossOrigin(origins =  "*" )
 @RestController
 @RequestMapping("/grammar")
 public class GrammarController {

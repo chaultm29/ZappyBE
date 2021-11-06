@@ -16,16 +16,23 @@ public interface QuestionRepository extends JpaRepository<QuestionEntity, Long> 
 			+ "from QuestionEntity q left  join q.answerEntities a left join q.lessonEntity l left  join q.questionTypeEntity qt left  join q.skillEntity sk order by q.id")
 	List<QuestionBaseDTO> getAllQuestion();
 
-    @Query("select q from QuestionEntity q where q.lessonEntity.id = :idLess and q.skillEntity.id = :idSkill and q.questionTypeEntity.id = :idType")
-    List<QuestionEntity> getQuestionByLessonAndTypeAndSkill(@Param("idLess") Long idLess,@Param("idSkill") Long idSkill,@Param("idType") Long idType);
-    
+	@Query("select q from QuestionEntity q where q.lessonEntity.id = :idLess and q.skillEntity.id = :idSkill and q.questionTypeEntity.id = :idType")
+	List<QuestionEntity> getQuestionByLessonAndTypeAndSkill(@Param("idLess") Long idLess,
+			@Param("idSkill") Long idSkill, @Param("idType") Long idType);
 
-    @Query("select DISTINCT q.lessonEntity.id from QuestionEntity q ")
-    List<Long> getIDLessonExit();
+	@Query("select DISTINCT q.lessonEntity.id from QuestionEntity q ")
+	List<Long> getIDLessonExit();
 
-    @Query("select DISTINCT q.questionTypeEntity.id from QuestionEntity q ")
-    List<Long> getIDTypeExit();
+	@Query("select DISTINCT q.questionTypeEntity.id from QuestionEntity q ")
+	List<Long> getIDTypeExit();
 
-    @Query("select DISTINCT q.skillEntity.id from QuestionEntity q ")
-    List<Long> getIDSkillExit();
+	@Query("select DISTINCT q.skillEntity.id from QuestionEntity q ")
+	List<Long> getIDSkillExit();
+
+	@Query("select q from QuestionEntity q inner join q.answerEntities a where q.id = :ids and a.answer = :value and a.correct = true")
+	QuestionEntity getAllQuestionByAnswer(@Param("ids") Long id, @Param("value") String value);
+
+	@Query("select q from QuestionEntity q where q.id in :ids")
+	List<QuestionEntity> getAllQuestionByIDs(@Param("ids") List<Long> id);
+
 }

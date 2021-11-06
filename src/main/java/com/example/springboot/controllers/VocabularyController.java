@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import com.example.springboot.dto.VocabularyDTO;
 import com.example.springboot.services.VocabularyService;
 
-@CrossOrigin(origins = {"*"})
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/vocabulary")
 public class VocabularyController {

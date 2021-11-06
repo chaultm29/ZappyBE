@@ -2,19 +2,15 @@ package com.example.springboot.services;
 
 import com.example.springboot.converters.ExamConverter;
 import com.example.springboot.converters.QuestionConverter;
-import com.example.springboot.dto.QuestionExamDTO;
-import com.example.springboot.dto.QuestionNotExitDTO;
-import com.example.springboot.dto.QuestionRequireDTO;
+import com.example.springboot.dto.*;
+import com.example.springboot.entities.AnswerEntity;
 import com.example.springboot.entities.QuestionEntity;
 import com.example.springboot.repositories.QuestionRepository;
 import org.hibernate.mapping.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @Service
 public class ExamService {
@@ -52,6 +48,12 @@ public class ExamService {
 		List<Integer> listCountLesson = new ArrayList<>();
 		List<Integer> listCountSkill = new ArrayList<>();
 		List<Integer> listCountType = new ArrayList<>();
+
+		// check ko ton tai cau hoi nao tuong ung
+		if (questionRequireDTO.getLessonIds().size() == 0 || questionRequireDTO.getTypeIds().size() == 0
+				|| questionRequireDTO.getSkillIds().size() == 0) {
+			return questionExamDTOS;
+		}
 
 		// get surplus lesson, skill, type
 		int checkSurplusLesson = questionRequireDTO.getNumberOfQuestion() % questionRequireDTO.getLessonIds().size();
@@ -91,6 +93,7 @@ public class ExamService {
 		}
 
 		List<QuestionNotExitDTO> questionNotExitDTOS = new ArrayList<>();
+		List<QuestionNotExitDTO> questionExitDTOS = new ArrayList<>();
 		List<QuestionEntity> listSupport = new ArrayList<>();
 
 		for (int i = 0; i < questionRequireDTO.getNumberOfQuestion(); i++) {
@@ -107,14 +110,23 @@ public class ExamService {
 						questionRequireDTO.getLessonIds().get(lessonindex),
 						questionRequireDTO.getSkillIds().get(skillindex),
 						questionRequireDTO.getTypeIds().get(typeindex));
-				if (!questionNotExitDTOS.contains(questionNotExitDTO)) {
+				// check ton tai trong list tra ve
+				// !questionExitDTOS.contains(questionNotExitDTO)
+				if (!questionNotExitDTOS.contains(questionNotExitDTO)
+						&& !questionExitDTOS.contains(questionNotExitDTO)) {
 					break;
 				} else {
 					count++;
 					if (count >= listCountLesson.size() * listCountSkill.size() * listCountType.size() * 10) {
 						for (int j = 0; j < listSupport.size(); j++) {
 							if (questionExamDTOS.size() < questionRequireDTO.getNumberOfQuestion()) {
-								questionExamDTOS.add(examConverter.toDTO(listSupport.get(j)));
+								QuestionEntity questionEntity = listSupport.get(j);
+								// delete anser if type name id 2 : 4
+								if (questionEntity.getQuestionTypeEntity().getId().equals(2l)
+										|| questionEntity.getQuestionTypeEntity().getId().equals(4l)) {
+									questionEntity.setAnswerEntities(new HashSet<>());
+								}
+								questionExamDTOS.add(examConverter.toDTO(questionEntity));
 							} else {
 								break;
 							}
@@ -131,8 +143,18 @@ public class ExamService {
 					questionRequireDTO.getLessonIds().get(lessonindex),
 					questionRequireDTO.getSkillIds().get(skillindex), questionRequireDTO.getTypeIds().get(typeindex));
 			if (questionEntities != null && questionEntities.size() != 0) {
+				questionExitDTOS.add(new QuestionNotExitDTO(questionRequireDTO.getLessonIds().get(lessonindex),
+						questionRequireDTO.getSkillIds().get(skillindex),
+						questionRequireDTO.getTypeIds().get(typeindex)));
 				int indexChoise = (questionEntities.size() != 1) ? rd.nextInt(questionEntities.size()) : 0;
-				questionExamDTOS.add(examConverter.toDTO(questionEntities.get(indexChoise)));
+				QuestionEntity questionEntity = questionEntities.get(indexChoise);
+
+				// delete anser if type name id 2 : 4
+				if (questionEntity.getQuestionTypeEntity().getId().equals(2l)
+						|| questionEntity.getQuestionTypeEntity().getId().equals(4l)) {
+					questionEntity.setAnswerEntities(new HashSet<>());
+				}
+				questionExamDTOS.add(examConverter.toDTO(questionEntity));
 				listCountLesson.set(lessonindex, listCountLesson.get(lessonindex) - 1);
 				listCountSkill.set(skillindex, listCountSkill.get(skillindex) - 1);
 				listCountType.set(typeindex, listCountType.get(typeindex) - 1);
@@ -157,8 +179,55 @@ public class ExamService {
 				i--;
 			}
 		}
-
 		return questionExamDTOS;
+	}
+
+	public List<Long> getResultQuestion(QuestionResultDTO questionResultDTO) {
+		List<Long> idQuestion = new ArrayList<>();
+		List<Long> idQuestionUserchoose = new ArrayList<>();
+		for (AnswerDTO id : questionResultDTO.getAnswerDTOs()) {
+			QuestionEntity questionEntities = questionRepository.getAllQuestionByAnswer(id.getId(), id.getAnswer());
+			if (questionEntities != null) {
+				idQuestion.add(id.getId());
+			}
+		}
+		return idQuestion;
+	}
+
+	public QuestionResultDetailDTO getResultDetailQuestion(QuestionResultDTO questionResultDTO) {
+		QuestionResultDetailDTO questionAnswer = new QuestionResultDetailDTO();
+		int numberOfCorrect = 0;
+		int numberOfQuestion = questionResultDTO.getAnswerDTOs().size();
+		int score = 0;
+		List<AnswerDTO> correct = new ArrayList<>();
+		List<Long> idQuestionUserchoose = new ArrayList<>();
+		for (AnswerDTO id : questionResultDTO.getAnswerDTOs()) {
+			idQuestionUserchoose.add(id.getId());
+		}
+		List<QuestionEntity> questionEntities = questionRepository.getAllQuestionByIDs(idQuestionUserchoose);
+		for (QuestionEntity questionEntity : questionEntities) {
+			int j = 0;
+			for (AnswerEntity answerEntity : questionEntity.getAnswerEntities()) {
+				if (answerEntity.isCorrect()) {
+					correct.add(new AnswerDTO(questionEntity.getId(), answerEntity.getAnswer()));
+				}
+				for (int i = j; i < questionResultDTO.getAnswerDTOs().size(); i++) {
+					if (questionEntity.getId().equals(questionResultDTO.getAnswerDTOs().get(i).getId())) {
+						j = i;
+						if (answerEntity.isCorrect() && answerEntity.getAnswer()
+								.equals(questionResultDTO.getAnswerDTOs().get(i).getAnswer())) {
+							numberOfCorrect++;
+						}
+						break;
+					}
+				}
+			}
+			questionResultDTO.getAnswerDTOs().remove(j);
+		}
+		questionAnswer.setCorrect(correct);
+		questionAnswer.setNumberOfCorrect(numberOfCorrect);
+		questionAnswer.setScore((numberOfCorrect * 100 / numberOfQuestion));
+		return questionAnswer;
 	}
 
 }
