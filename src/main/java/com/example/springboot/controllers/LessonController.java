@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.springboot.dto.LessonDTO;
 import com.example.springboot.services.LessonService;
 
-@CrossOrigin(origins = { "*" })
+@CrossOrigin(origins =  "*" )
 @RestController
 @RequestMapping("/lesson")
 public class LessonController {
