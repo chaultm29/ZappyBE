@@ -5,27 +5,29 @@ import java.util.Date;
 public class AccountDTO {
 	private Long id;
 	private String username;
+	private String password;
 	private Date dateOfBirth;
 	private String email;
 	private String fullName;
 	private String phone;
-	private String role;
+	private RoleDTO roleDTO;
 	private String avatar;
 
 	public AccountDTO() {
 		super();
 	}
 
-	public AccountDTO(Long id, String username, Date dateOfBirth, String email, String fullName, String phone,
-			String role, String avatar) {
+	public AccountDTO(Long id, String username, String password, Date dateOfBirth, String email, String fullName, String phone,
+			RoleDTO roleDTO, String avatar) {
 		super();
 		this.id = id;
 		this.username = username;
+		this.password = password;
 		this.dateOfBirth = dateOfBirth;
 		this.email = email;
 		this.fullName = fullName;
 		this.phone = phone;
-		this.role = role;
+		this.roleDTO = roleDTO;
 		this.avatar = avatar;
 	}
 
@@ -43,6 +45,14 @@ public class AccountDTO {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public Date getDateOfBirth() {
@@ -77,12 +87,12 @@ public class AccountDTO {
 		this.phone = phone;
 	}
 
-	public String getRole() {
-		return role;
+	public RoleDTO getRoleDTO() {
+		return roleDTO;
 	}
 
-	public void setRole(String role) {
-		this.role = role;
+	public void setRoleDTO(RoleDTO roleDTO) {
+		this.roleDTO = roleDTO;
 	}
 
 	public String getAvatar() {
