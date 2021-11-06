@@ -1,55 +1,55 @@
 package com.example.springboot.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class QuestionRequireDTO {
 
-	private Long lessonId;
-	private Long skillId;
-	private Long typeId;
-	private int quantity;
+	private List<Long> lessonIds = new ArrayList<>();
+	private List<Long> skillIds = new ArrayList<>();
+	private List<Long> typeIds = new ArrayList<>();
+	private int numberOfQuestion;
+
 
 	public QuestionRequireDTO() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	public QuestionRequireDTO(Long lessonId, Long skillId, Long typeId, int quantity) {
-		super();
-		this.lessonId = lessonId;
-		this.skillId = skillId;
-		this.typeId = typeId;
-		this.quantity = quantity;
+	public QuestionRequireDTO(List<Long> lessonIds, List<Long> skillIds, List<Long> typeIds, int numberOfQuestion) {
+		this.lessonIds = lessonIds;
+		this.skillIds = skillIds;
+		this.typeIds = typeIds;
+		this.numberOfQuestion = numberOfQuestion;
 	}
 
-	public Long getLessonId() {
-		return lessonId;
+	public List<Long> getLessonIds() {
+		return lessonIds;
 	}
 
-	public void setLessonId(Long lessonId) {
-		this.lessonId = lessonId;
+	public void setLessonIds(List<Long> lessonIds) {
+		this.lessonIds = lessonIds;
 	}
 
-	public Long getSkillId() {
-		return skillId;
+	public List<Long> getSkillIds() {
+		return skillIds;
 	}
 
-	public void setSkillId(Long skillId) {
-		this.skillId = skillId;
+	public void setSkillIds(List<Long> skillIds) {
+		this.skillIds = skillIds;
 	}
 
-	public Long getTypeId() {
-		return typeId;
+	public List<Long> getTypeIds() {
+		return typeIds;
 	}
 
-	public void setTypeId(Long typeId) {
-		this.typeId = typeId;
+	public void setTypeIds(List<Long> typeIds) {
+		this.typeIds = typeIds;
 	}
 
-	public int getQuantity() {
-		return quantity;
+	public int getNumberOfQuestion() {
+		return numberOfQuestion;
 	}
 
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
+	public void setNumberOfQuestion(int numberOfQuestion) {
+		this.numberOfQuestion = numberOfQuestion;
 	}
-
 }

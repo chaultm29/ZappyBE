@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import com.example.springboot.dto.GrammarDTO;
 import com.example.springboot.services.GrammarService;
 
-@CrossOrigin(origins = { "*" })
+@CrossOrigin(origins =  "*" )
 @RestController
 @RequestMapping("/grammar")
 public class GrammarController {
@@ -28,7 +28,7 @@ public class GrammarController {
 		return new ResponseEntity<List<GrammarDTO>>(grammarDTOs, HttpStatus.OK);
 	}
 
-	@GetMapping("/")
+	@GetMapping("")
 	public ResponseEntity<List<GrammarBaseDTO>> getAllGrammar() {
 		List<GrammarBaseDTO> listGram = new ArrayList<>();
 		listGram = grammarService.getAllGrammar();

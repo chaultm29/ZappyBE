@@ -46,9 +46,9 @@ public class KanjiService {
 		lessonEntity.setLessonName(kanjiDTO.getLessonName());
 		kanji.setLessonEntity(lessonEntity);
 		kanji.setCharacter(kanjiDTO.getCharacter());
-		kanji.setChinese(kanjiDTO.getChinese());
-		kanji.setChinese(kanjiDTO.getChinese());
+		kanji.setChinese(kanjiDTO.getChinese());		
 		kanji.setVietnamese(kanjiDTO.getVietnamese());
+		kanji.setDescription(kanjiDTO.getDescription());
 		kanji.setOnyomi(kanjiDTO.getOnyomi());
 		kanji.setKunyomi(kanjiDTO.getKunyomi());
 		kanji.setGifLink(kanjiDTO.getGifLink());
@@ -64,8 +64,8 @@ public class KanjiService {
 		kanji.setLessonEntity(lessonEntity);
 		kanji.setCharacter(kanjiDTO.getCharacter());
 		kanji.setChinese(kanjiDTO.getChinese());
-		kanji.setChinese(kanjiDTO.getChinese());
 		kanji.setVietnamese(kanjiDTO.getVietnamese());
+		kanji.setDescription(kanjiDTO.getDescription());
 		kanji.setOnyomi(kanjiDTO.getOnyomi());
 		kanji.setKunyomi(kanjiDTO.getKunyomi());
 		kanji.setGifLink(kanjiDTO.getGifLink());

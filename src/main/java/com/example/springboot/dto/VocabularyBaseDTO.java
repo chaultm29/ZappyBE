@@ -1,6 +1,7 @@
 package com.example.springboot.dto;
 
 public class VocabularyBaseDTO {
+	private Long id;
 	private String lessonName;
 	private String vocabulary;
 	private String meaning;
@@ -12,8 +13,10 @@ public class VocabularyBaseDTO {
 	public VocabularyBaseDTO() {
 	}
 
-	public VocabularyBaseDTO(String lessonName, String vocabulary, String meaning, String imageLink, String example,
-			String exampleMeaning, String exampleImageLink) {
+	public VocabularyBaseDTO(Long id, String lessonName, String vocabulary, String meaning, String imageLink,
+			String example, String exampleMeaning, String exampleImageLink) {
+		super();
+		this.id = id;
 		this.lessonName = lessonName;
 		this.vocabulary = vocabulary;
 		this.meaning = meaning;
@@ -21,6 +24,14 @@ public class VocabularyBaseDTO {
 		this.example = example;
 		this.exampleMeaning = exampleMeaning;
 		this.exampleImageLink = exampleImageLink;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getLessonName() {
@@ -78,4 +89,5 @@ public class VocabularyBaseDTO {
 	public void setExampleImageLink(String exampleImageLink) {
 		this.exampleImageLink = exampleImageLink;
 	}
+
 }

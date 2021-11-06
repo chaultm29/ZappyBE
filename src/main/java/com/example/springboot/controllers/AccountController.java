@@ -26,7 +26,7 @@ import com.example.springboot.exception.ResourceNotFoundException;
 import com.example.springboot.services.AccountService;
 import com.example.springboot.services.MyUserDetailsService;
 
-@CrossOrigin(origins = { "*" })
+@CrossOrigin(origins =  "*" )
 @RestController
 @RequestMapping("")
 public class AccountController {
