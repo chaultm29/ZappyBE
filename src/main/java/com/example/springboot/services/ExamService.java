@@ -4,10 +4,16 @@ import com.example.springboot.converters.ExamConverter;
 import com.example.springboot.converters.QuestionConverter;
 import com.example.springboot.dto.*;
 import com.example.springboot.entities.AnswerEntity;
+import com.example.springboot.entities.ExamEntity;
 import com.example.springboot.entities.QuestionEntity;
+import com.example.springboot.entities.UserEntity;
+import com.example.springboot.repositories.ExamRepositoty;
 import com.example.springboot.repositories.QuestionRepository;
+import com.example.springboot.repositories.UserRepository;
 import org.hibernate.mapping.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -20,9 +26,25 @@ public class ExamService {
 	@Autowired
 	ExamConverter examConverter;
 
+	@Autowired
+	private UserRepository userRepository;
+
+	@Autowired
+	private ExamRepositoty examRepositoty;
+
 	public List<QuestionExamDTO> questionExamDTOList(QuestionRequireDTO questionRequireDTO) {
 		Random rd = new Random();
 		List<QuestionExamDTO> questionExamDTOS = new ArrayList<>();
+		List<QuestionEntity> questionEntitiesOutPut = new ArrayList<>();
+		
+		// save
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		UserEntity userEntity = userRepository.getUserByUserName(username);
+		ExamEntity examEntity = new ExamEntity();
+		examEntity.setScore(0);
+		examEntity.setCreatedDate(new java.sql.Date((new Date()).getTime()));
+		examEntity.setUser(userEntity);
+
 		// get list id lesson, skill, type exit in question
 		List<Long> listIDLessonExit = questionRepository.getIDLessonExit();
 		List<Long> listIDSkillExit = questionRepository.getIDSkillExit();
@@ -52,6 +74,8 @@ public class ExamService {
 		// check ko ton tai cau hoi nao tuong ung
 		if (questionRequireDTO.getLessonIds().size() == 0 || questionRequireDTO.getTypeIds().size() == 0
 				|| questionRequireDTO.getSkillIds().size() == 0) {
+			examEntity.setQuestionEntities(new HashSet<>(questionEntitiesOutPut));
+			examRepositoty.save(examEntity);
 			return questionExamDTOS;
 		}
 
@@ -126,6 +150,7 @@ public class ExamService {
 										|| questionEntity.getQuestionTypeEntity().getId().equals(4l)) {
 									questionEntity.setAnswerEntities(new HashSet<>());
 								}
+								questionEntitiesOutPut.add(questionEntity);
 								questionExamDTOS.add(examConverter.toDTO(questionEntity));
 							} else {
 								break;
@@ -154,6 +179,7 @@ public class ExamService {
 						|| questionEntity.getQuestionTypeEntity().getId().equals(4l)) {
 					questionEntity.setAnswerEntities(new HashSet<>());
 				}
+				questionEntitiesOutPut.add(questionEntity);
 				questionExamDTOS.add(examConverter.toDTO(questionEntity));
 				listCountLesson.set(lessonindex, listCountLesson.get(lessonindex) - 1);
 				listCountSkill.set(skillindex, listCountSkill.get(skillindex) - 1);
@@ -179,18 +205,28 @@ public class ExamService {
 				i--;
 			}
 		}
+
+		examEntity.setQuestionEntities(new HashSet<>(questionEntitiesOutPut));
+		examRepositoty.save(examEntity);
 		return questionExamDTOS;
 	}
 
 	public List<Long> getResultQuestion(QuestionResultDTO questionResultDTO) {
 		List<Long> idQuestion = new ArrayList<>();
 		List<Long> idQuestionUserchoose = new ArrayList<>();
+		int count = 0 ;
 		for (AnswerDTO id : questionResultDTO.getAnswerDTOs()) {
 			QuestionEntity questionEntities = questionRepository.getAllQuestionByAnswer(id.getId(), id.getAnswer());
 			if (questionEntities != null) {
 				idQuestion.add(id.getId());
+				count++;
 			}
 		}
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		List<ExamEntity> examEntities = examRepositoty.getExamByUserName(username);
+		ExamEntity examEntity = examEntities.get(0);
+		examEntity.setScore(count);
+		examRepositoty.save(examEntity);
 		return idQuestion;
 	}
 

@@ -28,24 +28,45 @@ public class MyUserDetailsService implements UserDetailsService {
 	
 	@Override
 	@Transactional
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		AccountEntity accountEntity = accountRepository.findByUsername(username);
-		if(accountEntity == null) throw new UsernameNotFoundException("Account is not found!");
-		return new User(accountEntity.getUsername(), accountEntity.getPassword(), new ArrayList<GrantedAuthority>());
-	}
-	
-	public boolean checkRole(String username, String linkUri) {
-		AccountEntity accountEntity = accountRepository.findByUsername(username);
-		if(accountEntity == null) throw new UsernameNotFoundException("Account is not found!");
-		for (RoleDetailsEntity roleDetails : accountEntity.getRoleEntity().getRoleDetailsEntities()) {
-			if(roleDetails.getLink().startsWith(linkUri)) return true;
-		}
-		return false;
-	}
-	
-	public String getRoleName(String username) {
-		AccountEntity accountEntity = accountRepository.findByUsername(username);
-		if(accountEntity == null) throw new UsernameNotFoundException("Account is not found!");
-		return accountEntity.getRoleEntity().getName();
-	}
+//	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//		AccountEntity accountEntity = accountRepository.findByUsername(username);
+//		if(accountEntity == null) throw new UsernameNotFoundException("Account is not found!");
+//		return new User(accountEntity.getUsername(), accountEntity.getPassword(), new ArrayList<GrantedAuthority>());
+//	}
+//	
+//	public boolean checkRole(String username, String linkUri) {
+//		AccountEntity accountEntity = accountRepository.findByUsername(username);
+//		if(accountEntity == null) throw new UsernameNotFoundException("Account is not found!");
+//		for (RoleDetailsEntity roleDetails : accountEntity.getRoleEntity().getRoleDetailsEntities()) {
+//			if(roleDetails.getLink().startsWith(linkUri)) return true;
+//		}
+//		return false;
+//	}
+//	
+//	public String getRoleName(String username) {
+//		AccountEntity accountEntity = accountRepository.findByUsername(username);
+//		if(accountEntity == null) throw new UsernameNotFoundException("Account is not found!");
+//		return accountEntity.getRoleEntity().getName();
+//	}
+	 public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        AccountEntity accountEntity = accountRepository.findByUsername(username);
+        if (accountEntity == null) throw new UsernameNotFoundException("Account is not found!");
+        return new User(accountEntity.getUsername(), accountEntity.getPassword(), new ArrayList<GrantedAuthority>());
+    }
+
+    public boolean checkRole(String username, String linkUri) {
+        AccountEntity accountEntity = accountRepository.findByUsername(username);
+        if (accountEntity == null) throw new UsernameNotFoundException("Account is not found!");
+        for (RoleDetailsEntity roleDetails : accountEntity.getRoleEntity().getRoleDetailsEntities()) {
+//			if(roleDetails.getLink().startsWith(linkUri)) return true;
+            if (linkUri.startsWith(roleDetails.getLink())) return true;
+        }
+        return false;
+    }
+
+    public String getRoleName(String username) {
+        AccountEntity accountEntity = accountRepository.findByUsername(username);
+        if (accountEntity == null) throw new UsernameNotFoundException("Account is not found!");
+        return accountEntity.getRoleEntity().getName();
+    }
 }

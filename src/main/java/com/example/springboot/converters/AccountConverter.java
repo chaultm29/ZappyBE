@@ -3,6 +3,8 @@ package com.example.springboot.converters;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.springboot.entities.UserEntity;
+import com.example.springboot.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,19 +17,31 @@ public class AccountConverter {
 	@Autowired
 	RoleRepository roleRepository;
 
+	@Autowired
+	UserRepository userRepository;
+
 	public AccountEntity toEntity(AccountDTO accountDTO) {
 		AccountEntity accountEntity = new AccountEntity();
-		accountEntity.setId(accountDTO.getId());
+		accountEntity.setIsEnabled(true);
 		accountEntity.setUsername(accountDTO.getUsername());
 		accountEntity.setPassword(accountDTO.getPassword());
+		accountEntity.setRoleEntity(roleRepository.getById(accountDTO.getRoleDTO().getId()));
 		return accountEntity;
 	}
 
 	// UPDATE
 	public AccountEntity toEntity(AccountDTO accountDTO, AccountEntity accountEntity) {
-		accountEntity.setId(accountDTO.getId());
 		accountEntity.setUsername(accountDTO.getUsername());
-	    accountEntity.setPassword(accountDTO.getPassword());
+		accountEntity.setPassword(accountDTO.getPassword());
+		accountEntity.setRoleEntity(roleRepository.getById(accountDTO.getRoleDTO().getId()));
+		accountEntity.setIsEnabled(true);
+		UserEntity userEntity = accountEntity.getUserEntity();
+		userEntity.setAvatar(accountDTO.getAvatar());
+		userEntity.setEmail(accountDTO.getEmail());
+		userEntity.setPhone(accountDTO.getPhone());
+		userEntity.setFullName(accountDTO.getFullName());
+		userEntity.setDateOfBirth(accountDTO.getDateOfBirth());
+		accountEntity.setUserEntity(userEntity);
 		return accountEntity;
 	}
 
