@@ -24,4 +24,7 @@ public interface VocabularyRepository extends JpaRepository<VocabularyEntity, Lo
 
 	@Query("select new com.example.springboot.dto.VocabularyBaseDTO(v.id,l.lessonName,v.vocabulary,v.meaning,v.imageLink,v.example, v.exampleMeaning,v.exampleImageLink)  from VocabularyEntity v left join v.lessonEntity l where v.id =:id")
 	VocabularyBaseDTO getVocabularyDTOById(@Param("id") Long id);
+
+	@Query("select v from VocabularyEntity v  where v.vocabulary =:vocabulary")
+	VocabularyEntity getVocabulary(@Param("vocabulary") String vocabulary);
 }

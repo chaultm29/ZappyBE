@@ -29,7 +29,11 @@ public class VocabularyService {
 		return vocabularyConverter.toDTOs(vocabularyEntities);
 	}
 
-	public void addVocabulary(VocabularyBaseDTO addVocabularyDTO) {
+	public String addVocabulary(VocabularyBaseDTO addVocabularyDTO) {
+		VocabularyEntity vocabularyEntity = vocabularyRepository.getVocabulary(addVocabularyDTO.getVocabulary());
+		if(vocabularyEntity != null){
+			return "Đã tồn tại " + vocabularyEntity.getVocabulary() + " trong hệ thống";
+		}
 		VocabularyEntity vo = new VocabularyEntity();
 		LessonEntity lessonEntity = new LessonEntity();
 		lessonEntity.setId(lessonRepository.getIdLessonByName(addVocabularyDTO.getLessonName()));
@@ -42,6 +46,7 @@ public class VocabularyService {
 		vo.setExampleMeaning(addVocabularyDTO.getExampleMeaning());
 		vo.setExampleImageLink(addVocabularyDTO.getExampleImageLink());
 		vocabularyRepository.save(vo);
+		return "Thêm  " + addVocabularyDTO.getVocabulary() + " thành công";
 	}
 
 	public void updateVocabulary(VocabularyBaseDTO addVocabularyDTO, Long idLesson) {

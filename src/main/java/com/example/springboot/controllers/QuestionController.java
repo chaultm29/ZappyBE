@@ -24,8 +24,8 @@ public class QuestionController {
 	}
 
 	@PostMapping("/question")
-	public ResponseEntity<Boolean> createQuestionContentManager(@RequestBody QuestionDTO questionDTO) {
-		return new ResponseEntity<Boolean>(questionService.save(questionDTO), HttpStatus.OK);
+	public ResponseEntity<String> createQuestionContentManager(@RequestBody QuestionDTO questionDTO) {
+		return new ResponseEntity<String>(questionService.save(questionDTO), HttpStatus.OK);
 	}
 
 	@GetMapping("/question/{id}")

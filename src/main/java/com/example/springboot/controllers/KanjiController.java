@@ -42,9 +42,8 @@ public class KanjiController {
 	}
 
 	@PostMapping("/")
-	public ResponseEntity<?> addKanji(@RequestBody GetAllKanjiDTO kanjiDTO) {
-		kanjiService.addKanji(kanjiDTO);
-		return new ResponseEntity(HttpStatus.OK);
+	public ResponseEntity<String> addKanji(@RequestBody GetAllKanjiDTO kanjiDTO) {
+		return new ResponseEntity<String>(kanjiService.addKanji(kanjiDTO), HttpStatus.OK);
 	}
 
 	@PutMapping("/{id}")

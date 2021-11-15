@@ -42,8 +42,8 @@ public class AccountController {
 
 	// create account rest api
 	@PostMapping("/account")
-	public ResponseEntity<AccountDTO> createAccountEntity(@RequestBody AccountDTO accountDTO) {
-		return new ResponseEntity<AccountDTO>(accountService.save(accountDTO), HttpStatus.OK);
+	public ResponseEntity<String> createAccountEntity(@RequestBody AccountDTO accountDTO) {
+		return new ResponseEntity<String>(accountService.save(accountDTO), HttpStatus.OK);
 	}
 
 	// get account by id rest api

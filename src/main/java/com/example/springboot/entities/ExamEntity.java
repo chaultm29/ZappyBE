@@ -3,15 +3,7 @@ package com.example.springboot.entities;
 import java.sql.Date;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "exams")
@@ -28,7 +20,7 @@ public class ExamEntity {
 	private Date createdDate;
 	
 	@Column(name = "time")
-	private Date time;
+	private Integer time;
 	
 	@ManyToMany
 	@JoinTable(name = "exam_question_rf", 
@@ -36,18 +28,30 @@ public class ExamEntity {
 			inverseJoinColumns = @JoinColumn(name = "exam_id"))
 	private Set<QuestionEntity> questionEntities;
 
+	@ManyToOne
+	private UserEntity user;
+
 	public ExamEntity() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public ExamEntity(Long id, int score, Date createdDate, Date time, Set<QuestionEntity> questionEntities) {
+	public ExamEntity(Long id, int score, Date createdDate, Integer time, Set<QuestionEntity> questionEntities,UserEntity user) {
 		super();
 		this.id = id;
 		this.score = score;
 		this.createdDate = createdDate;
 		this.time = time;
 		this.questionEntities = questionEntities;
+		this.user = user;
+	}
+
+	public UserEntity getUser() {
+		return user;
+	}
+
+	public void setUser(UserEntity user) {
+		this.user = user;
 	}
 
 	public Long getId() {
@@ -74,11 +78,11 @@ public class ExamEntity {
 		this.createdDate = createdDate;
 	}
 
-	public Date getTime() {
+	public Integer getTime() {
 		return time;
 	}
 
-	public void setTime(Date time) {
+	public void setTime(Integer time) {
 		this.time = time;
 	}
 

@@ -39,7 +39,11 @@ public class KanjiService {
 		return kanji;
 	}
 
-	public void addKanji(GetAllKanjiDTO kanjiDTO) {
+	public String addKanji(GetAllKanjiDTO kanjiDTO) {
+		KanjiEntity kanjiEntity = kanjiRepository.getCharacter(kanjiDTO.getCharacter());
+		if(kanjiEntity != null){
+			return "Đã tồn tại "+ kanjiEntity.getCharacter() +" trong hệ thống";
+		}
 		KanjiEntity kanji = new KanjiEntity();
 		LessonEntity lessonEntity = new LessonEntity();
 		lessonEntity.setId(lessonRepository.getIdLessonByName(kanjiDTO.getLessonName()));
@@ -54,6 +58,7 @@ public class KanjiService {
 		kanji.setGifLink(kanjiDTO.getGifLink());
 		kanji.setImageLink(kanjiDTO.getImageLink());
 		kanjiRepository.save(kanji);
+		return "Thêm "+ kanjiDTO.getCharacter() +" thành công";
 	}
 
 	public void updateKanji(GetAllKanjiDTO kanjiDTO, Long id) {
