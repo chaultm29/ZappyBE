@@ -29,4 +29,7 @@ public interface KanjiRepository extends JpaRepository<KanjiEntity, Long> {
 	@Query("select k from KanjiEntity k left join k.lessonEntity l where k.id=:id")
 	KanjiEntity getKanjiEntityById(@Param("id") Long id);
 
+	@Query(" Select k from KanjiEntity k where k.character = :character ")
+	KanjiEntity getCharacter(@Param("character") String character);
+
 }

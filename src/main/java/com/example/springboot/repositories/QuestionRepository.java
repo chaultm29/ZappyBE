@@ -35,4 +35,7 @@ public interface QuestionRepository extends JpaRepository<QuestionEntity, Long> 
 	@Query("select q from QuestionEntity q where q.id in :ids")
 	List<QuestionEntity> getAllQuestionByIDs(@Param("ids") List<Long> id);
 
+	@Query("select q from QuestionEntity q where q.question = :question")
+	QuestionEntity getQuestion(@Param("question") String question);
+
 }

@@ -8,22 +8,24 @@ import javax.persistence.*;
 @Entity
 @Table(name = "exams")
 public class ExamEntity {
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
+	
 	@Column(name = "score")
 	private int score;
-
+	
 	@Column(name = "created_date")
 	private Date createdDate;
-
+	
 	@Column(name = "time")
-	private Date time;
-
+	private Integer time;
+	
 	@ManyToMany
-	@JoinTable(name = "exam_question_rf", joinColumns = @JoinColumn(name = "question_id"), inverseJoinColumns = @JoinColumn(name = "exam_id"))
+	@JoinTable(name = "exam_question_rf", 
+			joinColumns = @JoinColumn(name = "question_id"), 
+			inverseJoinColumns = @JoinColumn(name = "exam_id"))
 	private Set<QuestionEntity> questionEntities;
 
 	@ManyToOne
@@ -34,8 +36,7 @@ public class ExamEntity {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ExamEntity(Long id, int score, Date createdDate, Date time, Set<QuestionEntity> questionEntities,
-			UserEntity user) {
+	public ExamEntity(Long id, int score, Date createdDate, Integer time, Set<QuestionEntity> questionEntities,UserEntity user) {
 		super();
 		this.id = id;
 		this.score = score;
@@ -77,11 +78,11 @@ public class ExamEntity {
 		this.createdDate = createdDate;
 	}
 
-	public Date getTime() {
+	public Integer getTime() {
 		return time;
 	}
 
-	public void setTime(Date time) {
+	public void setTime(Integer time) {
 		this.time = time;
 	}
 
@@ -92,5 +93,5 @@ public class ExamEntity {
 	public void setQuestionEntities(Set<QuestionEntity> questionEntities) {
 		this.questionEntities = questionEntities;
 	}
-
+	
 }

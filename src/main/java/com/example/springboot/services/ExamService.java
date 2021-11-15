@@ -32,18 +32,22 @@ public class ExamService {
 	@Autowired
 	private ExamRepositoty examRepositoty;
 
-	public List<QuestionExamDTO> questionExamDTOList(QuestionRequireDTO questionRequireDTO) {
+	public HashMap<String, Object> questionExamDTOList(QuestionRequireDTO questionRequireDTO) {
 		Random rd = new Random();
+		HashMap<String,Object> stringObjectHashMap = new HashMap<>();
 		List<QuestionExamDTO> questionExamDTOS = new ArrayList<>();
 		List<QuestionEntity> questionEntitiesOutPut = new ArrayList<>();
-		
+
+
 		// save
+
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		UserEntity userEntity = userRepository.getUserByUserName(username);
 		ExamEntity examEntity = new ExamEntity();
 		examEntity.setScore(0);
 		examEntity.setCreatedDate(new java.sql.Date((new Date()).getTime()));
 		examEntity.setUser(userEntity);
+		int time = 0;
 
 		// get list id lesson, skill, type exit in question
 		List<Long> listIDLessonExit = questionRepository.getIDLessonExit();
@@ -75,8 +79,11 @@ public class ExamService {
 		if (questionRequireDTO.getLessonIds().size() == 0 || questionRequireDTO.getTypeIds().size() == 0
 				|| questionRequireDTO.getSkillIds().size() == 0) {
 			examEntity.setQuestionEntities(new HashSet<>(questionEntitiesOutPut));
+			examEntity.setTime(0);
 			examRepositoty.save(examEntity);
-			return questionExamDTOS;
+			stringObjectHashMap.put("listQuestions",questionExamDTOS);
+			stringObjectHashMap.put("time",time);
+			return stringObjectHashMap;
 		}
 
 		// get surplus lesson, skill, type
@@ -151,6 +158,7 @@ public class ExamService {
 									questionEntity.setAnswerEntities(new HashSet<>());
 								}
 								questionEntitiesOutPut.add(questionEntity);
+								time+=addTime(questionEntity.getQuestionTypeEntity().getTypeName());
 								questionExamDTOS.add(examConverter.toDTO(questionEntity));
 							} else {
 								break;
@@ -180,6 +188,7 @@ public class ExamService {
 					questionEntity.setAnswerEntities(new HashSet<>());
 				}
 				questionEntitiesOutPut.add(questionEntity);
+				time+=addTime(questionEntity.getQuestionTypeEntity().getTypeName());
 				questionExamDTOS.add(examConverter.toDTO(questionEntity));
 				listCountLesson.set(lessonindex, listCountLesson.get(lessonindex) - 1);
 				listCountSkill.set(skillindex, listCountSkill.get(skillindex) - 1);
@@ -207,8 +216,25 @@ public class ExamService {
 		}
 
 		examEntity.setQuestionEntities(new HashSet<>(questionEntitiesOutPut));
+		examEntity.setTime(time);
 		examRepositoty.save(examEntity);
-		return questionExamDTOS;
+		stringObjectHashMap.put("listQuestions",questionExamDTOS);
+		stringObjectHashMap.put("time",time);
+		return stringObjectHashMap;
+	}
+
+	private Integer addTime(String type){
+		if(type.equals("Nhiều lựa chọn")){
+			return 60;
+		}else if(type.equals("Điền vào chỗ trống")){
+			return 50;
+		}else if(type.equals("Đúng/Sai")){
+			return 30;
+		}else if(type.equals("Sắp xếp câu")){
+			return 90;
+		}else{
+			return 75;
+		}
 	}
 
 	public List<Long> getResultQuestion(QuestionResultDTO questionResultDTO) {

@@ -23,10 +23,10 @@ import javax.transaction.Transactional;
 
 @Service
 public class AccountService {
-
+	
 	@Autowired
 	AccountRepository accountRepository;
-
+	
 	@Autowired
 	RoleRepository roleRepository;
 
@@ -55,7 +55,11 @@ public class AccountService {
 	}
 
 	@Transactional
-	public AccountDTO save(AccountDTO accountDTO) {
+	public String save(AccountDTO accountDTO) {
+		AccountEntity accountEntity1 = accountRepository.findByUsername(accountDTO.getUsername());
+		if(accountEntity1 != null){
+			return "Username: " + accountEntity1.getUsername() + " đã tồn tại trong hệ thống!" ;
+		}
 		UserDTO userDTO = new UserDTO();
 		userDTO.setAvatar(accountDTO.getAvatar());
 		userDTO.setEmail(accountDTO.getEmail());
@@ -64,18 +68,19 @@ public class AccountService {
 		userDTO.setFullName(accountDTO.getFullName());
 		UserEntity userEntity = userConverter.toEntity(userDTO);
 
+
 		AccountEntity accountEntity = accountConverter.toEntity(accountDTO);
 		accountEntity.setUserEntity(userEntity);
 
 		AccountEntity afterSave = saveAccount(accountEntity);
-		return accountConverter.toDTO(afterSave);
+		return "Tạo tài khoản " + afterSave.getUsername() +" thành công" ;
 	}
 
 	public AccountDTO update(Long id, AccountDTO accountDetails) {
 		AccountEntity accountEntity = accountRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Account not exist with id :" + id));
 		AccountEntity updatAccountEntity = accountConverter.toEntity(accountDetails, accountEntity);
-		AccountEntity afterSave = saveAccount(updatAccountEntity);
+		AccountEntity afterSave =saveAccount(updatAccountEntity);
 
 		return accountConverter.toDTO(afterSave);
 	}
