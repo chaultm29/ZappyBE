@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.springboot.dto.AlphabetDTO;
 import com.example.springboot.services.AlphabetService;
 
-@CrossOrigin(origins = "*" )
+@CrossOrigin(origins = {"http://localhost:3000", "https://www.zappy-nihongo.com"} )
 @RestController
 @RequestMapping("/alphabet")
 public class AlphabetController {
