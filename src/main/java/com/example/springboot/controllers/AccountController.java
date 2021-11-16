@@ -1,5 +1,6 @@
 package com.example.springboot.controllers;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,11 +59,15 @@ public class AccountController {
 		}
 	}
 
-	// update account rest api
+	@PostMapping("/resetaccount")
+	public ResponseEntity<HashMap<String, Object>> resetPasswordAccountEntity(@RequestBody AccountDTO accountDTO) {
+		return new ResponseEntity<HashMap<String, Object>>(accountService.resetPassword(accountDTO), HttpStatus.OK);
+	}
 
+	// update account rest api
 	@PutMapping("/account/{id}")
-	public ResponseEntity<AccountDTO> updateAccEntity(@PathVariable Long id, @RequestBody AccountDTO accountDTO) {
-		return new ResponseEntity<AccountDTO>(accountService.update(id, accountDTO), HttpStatus.OK);
+	public ResponseEntity<HashMap<String, Object>> updateAccEntity(@PathVariable Long id, @RequestBody AccountDTO accountDTO) {
+		return new ResponseEntity<HashMap<String, Object>>(accountService.update(id, accountDTO), HttpStatus.OK);
 	}
 
 	// delete account rest api

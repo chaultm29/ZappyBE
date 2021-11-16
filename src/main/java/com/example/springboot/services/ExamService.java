@@ -224,7 +224,7 @@ public class ExamService {
 	}
 
 	private Integer addTime(String type){
-		if(type.equals("Nhiều lựa chọn")){
+		if(type.equals("Chọn đáp án đúng")){
 			return 60;
 		}else if(type.equals("Điền vào chỗ trống")){
 			return 50;

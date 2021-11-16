@@ -5,7 +5,8 @@ import java.sql.Date;
 public class AccountDTO {
 	private Long id;
 	private String username;
-	private String password;
+	private String passwordOld;
+	private String passwordNew;
 	private Date dateOfBirth;
 	private String email;
 	private String fullName;
@@ -17,12 +18,13 @@ public class AccountDTO {
 		super();
 	}
 
-	public AccountDTO(Long id, String username, String password, Date dateOfBirth, String email, String fullName,
-			String phone, RoleDTO roleDTO, String avatar) {
+	public AccountDTO(Long id, String username,String passwordOld, String passwordNew, Date dateOfBirth, String email, String fullName, String phone,
+			RoleDTO roleDTO, String avatar) {
 		super();
 		this.id = id;
 		this.username = username;
-		this.password = password;
+		this.passwordOld = passwordOld;
+		this.passwordNew = passwordNew;
 		this.dateOfBirth = dateOfBirth;
 		this.email = email;
 		this.fullName = fullName;
@@ -47,12 +49,20 @@ public class AccountDTO {
 		this.username = username;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getPasswordOld() {
+		return passwordOld;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setPasswordOld(String passwordOld) {
+		this.passwordOld = passwordOld;
+	}
+
+	public String getPasswordNew() {
+		return passwordNew;
+	}
+
+	public void setPasswordNew(String passwordNew) {
+		this.passwordNew = passwordNew;
 	}
 
 	public Date getDateOfBirth() {
