@@ -1,5 +1,6 @@
 package com.example.springboot.services;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.example.springboot.converters.UserConverter;
@@ -7,6 +8,7 @@ import com.example.springboot.dto.UserDTO;
 import com.example.springboot.entities.UserEntity;
 import com.example.springboot.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,10 +25,10 @@ import javax.transaction.Transactional;
 
 @Service
 public class AccountService {
-	
+
 	@Autowired
 	AccountRepository accountRepository;
-	
+
 	@Autowired
 	RoleRepository roleRepository;
 
@@ -57,8 +59,8 @@ public class AccountService {
 	@Transactional
 	public String save(AccountDTO accountDTO) {
 		AccountEntity accountEntity1 = accountRepository.findByUsername(accountDTO.getUsername());
-		if(accountEntity1 != null){
-			return "Username: " + accountEntity1.getUsername() + " đã tồn tại trong hệ thống!" ;
+		if (accountEntity1 != null) {
+			return "Username: " + accountEntity1.getUsername() + " đã tồn tại trong hệ thống!";
 		}
 		UserDTO userDTO = new UserDTO();
 		userDTO.setAvatar(accountDTO.getAvatar());
@@ -68,21 +70,52 @@ public class AccountService {
 		userDTO.setFullName(accountDTO.getFullName());
 		UserEntity userEntity = userConverter.toEntity(userDTO);
 
-
 		AccountEntity accountEntity = accountConverter.toEntity(accountDTO);
 		accountEntity.setUserEntity(userEntity);
 
 		AccountEntity afterSave = saveAccount(accountEntity);
-		return "Tạo tài khoản " + afterSave.getUsername() +" thành công" ;
+		return "Tạo tài khoản " + afterSave.getUsername() + " thành công";
 	}
 
-	public AccountDTO update(Long id, AccountDTO accountDetails) {
-		AccountEntity accountEntity = accountRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Account not exist with id :" + id));
-		AccountEntity updatAccountEntity = accountConverter.toEntity(accountDetails, accountEntity);
-		AccountEntity afterSave =saveAccount(updatAccountEntity);
+	public HashMap<String, Object> update(Long id, AccountDTO accountDetails) {
+		HashMap<String, Object> stringObjectHashMap = new HashMap<>();
+//		String mess = "";
+//		AccountEntity accountEntity = accountRepository.findById(id)
+//				.orElseThrow(() -> new ResourceNotFoundException("Account not exist with id :" + id));
+//		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+//		if (username.equals(accountEntity.getUsername())) {
+//			if (!passwordEncoder.matches(accountDetails.getPasswordOld(), accountEntity.getPassword())) {
+//				mess = "Bạn nhập sai mật khẩu cũ. Xin mời nhập lại mật khẩu cũ";
+//				stringObjectHashMap.put("data", null);
+//				stringObjectHashMap.put("message", mess);
+//			} else {
+//				AccountEntity updatAccountEntity = accountConverter.toEntity(accountDetails, accountEntity);
+//				AccountEntity afterSave = saveAccount(updatAccountEntity);
+//				mess = "Cập nhật account " + afterSave.getUsername() + " thành công";
+//				stringObjectHashMap.put("data", afterSave);
+//				stringObjectHashMap.put("message", mess);
+//			}
+//		} else {
+//			mess = "Bạn không có quyền đổi mật khẩu account này";
+//			stringObjectHashMap.put("data", null);
+//			stringObjectHashMap.put("message", mess);
+//		}
 
-		return accountConverter.toDTO(afterSave);
+		return stringObjectHashMap;
+	}
+
+	public HashMap<String, Object> resetPassword(AccountDTO accountDetails) {
+		HashMap<String, Object> stringObjectHashMap = new HashMap<>();
+		String mess = "";
+		AccountEntity accountEntity = accountRepository.findById(accountDetails.getId()).orElseThrow(
+				() -> new ResourceNotFoundException("Account not exist with id :" + accountDetails.getId()));
+
+		accountEntity.setPassword("123456");
+		AccountEntity afterSave = saveAccount(accountEntity);
+		mess = "Cập nhật account " + afterSave.getUsername() + " thành công";
+		stringObjectHashMap.put("data", afterSave);
+		stringObjectHashMap.put("message", mess);
+		return stringObjectHashMap;
 	}
 
 	public void delete(Long id) {
