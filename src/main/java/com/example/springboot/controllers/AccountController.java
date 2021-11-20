@@ -59,9 +59,9 @@ public class AccountController {
 		}
 	}
 
-	@PostMapping("/resetaccount")
-	public ResponseEntity<HashMap<String, Object>> resetPasswordAccountEntity(@RequestBody AccountDTO accountDTO) {
-		return new ResponseEntity<HashMap<String, Object>>(accountService.resetPassword(accountDTO), HttpStatus.OK);
+	@PostMapping("/resetaccount/{username}")
+	public ResponseEntity<HashMap<String, Object>> resetPasswordAccountEntity(@PathVariable String username) {
+		return new ResponseEntity<HashMap<String, Object>>(accountService.resetPassword(username), HttpStatus.OK);
 	}
 
 	// update account rest api
