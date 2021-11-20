@@ -23,6 +23,13 @@ public class QuestionController {
 		return new ResponseEntity<List<QuestionDTO>>(questionService.get(), HttpStatus.OK);
 	}
 
+	/*
+	 * @PostMapping("/questions/random")
+	 * gửi lên danh sách id câu hỏi đã get từ trc
+	 * check lại practice đã làm xem bài cao nhất là bài nào
+	 * viết game controller để cung cấp service cho game
+	 * */
+	
 	@PostMapping("/question")
 	public ResponseEntity<Boolean> createQuestionContentManager(@RequestBody QuestionDTO questionDTO) {
 		return new ResponseEntity<Boolean>(questionService.save(questionDTO), HttpStatus.OK);
