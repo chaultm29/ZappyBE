@@ -72,7 +72,7 @@ public class AccountController {
 
 	// delete account rest api
 	@DeleteMapping("/account/{id}")
-	public ResponseEntity<Boolean> deleteEmployee(@PathVariable Long id) {
+	public ResponseEntity<Boolean> deleteAccountEntity(@PathVariable Long id) {
 		try {
 			accountService.delete(id);
 			return new ResponseEntity<Boolean>(true, HttpStatus.OK);
