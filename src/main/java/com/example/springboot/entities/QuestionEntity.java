@@ -48,6 +48,10 @@ public class QuestionEntity {
 	@ManyToMany(mappedBy = "questionEntities")
 	private Set<ExamEntity> examEntities;
 
+	@ManyToMany(mappedBy = "questionEntities")
+	private Set<PracticeEntiry> practiceEntiries;
+
+
 	public QuestionEntity() {
 		super();
 		// TODO Auto-generated constructor stub
