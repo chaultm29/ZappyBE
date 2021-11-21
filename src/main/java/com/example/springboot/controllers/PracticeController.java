@@ -33,5 +33,9 @@ public class PracticeController {
         return new ResponseEntity<QuestionResultDetailDTO>(practiceService.getResultDetailQuestion(questionResultDTO),
                 HttpStatus.OK);
     }
+    @GetMapping("/progress")
+    public ResponseEntity<ProgressDTO> getProgress() {
+        return new ResponseEntity<ProgressDTO>(practiceService.getProgress(), HttpStatus.OK);
+    }
     
 }

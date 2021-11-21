@@ -262,4 +262,21 @@ public class PracticeService {
 		return questionAnswer;
 	}
 
+	public ProgressDTO getProgress() {
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		ProgressDTO progressDTO = new ProgressDTO();
+		Double voca = (practiceRepository.getIdsPracticeBySkillUserScore(username, 1l) * 1.0)
+				/ practiceRepository.getIdsPracticeBySkillUser(username, 1l);
+		Double grammar = (practiceRepository.getIdsPracticeBySkillUserScore(username, 2l) * 1.0)
+				/ practiceRepository.getIdsPracticeBySkillUser(username, 2l);
+		Double kanji = (practiceRepository.getIdsPracticeBySkillUserScore(username, 3l) * 1.0)
+				/ practiceRepository.getIdsPracticeBySkillUser(username, 3l);
+
+		progressDTO.setVocaProgress(voca);
+		progressDTO.setGrammarProgess(grammar);
+		progressDTO.setKanjiProgress(kanji);
+		progressDTO.setProgressAll((voca + grammar + kanji) * 100 / 3);
+		return progressDTO;
+	}
+
 }
