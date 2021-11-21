@@ -34,7 +34,7 @@ public class ExamService {
 
 	public HashMap<String, Object> questionExamDTOList(QuestionRequireDTO questionRequireDTO) {
 		Random rd = new Random();
-		HashMap<String,Object> stringObjectHashMap = new HashMap<>();
+		HashMap<String, Object> stringObjectHashMap = new HashMap<>();
 		List<QuestionExamDTO> questionExamDTOS = new ArrayList<>();
 		List<QuestionEntity> questionEntitiesOutPut = new ArrayList<>();
 
@@ -79,8 +79,8 @@ public class ExamService {
 			examEntity.setQuestionEntities(new HashSet<>(questionEntitiesOutPut));
 			examEntity.setTime(0);
 			examRepositoty.save(examEntity);
-			stringObjectHashMap.put("listQuestions",questionExamDTOS);
-			stringObjectHashMap.put("time",time);
+			stringObjectHashMap.put("listQuestions", questionExamDTOS);
+			stringObjectHashMap.put("time", time);
 			return stringObjectHashMap;
 		}
 
@@ -156,7 +156,7 @@ public class ExamService {
 									questionEntity.setAnswerEntities(new HashSet<>());
 								}
 								questionEntitiesOutPut.add(questionEntity);
-								time+=addTime(questionEntity.getQuestionTypeEntity().getTypeName());
+								time += addTime(questionEntity.getQuestionTypeEntity().getTypeName());
 								questionExamDTOS.add(examConverter.toDTO(questionEntity));
 							} else {
 								break;
@@ -186,7 +186,7 @@ public class ExamService {
 					questionEntity.setAnswerEntities(new HashSet<>());
 				}
 				questionEntitiesOutPut.add(questionEntity);
-				time+=addTime(questionEntity.getQuestionTypeEntity().getTypeName());
+				time += addTime(questionEntity.getQuestionTypeEntity().getTypeName());
 				questionExamDTOS.add(examConverter.toDTO(questionEntity));
 				listCountLesson.set(lessonindex, listCountLesson.get(lessonindex) - 1);
 				listCountSkill.set(skillindex, listCountSkill.get(skillindex) - 1);
@@ -216,21 +216,21 @@ public class ExamService {
 		examEntity.setQuestionEntities(new HashSet<>(questionEntitiesOutPut));
 		examEntity.setTime(time);
 		examRepositoty.save(examEntity);
-		stringObjectHashMap.put("listQuestions",questionExamDTOS);
-		stringObjectHashMap.put("time",time);
+		stringObjectHashMap.put("listQuestions", questionExamDTOS);
+		stringObjectHashMap.put("time", time);
 		return stringObjectHashMap;
 	}
 
-	private Integer addTime(String type){
-		if(type.equals("Chọn đáp án đúng")){
+	private Integer addTime(String type) {
+		if (type.equals("Chọn đáp án đúng")) {
 			return 60;
-		}else if(type.equals("Điền vào chỗ trống")){
+		} else if (type.equals("Điền vào chỗ trống")) {
 			return 50;
-		}else if(type.equals("Đúng/Sai")){
+		} else if (type.equals("Đúng/Sai")) {
 			return 30;
-		}else if(type.equals("Sắp xếp câu")){
+		} else if (type.equals("Sắp xếp câu")) {
 			return 90;
-		}else{
+		} else {
 			return 75;
 		}
 	}
@@ -238,7 +238,7 @@ public class ExamService {
 	public List<Long> getResultQuestion(QuestionResultDTO questionResultDTO) {
 		List<Long> idQuestion = new ArrayList<>();
 		List<Long> idQuestionUserchoose = new ArrayList<>();
-		int count = 0 ;
+		int count = 0;
 		for (AnswerDTO id : questionResultDTO.getAnswerDTOs()) {
 			QuestionEntity questionEntities = questionRepository.getAllQuestionByAnswer(id.getId(), id.getAnswer());
 			if (questionEntities != null) {
@@ -288,6 +288,13 @@ public class ExamService {
 		questionAnswer.setNumberOfCorrect(numberOfCorrect);
 		questionAnswer.setScore((numberOfCorrect * 100 / numberOfQuestion));
 		return questionAnswer;
+	}
+
+	public List<ExamDTO> getHistoryExam() {
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		List<ExamEntity> examEntities = examRepositoty.getExamByUserName(username);
+		List<ExamDTO> list = examConverter.toDTOExs(examEntities);
+		return list;
 	}
 
 }
