@@ -1,34 +1,28 @@
 package com.example.springboot.services;
 
-import com.example.springboot.converters.ExamConverter;
-import com.example.springboot.converters.QuestionConverter;
+import com.example.springboot.converters.PracticeConverter;
 import com.example.springboot.dto.*;
-import com.example.springboot.entities.AnswerEntity;
-import com.example.springboot.entities.ExamEntity;
-import com.example.springboot.entities.QuestionEntity;
-import com.example.springboot.entities.UserEntity;
+import com.example.springboot.entities.*;
 import com.example.springboot.repositories.ExamRepositoty;
+import com.example.springboot.repositories.PracticeRepository;
 import com.example.springboot.repositories.QuestionRepository;
 import com.example.springboot.repositories.UserRepository;
-import org.hibernate.mapping.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
-public class ExamService {
+public class PracticeService {
+	@Autowired
+	PracticeRepository practiceRepository;
 	@Autowired
 	private QuestionRepository questionRepository;
-
 	@Autowired
-	ExamConverter examConverter;
-
+	private PracticeConverter practiceConverter;
 	@Autowired
 	private UserRepository userRepository;
-
 	@Autowired
 	private ExamRepositoty examRepositoty;
 
@@ -41,11 +35,9 @@ public class ExamService {
 		// save
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		UserEntity userEntity = userRepository.getUserByUserName(username);
-		ExamEntity examEntity = new ExamEntity();
-		examEntity.setScore(0);
-		examEntity.setCreatedDate(new java.sql.Date((new Date()).getTime()));
-		examEntity.setUser(userEntity);
-		int time = 0;
+		PracticeEntiry practiceEntiry = new PracticeEntiry();
+		practiceEntiry.setScore(0);
+		practiceEntiry.setUserEntities(userEntity);
 
 		// get list id lesson, skill, type exit in question
 		List<Long> listIDLessonExit = questionRepository.getIDLessonExit();
@@ -76,11 +68,9 @@ public class ExamService {
 		// check ko ton tai cau hoi nao tuong ung
 		if (questionRequireDTO.getLessonIds().size() == 0 || questionRequireDTO.getTypeIds().size() == 0
 				|| questionRequireDTO.getSkillIds().size() == 0) {
-			examEntity.setQuestionEntities(new HashSet<>(questionEntitiesOutPut));
-			examEntity.setTime(0);
-			examRepositoty.save(examEntity);
+			practiceEntiry.setQuestionEntities(new HashSet<>(questionEntitiesOutPut));
+			practiceRepository.save(practiceEntiry);
 			stringObjectHashMap.put("listQuestions", questionExamDTOS);
-			stringObjectHashMap.put("time", time);
 			return stringObjectHashMap;
 		}
 
@@ -156,8 +146,7 @@ public class ExamService {
 									questionEntity.setAnswerEntities(new HashSet<>());
 								}
 								questionEntitiesOutPut.add(questionEntity);
-								time += addTime(questionEntity.getQuestionTypeEntity().getTypeName());
-								questionExamDTOS.add(examConverter.toDTO(questionEntity));
+								questionExamDTOS.add(practiceConverter.toDTO(questionEntity));
 							} else {
 								break;
 							}
@@ -186,8 +175,7 @@ public class ExamService {
 					questionEntity.setAnswerEntities(new HashSet<>());
 				}
 				questionEntitiesOutPut.add(questionEntity);
-				time += addTime(questionEntity.getQuestionTypeEntity().getTypeName());
-				questionExamDTOS.add(examConverter.toDTO(questionEntity));
+				questionExamDTOS.add(practiceConverter.toDTO(questionEntity));
 				listCountLesson.set(lessonindex, listCountLesson.get(lessonindex) - 1);
 				listCountSkill.set(skillindex, listCountSkill.get(skillindex) - 1);
 				listCountType.set(typeindex, listCountType.get(typeindex) - 1);
@@ -213,26 +201,10 @@ public class ExamService {
 			}
 		}
 
-		examEntity.setQuestionEntities(new HashSet<>(questionEntitiesOutPut));
-		examEntity.setTime(time);
-		examRepositoty.save(examEntity);
+		practiceEntiry.setQuestionEntities(new HashSet<>(questionEntitiesOutPut));
+		practiceRepository.save(practiceEntiry);
 		stringObjectHashMap.put("listQuestions", questionExamDTOS);
-		stringObjectHashMap.put("time", time);
 		return stringObjectHashMap;
-	}
-
-	private Integer addTime(String type) {
-		if (type.equals("Chọn đáp án đúng")) {
-			return 60;
-		} else if (type.equals("Điền vào chỗ trống")) {
-			return 50;
-		} else if (type.equals("Đúng/Sai")) {
-			return 30;
-		} else if (type.equals("Sắp xếp câu")) {
-			return 90;
-		} else {
-			return 75;
-		}
 	}
 
 	public List<Long> getResultQuestion(QuestionResultDTO questionResultDTO) {
@@ -247,10 +219,10 @@ public class ExamService {
 			}
 		}
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		List<ExamEntity> examEntities = examRepositoty.getExamByUserName(username);
-		ExamEntity examEntity = examEntities.get(0);
-		examEntity.setScore(count);
-		examRepositoty.save(examEntity);
+		List<PracticeEntiry> examEntities = practiceRepository.getPracticeByUserName(username);
+		PracticeEntiry practiceEntiry = examEntities.get(0);
+		practiceEntiry.setScore(count * 100 / questionResultDTO.getAnswerDTOs().size());
+		practiceRepository.save(practiceEntiry);
 		return idQuestion;
 	}
 
@@ -290,11 +262,21 @@ public class ExamService {
 		return questionAnswer;
 	}
 
-	public List<ExamDTO> getHistoryExam() {
+	public ProgressDTO getProgress() {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		List<ExamEntity> examEntities = examRepositoty.getExamByUserName(username);
-		List<ExamDTO> list = examConverter.toDTOExs(examEntities);
-		return list;
+		ProgressDTO progressDTO = new ProgressDTO();
+		Double voca = (practiceRepository.getIdsPracticeBySkillUserScore(username, 1l) * 1.0)
+				/ practiceRepository.getIdsPracticeBySkillUser(username, 1l);
+		Double grammar = (practiceRepository.getIdsPracticeBySkillUserScore(username, 2l) * 1.0)
+				/ practiceRepository.getIdsPracticeBySkillUser(username, 2l);
+		Double kanji = (practiceRepository.getIdsPracticeBySkillUserScore(username, 3l) * 1.0)
+				/ practiceRepository.getIdsPracticeBySkillUser(username, 3l);
+
+		progressDTO.setVocaProgress(voca);
+		progressDTO.setGrammarProgess(grammar);
+		progressDTO.setKanjiProgress(kanji);
+		progressDTO.setProgressAll((voca + grammar + kanji) * 100 / 3);
+		return progressDTO;
 	}
 
 }
