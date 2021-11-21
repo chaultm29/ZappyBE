@@ -7,9 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
-@CrossOrigin(origins = {"http://localhost:3000", "https://www.zappy-nihongo.com"})
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/exam")
 public class ExamController {
@@ -18,8 +19,8 @@ public class ExamController {
 	private ExamService examService;
 
 	@PostMapping()
-	public ResponseEntity<List<QuestionExamDTO>> getExam(@RequestBody QuestionRequireDTO questionRequireDTO) {
-		return new ResponseEntity<List<QuestionExamDTO>>(examService.questionExamDTOList(questionRequireDTO),
+	public ResponseEntity<HashMap<String, Object>> getExam(@RequestBody QuestionRequireDTO questionRequireDTO) {
+		return new ResponseEntity<HashMap<String, Object>>(examService.questionExamDTOList(questionRequireDTO),
 				HttpStatus.OK);
 	}
 

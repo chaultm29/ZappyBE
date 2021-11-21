@@ -28,9 +28,8 @@ public class VocabularyController {
 	}
 
 	@PostMapping("")
-	public ResponseEntity<?> addVocabulary(@RequestBody VocabularyBaseDTO addVocabularyDTO) {
-		vocabularyService.addVocabulary(addVocabularyDTO);
-		return new ResponseEntity(HttpStatus.OK);
+	public ResponseEntity<String> addVocabulary(@RequestBody VocabularyBaseDTO addVocabularyDTO) {
+		return new ResponseEntity<String>(vocabularyService.addVocabulary(addVocabularyDTO), HttpStatus.OK);
 	}
 
 	@PutMapping("/{id}")

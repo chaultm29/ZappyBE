@@ -1,18 +1,12 @@
 package com.example.springboot.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.sql.Date;
+import java.util.Collection;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "users")
@@ -57,13 +51,17 @@ public class UserEntity {
 	@JoinTable(name = "user_grammar_rf", joinColumns = @JoinColumn(name = "grammar_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private Set<GrammarEntity> grammarEntities;
 
+	@JsonIgnore
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private Set<ExamEntity> examEntities;
+
 	public UserEntity() {
 	}
 
 	public UserEntity(Long id, String fullName, String phone, String email, Date dateOfBirth, String avatar,
 			Set<AchievenmentEntity> achievenmentEntities, Set<AlphabetEntity> alphabetEntities,
 			Set<KanjiEntity> kanjiEntities, Set<VocabularyEntity> vocabularyEntities,
-			Set<GrammarEntity> grammarEntities) {
+			Set<GrammarEntity> grammarEntities, Set<ExamEntity> examEntities) {
 		super();
 		this.id = id;
 		this.fullName = fullName;
@@ -76,6 +74,15 @@ public class UserEntity {
 		this.kanjiEntities = kanjiEntities;
 		this.vocabularyEntities = vocabularyEntities;
 		this.grammarEntities = grammarEntities;
+		this.examEntities = examEntities;
+	}
+
+	public Set<ExamEntity> getExamEntities() {
+		return examEntities;
+	}
+
+	public void setExamEntities(Set<ExamEntity> examEntities) {
+		this.examEntities = examEntities;
 	}
 
 	public Long getId() {

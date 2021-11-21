@@ -42,9 +42,8 @@ public class GrammarController {
 	}
 
 	@PostMapping("/")
-	public ResponseEntity<?> addGrammar(@RequestBody GrammarBaseDTO grammarBaseDTO) {
-		grammarService.addGrammar(grammarBaseDTO);
-		return new ResponseEntity(HttpStatus.OK);
+	public ResponseEntity<String> addGrammar(@RequestBody GrammarBaseDTO grammarBaseDTO) {
+		return new ResponseEntity<String>(grammarService.addGrammar(grammarBaseDTO), HttpStatus.OK);
 	}
 
 	@PutMapping("/{id}")

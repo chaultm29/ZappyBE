@@ -38,7 +38,12 @@ public class QuestionService {
 		return questionConverter.toDTOs(questionEntities);
 	}
 
-	public Boolean save(QuestionDTO questionDTO) {
+	public String save(QuestionDTO questionDTO) {
+
+		QuestionEntity questionEntity1 = questionRepository.getQuestion(questionDTO.getQuestion());
+		if(questionEntity1 != null){
+			return "Đã tồn tại "+ questionEntity1.getQuestion()+" trong hệ thống";
+		}
 		QuestionEntity questionEntity = questionConverter.toEntity(questionDTO);
 		QuestionEntity afterSave = questionRepository.save(questionEntity);
 		Set<AnswerEntity> answerEntitySet = new HashSet<>();
@@ -47,9 +52,9 @@ public class QuestionService {
 					answerEntity.getImage_link(), answerEntity.getAnswer(), afterSave)));
 		}
 		if (afterSave != null) {
-			return true;
+			return "Thêm "+ questionEntity1.getQuestion()+" thành công";
 		}
-		return false;
+		return "Không thể thêm "+ questionDTO.getQuestion();
 	}
 
 	public QuestionDTO update(QuestionDTO questionDTO, Long id) {

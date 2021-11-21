@@ -29,4 +29,7 @@ public interface GrammarRepository extends JpaRepository<GrammarEntity, Long> {
 
 	@Query("select g from GrammarEntity g left join g.lessonEntity l where g.id=:id")
 	GrammarEntity getGrammarEntityById(@Param("id") Long id);
+
+	@Query("select g from GrammarEntity g  where g.grammar = :grammar")
+	GrammarEntity getGrammar(@Param("grammar") String grammar);
 }

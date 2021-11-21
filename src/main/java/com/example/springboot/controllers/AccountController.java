@@ -1,5 +1,6 @@
 package com.example.springboot.controllers;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,8 +43,8 @@ public class AccountController {
 
 	// create account rest api
 	@PostMapping("/account")
-	public ResponseEntity<AccountDTO> createAccountEntity(@RequestBody AccountDTO accountDTO) {
-		return new ResponseEntity<AccountDTO>(accountService.save(accountDTO), HttpStatus.OK);
+	public ResponseEntity<String> createAccountEntity(@RequestBody AccountDTO accountDTO) {
+		return new ResponseEntity<String>(accountService.save(accountDTO), HttpStatus.OK);
 	}
 
 	// get account by id rest api
@@ -58,11 +59,15 @@ public class AccountController {
 		}
 	}
 
-	// update account rest api
+	@PostMapping("/resetaccount/{username}")
+	public ResponseEntity<HashMap<String, Object>> resetPasswordAccountEntity(@PathVariable String username) {
+		return new ResponseEntity<HashMap<String, Object>>(accountService.resetPassword(username), HttpStatus.OK);
+	}
 
+	// update account rest api
 	@PutMapping("/account/{id}")
-	public ResponseEntity<AccountDTO> updateAccEntity(@PathVariable Long id, @RequestBody AccountDTO accountDTO) {
-		return new ResponseEntity<AccountDTO>(accountService.update(id, accountDTO), HttpStatus.OK);
+	public ResponseEntity<HashMap<String, Object>> updateAccEntity(@PathVariable Long id, @RequestBody AccountDTO accountDTO) {
+		return new ResponseEntity<HashMap<String, Object>>(accountService.update(id, accountDTO), HttpStatus.OK);
 	}
 
 	// delete account rest api
