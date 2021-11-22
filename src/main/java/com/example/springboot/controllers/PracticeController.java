@@ -35,4 +35,9 @@ public class PracticeController {
 		return new ResponseEntity<ProgressDTO>(practiceService.getProgress(), HttpStatus.OK);
 	}
 
+	@GetMapping("/level")
+	public ResponseEntity<LevelDTO> getLevel() {
+		return new ResponseEntity<LevelDTO>(practiceService.getLevel(), HttpStatus.OK);
+	}
+
 }
