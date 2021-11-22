@@ -41,7 +41,7 @@ public class KanjiController {
 		return new ResponseEntity<GetAllKanjiDTO>(kanji, HttpStatus.OK);
 	}
 
-	@PostMapping("/")
+	@PostMapping("")
 	public ResponseEntity<String> addKanji(@RequestBody GetAllKanjiDTO kanjiDTO) {
 		return new ResponseEntity<String>(kanjiService.addKanji(kanjiDTO), HttpStatus.OK);
 	}
