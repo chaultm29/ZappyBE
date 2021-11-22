@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import com.example.springboot.dto.AnswerDTO;
 import com.example.springboot.dto.QuestionDTO;
+import com.example.springboot.dto.QuestionGameDTO;
 import com.example.springboot.entities.AnswerEntity;
 import com.example.springboot.entities.QuestionEntity;
 
@@ -65,6 +66,22 @@ public class QuestionConverter {
 			questionDTOs.add(toDTO(questionEntity));
 		}
 		return questionDTOs;
+	}
+	
+	public QuestionGameDTO toQuestionGameDTOs(QuestionEntity questionEntity){
+		QuestionGameDTO questionDTO = new QuestionGameDTO();
+		questionDTO.setQuestionID(questionEntity.getId());
+		questionDTO.setQuestion(questionEntity.getQuestion());
+		questionDTO.setImageLink(questionEntity.getImage_link());
+		ArrayList<AnswerDTO> answerDTOs = new ArrayList<>();
+        for (AnswerEntity answerEntity : questionEntity.getAnswerEntities()) {
+            AnswerDTO answerDTO = new AnswerDTO();
+            answerDTO.setId(answerEntity.getId());
+            answerDTO.setAnswer(answerEntity.getAnswer());
+            answerDTOs.add(answerDTO);
+        }
+		questionDTO.setAnswers(answerDTOs);
+		return questionDTO;
 	}
 }
 
