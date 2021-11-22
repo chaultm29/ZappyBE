@@ -279,4 +279,25 @@ public class PracticeService {
 		return progressDTO;
 	}
 
+	public LevelDTO getLevel() {
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		LevelDTO levelDTO = new LevelDTO();
+		Integer score = practiceRepository.totalScorePracticeByUsername(username)
+				+ examRepositoty.totalScoreExamByUsername(username);
+		Integer[] levelScore = { 0, 50, 100, 200, 300, 500, 1000, 2000, 3000, 5000, 7000, 10000, 15000, 20000, 25000,
+				30000 };
+		for (int i = levelScore.length - 1; i > 0; i--) {
+			if (score > levelScore[i]) {
+				levelDTO.setLevel(i);
+				levelDTO.setPercentage((score - levelScore[i - 1]) * 100 / (levelScore[i + 1] - levelScore[i]));
+				break;
+			} else if (score == levelScore[i]) {
+				levelDTO.setLevel(i);
+				levelDTO.setPercentage(0);
+				break;
+			}
+		}
+		return levelDTO;
+	}
+
 }
