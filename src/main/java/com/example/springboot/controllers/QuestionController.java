@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import com.example.springboot.dto.QuestionDTO;
 import com.example.springboot.services.QuestionService;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"http://localhost:3000", "https://www.zappy-nihongo.com"})
 @RestController
 @RequestMapping("")
 public class QuestionController {
@@ -23,6 +23,13 @@ public class QuestionController {
 		return new ResponseEntity<List<QuestionDTO>>(questionService.get(), HttpStatus.OK);
 	}
 
+	/*
+	 * @PostMapping("/questions/random")
+	 * gửi lên danh sách id câu hỏi đã get từ trc
+	 * check lại practice đã làm xem bài cao nhất là bài nào
+	 * viết game controller để cung cấp service cho game
+	 * */
+	
 	@PostMapping("/question")
 	public ResponseEntity<String> createQuestionContentManager(@RequestBody QuestionDTO questionDTO) {
 		return new ResponseEntity<String>(questionService.save(questionDTO), HttpStatus.OK);

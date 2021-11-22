@@ -16,7 +16,7 @@ import com.example.springboot.config.JWTTokenUtil;
 import com.example.springboot.config.JwtRequest;
 import com.example.springboot.services.MyUserDetailsService;
 
-@CrossOrigin(origins = { "*" })
+@CrossOrigin(origins = {"http://localhost:3000", "https://www.zappy-nihongo.com"})
 @RestController
 public class AuthenticationController {
 
