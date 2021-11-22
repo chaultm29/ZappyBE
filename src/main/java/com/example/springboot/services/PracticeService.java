@@ -286,6 +286,9 @@ public class PracticeService {
 				+ examRepositoty.totalScoreExamByUsername(username);
 		Integer[] levelScore = { 0, 50, 100, 200, 300, 500, 1000, 2000, 3000, 5000, 7000, 10000, 15000, 20000, 25000,
 				30000 };
+		if (score > levelScore[levelScore.length - 1]) {
+			return levelDTO;
+		}
 		for (int i = levelScore.length - 1; i > 0; i--) {
 			if (score > levelScore[i]) {
 				levelDTO.setLevel(i);
