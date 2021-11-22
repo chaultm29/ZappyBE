@@ -14,28 +14,25 @@ import java.util.List;
 @RestController
 @RequestMapping("/practice")
 public class PracticeController {
-    @Autowired
-    PracticeService practiceService;
-    @PostMapping()
-    public ResponseEntity<HashMap<String, Object>> getExam(@RequestBody QuestionRequireDTO questionRequireDTO) {
-        return new ResponseEntity<HashMap<String, Object>>(practiceService.questionExamDTOList(questionRequireDTO),
-                HttpStatus.OK);
-    } 
+	@Autowired
+	PracticeService practiceService;
 
-    @PostMapping("/result")
-    public ResponseEntity<List<Long>> getResultQuestion(@RequestBody QuestionResultDTO questionResultDTO) {
-        return new ResponseEntity<List<Long>>(practiceService.getResultQuestion(questionResultDTO), HttpStatus.OK);
-    }
+	@PostMapping()
+	public ResponseEntity<HashMap<String, Object>> getExam(@RequestBody QuestionRequireDTO questionRequireDTO) {
+		return new ResponseEntity<HashMap<String, Object>>(practiceService.questionExamDTOList(questionRequireDTO),
+				HttpStatus.OK);
+	}
 
-    @PostMapping("/practive")
-    public ResponseEntity<QuestionResultDetailDTO> getResultDetailQuestion(
-            @RequestBody QuestionResultDTO questionResultDTO) {
-        return new ResponseEntity<QuestionResultDetailDTO>(practiceService.getResultDetailQuestion(questionResultDTO),
-                HttpStatus.OK);
-    }
-    @GetMapping("/progress")
-    public ResponseEntity<ProgressDTO> getProgress() {
-        return new ResponseEntity<ProgressDTO>(practiceService.getProgress(), HttpStatus.OK);
-    }
-    
+	@PostMapping("/result")
+	public ResponseEntity<QuestionResultDetailDTO> getResultDetailQuestion(
+			@RequestBody QuestionResultDTO questionResultDTO) {
+		return new ResponseEntity<QuestionResultDetailDTO>(practiceService.getResultDetailQuestion(questionResultDTO),
+				HttpStatus.OK);
+	}
+
+	@GetMapping("/progress")
+	public ResponseEntity<ProgressDTO> getProgress() {
+		return new ResponseEntity<ProgressDTO>(practiceService.getProgress(), HttpStatus.OK);
+	}
+
 }
