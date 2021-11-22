@@ -41,7 +41,7 @@ public class GrammarController {
 		return new ResponseEntity<GrammarBaseDTO>(grammar, HttpStatus.OK);
 	}
 
-	@PostMapping("/")
+	@PostMapping("")
 	public ResponseEntity<String> addGrammar(@RequestBody GrammarBaseDTO grammarBaseDTO) {
 		return new ResponseEntity<String>(grammarService.addGrammar(grammarBaseDTO), HttpStatus.OK);
 	}
