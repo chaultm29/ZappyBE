@@ -3,7 +3,6 @@ package com.example.springboot.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.sql.Date;
-import java.util.Collection;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -54,6 +53,10 @@ public class UserEntity {
 	@JsonIgnore
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private Set<ExamEntity> examEntities;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "userEntities", cascade = CascadeType.ALL)
+	private Set<PracticeEntiry> paPracticeEntiries;
 
 	public UserEntity() {
 	}

@@ -29,10 +29,8 @@ public class ExamController {
 		return new ResponseEntity<List<Long>>(examService.getResultQuestion(questionResultDTO), HttpStatus.OK);
 	}
 
-	@PostMapping("/practive")
-	public ResponseEntity<QuestionResultDetailDTO> getResultDetailQuestion(
-			@RequestBody QuestionResultDTO questionResultDTO) {
-		return new ResponseEntity<QuestionResultDetailDTO>(examService.getResultDetailQuestion(questionResultDTO),
-				HttpStatus.OK);
+	@GetMapping("/history")
+	public ResponseEntity<List<ExamDTO>> getHistoryExam() {
+		return new ResponseEntity<List<ExamDTO>>(examService.getHistoryExam(), HttpStatus.OK);
 	}
 }
