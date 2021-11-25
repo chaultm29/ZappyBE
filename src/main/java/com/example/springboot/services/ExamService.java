@@ -1,20 +1,20 @@
 package com.example.springboot.services;
 
 import com.example.springboot.converters.ExamConverter;
-import com.example.springboot.converters.QuestionConverter;
+
 import com.example.springboot.dto.*;
-import com.example.springboot.entities.AnswerEntity;
-import com.example.springboot.entities.ExamEntity;
-import com.example.springboot.entities.QuestionEntity;
-import com.example.springboot.entities.UserEntity;
+import com.example.springboot.entities.*;
 import com.example.springboot.repositories.ExamRepositoty;
 import com.example.springboot.repositories.QuestionRepository;
 import com.example.springboot.repositories.UserRepository;
-import org.hibernate.mapping.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.ExampleMatcher;
+
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
 
 import java.util.*;
 
@@ -249,7 +249,25 @@ public class ExamService {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		List<ExamEntity> examEntities = examRepositoty.getExamByUserName(username);
 		ExamEntity examEntity = examEntities.get(0);
-		examEntity.setScore(count);
+		int score = (count*100)/questionResultDTO.getAnswerDTOs().size();
+		examEntity.setScore(score);
+		Pageable pageable = PageRequest.of(0,10);
+		int totalScore = 0;
+		List<Integer> listScore = examRepositoty.totalScore10ExamByUsername(username,pageable);
+		for(int i=0;i<listScore.size();i++){
+			totalScore= +listScore.get(i);
+		}
+		///test 10 exam lien tuc dc 100 = quai vat
+		if((totalScore+score)==1000){
+			UserEntity user = userRepository.getUserByUserName(username);
+			AchievenmentEntity achievenment = new AchievenmentEntity();
+			achievenment.setId(1l);
+			Set<AchievenmentEntity> listAchievenment =new HashSet<>();
+			listAchievenment.add(achievenment);
+			user.setAchievenmentEntities(listAchievenment);
+			userRepository.save(user);
+		}
+
 		examRepositoty.save(examEntity);
 		return idQuestion;
 	}
