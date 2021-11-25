@@ -3,6 +3,7 @@ package com.example.springboot.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.sql.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
