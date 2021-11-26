@@ -1,14 +1,10 @@
 package com.example.springboot.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "achievements")
@@ -25,19 +21,20 @@ public class AchievenmentEntity {
 
 	@Column(name = "achieve_condition")
 	private String condition;
-	
-	@ManyToMany(mappedBy = "achievenmentEntities")
-	private Set<UserEntity> userEntities;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "achievenmentEntity",cascade = CascadeType.ALL)
+	private Set<UserAchievenmentEntity> userAchievenmentEntities;
 	
 	public AchievenmentEntity() {
 	}
 
-	public AchievenmentEntity(Long id, String name, String desciption, String condition) {
-		super();
+	public AchievenmentEntity(Long id, String name, String desciption, String condition, Set<UserAchievenmentEntity> userAchievenmentEntities) {
 		this.id = id;
 		this.name = name;
 		this.desciption = desciption;
 		this.condition = condition;
+		this.userAchievenmentEntities = userAchievenmentEntities;
 	}
 
 	public Long getId() {
@@ -72,4 +69,11 @@ public class AchievenmentEntity {
 		this.condition = condition;
 	}
 
+	public Set<UserAchievenmentEntity> getUserAchievenmentEntities() {
+		return userAchievenmentEntities;
+	}
+
+	public void setUserAchievenmentEntities(Set<UserAchievenmentEntity> userAchievenmentEntities) {
+		this.userAchievenmentEntities = userAchievenmentEntities;
+	}
 }

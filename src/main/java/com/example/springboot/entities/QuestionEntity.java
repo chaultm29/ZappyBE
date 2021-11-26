@@ -27,6 +27,9 @@ public class QuestionEntity {
 	@Column(name = "question")
 	private String question;
 
+	@Column(name = "enabled")
+	private Boolean isEnabled;
+
 	@OneToMany(mappedBy = "questionEntity", cascade = CascadeType.ALL)
 	private Set<AnswerEntity> answerEntities;
 
@@ -57,19 +60,18 @@ public class QuestionEntity {
 		// TODO Auto-generated constructor stub
 	}
 
-	public QuestionEntity(Long id, String image_link, String question, Set<AnswerEntity> answerEntities,
-			QuestionTypeEntity questionTypeEntity, SkillEntity skillEntity, Set<RoomEntity> roomEntities,
-			LessonEntity lessonEntity, Set<ExamEntity> examEntities) {
-		super();
+	public QuestionEntity(Long id, String image_link, String question, Boolean isEnabled, Set<AnswerEntity> answerEntities, QuestionTypeEntity questionTypeEntity, SkillEntity skillEntity, Set<RoomEntity> roomEntities, LessonEntity lessonEntity, Set<ExamEntity> examEntities, Set<PracticeEntiry> practiceEntiries) {
 		this.id = id;
 		this.image_link = image_link;
 		this.question = question;
+		this.isEnabled = isEnabled;
 		this.answerEntities = answerEntities;
 		this.questionTypeEntity = questionTypeEntity;
 		this.skillEntity = skillEntity;
 		this.roomEntities = roomEntities;
 		this.lessonEntity = lessonEntity;
 		this.examEntities = examEntities;
+		this.practiceEntiries = practiceEntiries;
 	}
 
 	public Long getId() {
@@ -94,6 +96,14 @@ public class QuestionEntity {
 
 	public void setQuestion(String question) {
 		this.question = question;
+	}
+
+	public Boolean getEnabled() {
+		return isEnabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		isEnabled = enabled;
 	}
 
 	public Set<AnswerEntity> getAnswerEntities() {
@@ -144,6 +154,11 @@ public class QuestionEntity {
 		this.examEntities = examEntities;
 	}
 
-	
+	public Set<PracticeEntiry> getPracticeEntiries() {
+		return practiceEntiries;
+	}
 
+	public void setPracticeEntiries(Set<PracticeEntiry> practiceEntiries) {
+		this.practiceEntiries = practiceEntiries;
+	}
 }
