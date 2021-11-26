@@ -17,8 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.springboot.dto.GameRecordDTO;
 import com.example.springboot.dto.QuestionDTO;
 import com.example.springboot.dto.QuestionGameDTO;
+import com.example.springboot.dto.RequireBingoQuestionDTO;
 import com.example.springboot.services.GameRecordService;
 import com.example.springboot.services.GameService;
+
+import javassist.NotFoundException;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -32,8 +35,12 @@ public class GameController {
 	GameRecordService gameRecordService;
 	
 	@PostMapping("bingo/currentQuestion")
-	public ResponseEntity<QuestionGameDTO> getCurrentQuestion(@RequestBody List<Integer> listQuestionId){
-		return new ResponseEntity<QuestionGameDTO>(gameService.getCurrentQuestion(listQuestionId), HttpStatus.OK);
+	public ResponseEntity<QuestionGameDTO> getCurrentQuestion(@RequestBody RequireBingoQuestionDTO requireBingo) {
+		try {
+			return new ResponseEntity<QuestionGameDTO>(gameService.getCurrentQuestion(requireBingo), HttpStatus.OK);
+		} catch (NotFoundException e) {
+			return new ResponseEntity<QuestionGameDTO>(new QuestionGameDTO(), HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	@PostMapping("bingo/result/{qid}/{aid}")
@@ -54,4 +61,6 @@ public class GameController {
 	public ResponseEntity<List<GameRecordDTO>> getRecord(){
 		return new ResponseEntity<List<GameRecordDTO>>(gameRecordService.getRecords(), HttpStatus.OK);
 	}
+	
+	
 }
