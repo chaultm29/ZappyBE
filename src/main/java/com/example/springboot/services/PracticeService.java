@@ -3,10 +3,7 @@ package com.example.springboot.services;
 import com.example.springboot.converters.PracticeConverter;
 import com.example.springboot.dto.*;
 import com.example.springboot.entities.*;
-import com.example.springboot.repositories.ExamRepositoty;
-import com.example.springboot.repositories.PracticeRepository;
-import com.example.springboot.repositories.QuestionRepository;
-import com.example.springboot.repositories.UserRepository;
+import com.example.springboot.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -25,6 +22,8 @@ public class PracticeService {
 	private UserRepository userRepository;
 	@Autowired
 	private ExamRepositoty examRepositoty;
+	@Autowired
+	private UserAchienmentRepository userAchienmentRepository;
 
 	public HashMap<String, Object> questionExamDTOList(QuestionRequireDTO questionRequireDTO) {
 		Random rd = new Random();
@@ -275,7 +274,51 @@ public class PracticeService {
 		progressDTO.setVocaProgress(voca);
 		progressDTO.setGrammarProgess(grammar);
 		progressDTO.setKanjiProgress(kanji);
-		progressDTO.setProgressAll((voca + grammar + kanji) * 100 / 3);
+		Double progressAll = (Double) ((voca + grammar + kanji) * 100 / 3);
+		progressDTO.setProgressAll(progressAll);
+		//Chúa tể ngôn từ
+		if(voca==7){
+			UserEntity user = userRepository.getUserByUserName(username);
+			AchievenmentEntity achievenment = new AchievenmentEntity();
+			achievenment.setId(5l);
+			UserAchievenmentEntity userAchievenment = new UserAchievenmentEntity();
+			userAchievenment.setAchievenmentEntity(achievenment);
+			userAchievenment.setUser(user);
+			userAchievenment.setDateCreate(new java.sql.Date((new Date()).getTime()));
+			userAchienmentRepository.save(userAchievenment);
+		}
+		//Vị thần ngữ pháp
+		if(grammar==7){
+			UserEntity user = userRepository.getUserByUserName(username);
+			AchievenmentEntity achievenment = new AchievenmentEntity();
+			achievenment.setId(4l);
+			UserAchievenmentEntity userAchievenment = new UserAchievenmentEntity();
+			userAchievenment.setAchievenmentEntity(achievenment);
+			userAchievenment.setUser(user);
+			userAchievenment.setDateCreate(new java.sql.Date((new Date()).getTime()));
+			userAchienmentRepository.save(userAchievenment);
+		}//Bậc thầy chữ hán
+		if(kanji==7){
+			UserEntity user = userRepository.getUserByUserName(username);
+			AchievenmentEntity achievenment = new AchievenmentEntity();
+			achievenment.setId(3l);
+			UserAchievenmentEntity userAchievenment = new UserAchievenmentEntity();
+			userAchievenment.setAchievenmentEntity(achievenment);
+			userAchievenment.setUser(user);
+			userAchievenment.setDateCreate(new java.sql.Date((new Date()).getTime()));
+			userAchienmentRepository.save(userAchievenment);
+		}
+		//Thần đồng ngôn ngữ
+		if(progressAll==100){
+			UserEntity user = userRepository.getUserByUserName(username);
+			AchievenmentEntity achievenment = new AchievenmentEntity();
+			achievenment.setId(6l);
+			UserAchievenmentEntity userAchievenment = new UserAchievenmentEntity();
+			userAchievenment.setAchievenmentEntity(achievenment);
+			userAchievenment.setUser(user);
+			userAchievenment.setDateCreate(new java.sql.Date((new Date()).getTime()));
+			userAchienmentRepository.save(userAchievenment);
+		}
 		return progressDTO;
 	}
 
@@ -284,6 +327,61 @@ public class PracticeService {
 		LevelDTO levelDTO = new LevelDTO();
 		Integer score = practiceRepository.totalScorePracticeByUsername(username)
 				+ examRepositoty.totalScoreExamByUsername(username);
+		//Ho ve level(level 6)
+		if(score==1000){
+			UserEntity user = userRepository.getUserByUserName(username);
+			AchievenmentEntity achievenment = new AchievenmentEntity();
+			achievenment.setId(7l);
+			UserAchievenmentEntity userAchievenment = new UserAchievenmentEntity();
+			userAchievenment.setAchievenmentEntity(achievenment);
+			userAchievenment.setUser(user);
+			userAchievenment.setDateCreate(new java.sql.Date((new Date()).getTime()));
+			userAchienmentRepository.save(userAchievenment);
+		}
+		//Tho san level (level 9)
+		if(score==5000){
+			UserEntity user = userRepository.getUserByUserName(username);
+			AchievenmentEntity achievenment = new AchievenmentEntity();
+			achievenment.setId(8l);
+			UserAchievenmentEntity userAchievenment = new UserAchievenmentEntity();
+			userAchievenment.setAchievenmentEntity(achievenment);
+			userAchievenment.setUser(user);
+			userAchievenment.setDateCreate(new java.sql.Date((new Date()).getTime()));
+			userAchienmentRepository.save(userAchievenment);
+		}
+		//Quai thu level(level 11)
+		if(score==10000){
+			UserEntity user = userRepository.getUserByUserName(username);
+			AchievenmentEntity achievenment = new AchievenmentEntity();
+			achievenment.setId(9l);
+			UserAchievenmentEntity userAchievenment = new UserAchievenmentEntity();
+			userAchievenment.setAchievenmentEntity(achievenment);
+			userAchievenment.setUser(user);
+			userAchievenment.setDateCreate(new java.sql.Date((new Date()).getTime()));
+			userAchienmentRepository.save(userAchievenment);
+		}
+		//Ke huy diet level(level 13)
+		if(score==20000){
+			UserEntity user = userRepository.getUserByUserName(username);
+			AchievenmentEntity achievenment = new AchievenmentEntity();
+			achievenment.setId(10l);
+			UserAchievenmentEntity userAchievenment = new UserAchievenmentEntity();
+			userAchievenment.setAchievenmentEntity(achievenment);
+			userAchievenment.setUser(user);
+			userAchievenment.setDateCreate(new java.sql.Date((new Date()).getTime()));
+			userAchienmentRepository.save(userAchievenment);
+		}
+		//Than thoai level(level 15)
+		if(score==1000){
+			UserEntity user = userRepository.getUserByUserName(username);
+			AchievenmentEntity achievenment = new AchievenmentEntity();
+			achievenment.setId(11l);
+			UserAchievenmentEntity userAchievenment = new UserAchievenmentEntity();
+			userAchievenment.setAchievenmentEntity(achievenment);
+			userAchievenment.setUser(user);
+			userAchievenment.setDateCreate(new java.sql.Date((new Date()).getTime()));
+			userAchienmentRepository.save(userAchievenment);
+		}
 		Integer[] levelScore = { 0, 50, 100, 200, 300, 500, 1000, 2000, 3000, 5000, 7000, 10000, 15000, 20000, 25000,
 				30000 };
 		if (score > levelScore[levelScore.length - 1]) {

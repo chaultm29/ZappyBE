@@ -122,6 +122,7 @@ public class AccountService {
 		AccountEntity accountEntity = accountRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Account not exist with id :" + id));
 		accountRepository.delete(accountEntity);
+		accountRepository.save(accountEntity);
 	}
 
 	public AccountDTO get(Long id) {
