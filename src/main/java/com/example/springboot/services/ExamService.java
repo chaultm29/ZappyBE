@@ -6,6 +6,7 @@ import com.example.springboot.dto.*;
 import com.example.springboot.entities.*;
 import com.example.springboot.repositories.ExamRepositoty;
 import com.example.springboot.repositories.QuestionRepository;
+import com.example.springboot.repositories.UserAchienmentRepository;
 import com.example.springboot.repositories.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,8 @@ public class ExamService {
 
 	@Autowired
 	private ExamRepositoty examRepositoty;
+	@Autowired
+	private UserAchienmentRepository userAchienmentRepository;
 
 	public HashMap<String, Object> questionExamDTOList(QuestionRequireDTO questionRequireDTO) {
 		Random rd = new Random();
@@ -262,10 +265,11 @@ public class ExamService {
 			UserEntity user = userRepository.getUserByUserName(username);
 			AchievenmentEntity achievenment = new AchievenmentEntity();
 			achievenment.setId(1l);
-			Set<AchievenmentEntity> listAchievenment =new HashSet<>();
-			listAchievenment.add(achievenment);
-//			user.setAchievenmentEntities(listAchievenment);
-			userRepository.save(user);
+			UserAchievenmentEntity userAchievenment = new UserAchievenmentEntity();
+			userAchievenment.setAchievenmentEntity(achievenment);
+			userAchievenment.setUser(user);
+			userAchievenment.setDateCreate(new java.sql.Date((new Date()).getTime()));
+			userAchienmentRepository.save(userAchievenment);
 		}
 
 		examRepositoty.save(examEntity);
