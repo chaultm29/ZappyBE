@@ -1,5 +1,6 @@
 package com.example.springboot.entities;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -29,7 +30,7 @@ public class GameEntity {
 
 	@Column(name = "game_name")
 	private String gameName;
- 
+	
 //	@ManyToMany
 //	@JoinTable(name = "game_questiontype_rf", 
 //			joinColumns = @JoinColumn(name = "game_id"), 
