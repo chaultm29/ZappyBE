@@ -264,7 +264,7 @@ public class ExamService {
 			achievenment.setId(1l);
 			Set<AchievenmentEntity> listAchievenment =new HashSet<>();
 			listAchievenment.add(achievenment);
-			user.setAchievenmentEntities(listAchievenment);
+//			user.setAchievenmentEntities(listAchievenment);
 			userRepository.save(user);
 		}
 

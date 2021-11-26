@@ -284,7 +284,7 @@ public class PracticeService {
 			achievenment.setId(5l);
 			Set<AchievenmentEntity> listAchievenment =new HashSet<>();
 			listAchievenment.add(achievenment);
-			user.setAchievenmentEntities(listAchievenment);
+//			user.setAchievenmentEntities(listAchievenment);
 			userRepository.save(user);
 		}
 		//Vị thần ngữ pháp
@@ -294,7 +294,7 @@ public class PracticeService {
 			achievenment.setId(4l);
 			Set<AchievenmentEntity> listAchievenment =new HashSet<>();
 			listAchievenment.add(achievenment);
-			user.setAchievenmentEntities(listAchievenment);
+//			user.setAchievenmentEntities(listAchievenment);
 			userRepository.save(user);
 		}//Bậc thầy chữ hán
 		if(kanji==7){
@@ -303,7 +303,7 @@ public class PracticeService {
 			achievenment.setId(3l);
 			Set<AchievenmentEntity> listAchievenment =new HashSet<>();
 			listAchievenment.add(achievenment);
-			user.setAchievenmentEntities(listAchievenment);
+//			user.setAchievenmentEntities(listAchievenment);
 			userRepository.save(user);
 		}
 		//Thần đồng ngôn ngữ
@@ -313,7 +313,7 @@ public class PracticeService {
 			achievenment.setId(6l);
 			Set<AchievenmentEntity> listAchievenment =new HashSet<>();
 			listAchievenment.add(achievenment);
-			user.setAchievenmentEntities(listAchievenment);
+//			user.setAchievenmentEntities(listAchievenment);
 			userRepository.save(user);
 		}
 		return progressDTO;
@@ -331,7 +331,7 @@ public class PracticeService {
 			achievenment.setId(7l);
 			Set<AchievenmentEntity> listAchievenment =new HashSet<>();
 			listAchievenment.add(achievenment);
-			user.setAchievenmentEntities(listAchievenment);
+//			user.setAchievenmentEntities(listAchievenment);
 			userRepository.save(user);
 		}
 		//Tho san level (level 9)
@@ -341,7 +341,7 @@ public class PracticeService {
 			achievenment.setId(8l);
 			Set<AchievenmentEntity> listAchievenment =new HashSet<>();
 			listAchievenment.add(achievenment);
-			user.setAchievenmentEntities(listAchievenment);
+//			user.setAchievenmentEntities(listAchievenment);
 			userRepository.save(user);
 		}
 		//Quai thu level(level 11)
@@ -351,7 +351,7 @@ public class PracticeService {
 			achievenment.setId(9l);
 			Set<AchievenmentEntity> listAchievenment =new HashSet<>();
 			listAchievenment.add(achievenment);
-			user.setAchievenmentEntities(listAchievenment);
+//			user.setAchievenmentEntities(listAchievenment);
 			userRepository.save(user);
 		}
 		//Ke huy diet level(level 13)
@@ -361,7 +361,7 @@ public class PracticeService {
 			achievenment.setId(10l);
 			Set<AchievenmentEntity> listAchievenment =new HashSet<>();
 			listAchievenment.add(achievenment);
-			user.setAchievenmentEntities(listAchievenment);
+//			user.setAchievenmentEntities(listAchievenment);
 			userRepository.save(user);
 		}
 		//Than thoai level(level 15)
@@ -371,7 +371,7 @@ public class PracticeService {
 			achievenment.setId(11l);
 			Set<AchievenmentEntity> listAchievenment =new HashSet<>();
 			listAchievenment.add(achievenment);
-			user.setAchievenmentEntities(listAchievenment);
+//			user.setAchievenmentEntities(listAchievenment);
 			userRepository.save(user);
 		}
 		Integer[] levelScore = { 0, 50, 100, 200, 300, 500, 1000, 2000, 3000, 5000, 7000, 10000, 15000, 20000, 25000,

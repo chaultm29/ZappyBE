@@ -3,6 +3,7 @@ package com.example.springboot.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.sql.Date;
+import java.util.Collection;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -30,9 +31,9 @@ public class UserEntity {
 	@Column(name = "avatar")
 	private String avatar;
 
-	@ManyToMany
-	@JoinTable(name = "user_achievement_rf", joinColumns = @JoinColumn(name = "achievement_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
-	private Set<AchievenmentEntity> achievenmentEntities;
+	@JsonIgnore
+	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+	private Set<UserAchievenmentEntity> userAchievenmentEntities;
 
 	@ManyToMany
 	@JoinTable(name = "user_alphabet_rf", joinColumns = @JoinColumn(name = "alphabet_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
@@ -61,23 +62,20 @@ public class UserEntity {
 	public UserEntity() {
 	}
 
-	public UserEntity(Long id, String fullName, String phone, String email, Date dateOfBirth, String avatar,
-			Set<AchievenmentEntity> achievenmentEntities, Set<AlphabetEntity> alphabetEntities,
-			Set<KanjiEntity> kanjiEntities, Set<VocabularyEntity> vocabularyEntities,
-			Set<GrammarEntity> grammarEntities, Set<ExamEntity> examEntities) {
-		super();
+	public UserEntity(Long id, String fullName, String phone, String email, Date dateOfBirth, String avatar, Set<UserAchievenmentEntity> userAchievenmentEntities, Set<AlphabetEntity> alphabetEntities, Set<KanjiEntity> kanjiEntities, Set<VocabularyEntity> vocabularyEntities, Set<GrammarEntity> grammarEntities, Set<ExamEntity> examEntities, Set<PracticeEntiry> paPracticeEntiries) {
 		this.id = id;
 		this.fullName = fullName;
 		this.phone = phone;
 		this.email = email;
 		this.dateOfBirth = dateOfBirth;
 		this.avatar = avatar;
-		this.achievenmentEntities = achievenmentEntities;
+		this.userAchievenmentEntities = userAchievenmentEntities;
 		this.alphabetEntities = alphabetEntities;
 		this.kanjiEntities = kanjiEntities;
 		this.vocabularyEntities = vocabularyEntities;
 		this.grammarEntities = grammarEntities;
 		this.examEntities = examEntities;
+		this.paPracticeEntiries = paPracticeEntiries;
 	}
 
 	public Set<ExamEntity> getExamEntities() {
@@ -136,12 +134,20 @@ public class UserEntity {
 		this.avatar = avatar;
 	}
 
-	public Set<AchievenmentEntity> getAchievenmentEntities() {
-		return achievenmentEntities;
+	public Set<UserAchievenmentEntity> getUserAchievenmentEntities() {
+		return userAchievenmentEntities;
 	}
 
-	public void setAchievenmentEntities(Set<AchievenmentEntity> achievenmentEntities) {
-		this.achievenmentEntities = achievenmentEntities;
+	public void setUserAchievenmentEntities(Set<UserAchievenmentEntity> userAchievenmentEntities) {
+		this.userAchievenmentEntities = userAchievenmentEntities;
+	}
+
+	public Set<PracticeEntiry> getPaPracticeEntiries() {
+		return paPracticeEntiries;
+	}
+
+	public void setPaPracticeEntiries(Set<PracticeEntiry> paPracticeEntiries) {
+		this.paPracticeEntiries = paPracticeEntiries;
 	}
 
 	public Set<AlphabetEntity> getAlphabetEntities() {
