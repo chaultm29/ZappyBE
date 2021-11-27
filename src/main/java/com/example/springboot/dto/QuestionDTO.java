@@ -1,6 +1,5 @@
 package com.example.springboot.dto;
 
-import java.util.List;
 import java.util.Set;
 
 import com.example.springboot.entities.AnswerEntity;

@@ -121,7 +121,8 @@ public class AccountService {
 	public void delete(Long id) {
 		AccountEntity accountEntity = accountRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Account not exist with id :" + id));
-		accountRepository.delete(accountEntity);
+//		accountRepository.delete(accountEntity);
+		accountEntity.setIsEnabled(false);
 		accountRepository.save(accountEntity);
 	}
 
