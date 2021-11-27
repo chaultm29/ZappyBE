@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.springboot.converters.QuestionConverter;
 import com.example.springboot.dto.QuestionGameDTO;
+import com.example.springboot.dto.RequireBingoQuestionDTO;
 import com.example.springboot.entities.AnswerEntity;
 import com.example.springboot.entities.QuestionEntity;
 import com.example.springboot.repositories.AnswerRepository;
@@ -26,19 +27,21 @@ public class GameService {
 	@Autowired
 	AnswerRepository answerRepository;
 	
-	public QuestionGameDTO getCurrentQuestion(List<Integer> listQuestionId) {
+	public QuestionGameDTO getCurrentQuestion(RequireBingoQuestionDTO requireBingo) throws NotFoundException {
+		if(requireBingo.getLessonIds().isEmpty()) throw new NotFoundException("list lessons can not be empty"); 
 		QuestionEntity currentQuestion;
 		do {
-		currentQuestion = questionRepository.getQuestionBingoGame();
+			currentQuestion = questionRepository.getQuestionBingoGame();
 		}
-		while(doesExist(currentQuestion.getId(), listQuestionId));
+		while(doesExist(currentQuestion.getId().intValue(), requireBingo.getQuestionIds()) ||
+				!doesExist(currentQuestion.getLessonEntity().getId().intValue(), requireBingo.getLessonIds()));
 		return questionConverter.toQuestionGameDTOs(currentQuestion);
-		}
+	}
 	
-	//check if questionId existed in list 
-	private boolean doesExist(Long questionId,List<Integer> listQuestionId) {
-		for(Integer id: listQuestionId) {
-			if(Long.valueOf(id)==questionId) {
+	//check if Id existed in list 
+	private boolean doesExist(int id,List<Integer> listId) {
+		for(int _id: listId) {
+			if(_id == id) {
 				return true;
 			}
 		}

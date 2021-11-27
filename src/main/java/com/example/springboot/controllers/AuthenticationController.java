@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.springboot.config.JWTResponse;
 import com.example.springboot.config.JWTTokenUtil;
 import com.example.springboot.config.JwtRequest;
+import com.example.springboot.dto.AccountDTO;
+import com.example.springboot.services.AccountService;
 import com.example.springboot.services.MyUserDetailsService;
 
 @CrossOrigin(origins = {"http://localhost:3000", "https://www.zappy-nihongo.com"})
@@ -28,6 +30,9 @@ public class AuthenticationController {
 	
 	@Autowired
 	private MyUserDetailsService userDetailsService;
+	
+	@Autowired
+	private AccountService accountService;
 	
 	@PostMapping("/login")
 	public ResponseEntity<JWTResponse> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) {
@@ -45,5 +50,10 @@ public class AuthenticationController {
 		} catch (Exception e) {
 			return new ResponseEntity<JWTResponse>(result, HttpStatus.UNAUTHORIZED);
 		}
+	}
+	//register
+	@PostMapping("/register")
+	public ResponseEntity<String> createAccountEntity(@RequestBody AccountDTO accountDTO) {
+		return new ResponseEntity<String>(accountService.save(accountDTO), HttpStatus.OK);
 	}
 }
