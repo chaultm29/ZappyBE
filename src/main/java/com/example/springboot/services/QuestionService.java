@@ -52,10 +52,10 @@ public class QuestionService {
 					answerEntity.getImage_link(), answerEntity.getAnswer(), afterSave)));
 		}
 		if (afterSave != null) {
-			return "Thêm " + questionDTO.getQuestion() + " thành công";
+			return "Thêm "+ questionDTO.getQuestion()+" thành công";
 		}
 
-		return "Không thể thêm " + questionDTO.getQuestion();
+		return "Không thể thêm "+ questionDTO.getQuestion();
 	}
 
 	public QuestionDTO update(QuestionDTO questionDTO, Long id) {
@@ -87,8 +87,8 @@ public class QuestionService {
 //		answerRepository.deleteByIdQuestion(id);
 
 //		questionRepository.delete(questionEntity);
-		questionEntity.setEnabled(false);
-		questionRepository.save(questionEntity);
+			questionEntity.setEnabled(false);
+			questionRepository.save(questionEntity);
 	}
 
 	public QuestionDTO get(Long id) {
