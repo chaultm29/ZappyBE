@@ -84,9 +84,11 @@ public class QuestionService {
 		QuestionEntity questionEntity = questionRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Question not exist with id :" + id));
 
-		answerRepository.deleteByIdQuestion(id);
+//		answerRepository.deleteByIdQuestion(id);
 
-		questionRepository.delete(questionEntity);
+//		questionRepository.delete(questionEntity);
+		questionEntity.setEnabled(false);
+		questionRepository.save(questionEntity);
 	}
 
 	public QuestionDTO get(Long id) {
