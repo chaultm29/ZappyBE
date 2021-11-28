@@ -56,4 +56,10 @@ public class AuthenticationController {
 	public ResponseEntity<String> createAccountEntity(@RequestBody AccountDTO accountDTO) {
 		return new ResponseEntity<String>(accountService.save(accountDTO), HttpStatus.OK);
 	}
+	
+	//check if the token is expired
+	@PostMapping("/ping")
+	public ResponseEntity<Boolean> ping(){
+		return new ResponseEntity<Boolean>(true, HttpStatus.OK); 
+	}
 }
