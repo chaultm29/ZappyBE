@@ -12,7 +12,7 @@ public class AchievementConverter {
     public UserAchievenmentDTO toDTO(UserAchievenmentEntity userAchievenmentEntity) {
         UserAchievenmentDTO userAchievenmentDTO = new UserAchievenmentDTO();
         userAchievenmentDTO.setName(userAchievenmentEntity.getAchievenmentEntity().getName());
-        userAchievenmentDTO.setName(userAchievenmentDTO.getName());
+        userAchievenmentDTO.setDateCreate(userAchievenmentEntity.getDateCreate());
         return userAchievenmentDTO;
     }
 
