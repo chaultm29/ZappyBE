@@ -258,18 +258,35 @@ public class PracticeService {
 		questionAnswer.setCorrect(correct);
 		questionAnswer.setNumberOfCorrect(numberOfCorrect);
 		questionAnswer.setScore((numberOfCorrect * 100 / numberOfQuestion));
+		
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		List<PracticeEntiry> examEntities = practiceRepository.getPracticeByUserName(username);
+		PracticeEntiry practiceEntiry = examEntities.get(0);
+		practiceEntiry.setScore(numberOfCorrect * 100 /  numberOfQuestion);
+		practiceRepository.save(practiceEntiry);
+		getProgress();
+		getLevel();
 		return questionAnswer;
 	}
 
 	public ProgressDTO getProgress() {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		ProgressDTO progressDTO = new ProgressDTO();
-		Double voca = (practiceRepository.getIdsPracticeBySkillUserScore(username, 1l) * 1.0)
-				/ practiceRepository.getIdsPracticeBySkillUser(username, 1l);
-		Double grammar = (practiceRepository.getIdsPracticeBySkillUserScore(username, 2l) * 1.0)
-				/ practiceRepository.getIdsPracticeBySkillUser(username, 2l);
-		Double kanji = (practiceRepository.getIdsPracticeBySkillUserScore(username, 3l) * 1.0)
-				/ practiceRepository.getIdsPracticeBySkillUser(username, 3l);
+		Integer vocaScore = (practiceRepository.getIdsPracticeBySkillUserScore(username, 1l)!=null?practiceRepository.getIdsPracticeBySkillUserScore(username, 1l):0);
+		Integer vocaCount = practiceRepository.getIdsPracticeBySkillUser(username, 1l)!=null?practiceRepository.getIdsPracticeBySkillUser(username, 1l):1;
+
+		Integer gramarScore = practiceRepository.getIdsPracticeBySkillUserScore(username, 2l)!=null?practiceRepository.getIdsPracticeBySkillUserScore(username, 2l):0;
+		Integer gramarCount = practiceRepository.getIdsPracticeBySkillUser(username, 2l)!=null?practiceRepository.getIdsPracticeBySkillUser(username, 2l):1;
+
+		Integer kanjiScore = practiceRepository.getIdsPracticeBySkillUserScore(username, 3l)!=null?practiceRepository.getIdsPracticeBySkillUserScore(username, 3l):0;
+		Integer kanjiCount = practiceRepository.getIdsPracticeBySkillUser(username, 3l)!=null?practiceRepository.getIdsPracticeBySkillUser(username, 3l):1;
+
+		Double voca = (vocaScore * 1.0)
+				/ vocaCount;
+		Double grammar = (gramarScore * 1.0)
+				/ gramarCount;
+		Double kanji = (kanjiScore * 1.0)
+				/ kanjiCount;
 
 		progressDTO.setVocaProgress(voca);
 		progressDTO.setGrammarProgess(grammar);
@@ -390,7 +407,7 @@ public class PracticeService {
 		for (int i = levelScore.length - 1; i > 0; i--) {
 			if (score > levelScore[i]) {
 				levelDTO.setLevel(i);
-				levelDTO.setPercentage((score - levelScore[i - 1]) * 100 / (levelScore[i + 1] - levelScore[i]));
+				levelDTO.setPercentage((score - levelScore[i]) * 100 / (levelScore[i + 1] - levelScore[i]));
 				break;
 			} else if (score == levelScore[i]) {
 				levelDTO.setLevel(i);
