@@ -34,8 +34,9 @@ public class QuestionService {
 	private AnswerRepository answerRepository;
 
 	public List<QuestionDTO> get() {
-		List<QuestionEntity> questionEntities = questionRepository.findAll();
-		return questionConverter.toDTOs(questionEntities);
+		List<QuestionEntity> questionEntities = questionRepository.getAllQuestionEnable();
+		List<QuestionDTO> questionDTOS = (questionEntities != null && questionEntities.size()!=0)? questionConverter.toDTOs(questionEntities): new ArrayList<>();
+		return questionDTOS;
 	}
 
 	public String save(QuestionDTO questionDTO) {
@@ -92,9 +93,9 @@ public class QuestionService {
 	}
 
 	public QuestionDTO get(Long id) {
-		QuestionEntity questionEntity = questionRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Question not exist with id :" + id));
-		return questionConverter.toDTO(questionEntity);
+		QuestionEntity questionEntity = questionRepository.getQuestionEnableByID(id);
+		QuestionDTO questionDTO =(questionEntity != null)? questionConverter.toDTO(questionEntity): new QuestionDTO();
+		return questionDTO;
 	}
 
 	public List<QuestionDTO> getAllQuestion() {
