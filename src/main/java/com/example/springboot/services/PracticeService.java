@@ -272,29 +272,20 @@ public class PracticeService {
 	public ProgressDTO getProgress() {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		ProgressDTO progressDTO = new ProgressDTO();
-		Integer vocaScore = (practiceRepository.getIdsPracticeBySkillUserScore(username, 1l)!=null?practiceRepository.getIdsPracticeBySkillUserScore(username, 1l):0);
-		Integer vocaCount = practiceRepository.getIdsPracticeBySkillUser(username, 1l)!=null?practiceRepository.getIdsPracticeBySkillUser(username, 1l):1;
+		Integer countLessonVocaPass = (practiceRepository.getIdsPracticeBySkillUserScore(username, 1l)!=null?practiceRepository.getIdsPracticeBySkillUserScore(username, 1l):0);
+		
+		Integer countLessonGramarPass = practiceRepository.getIdsPracticeBySkillUserScore(username, 2l)!=null?practiceRepository.getIdsPracticeBySkillUserScore(username, 2l):0;
+		
+		Integer countLessonKanjiPass = practiceRepository.getIdsPracticeBySkillUserScore(username, 3l)!=null?practiceRepository.getIdsPracticeBySkillUserScore(username, 3l):0;
+		
 
-		Integer gramarScore = practiceRepository.getIdsPracticeBySkillUserScore(username, 2l)!=null?practiceRepository.getIdsPracticeBySkillUserScore(username, 2l):0;
-		Integer gramarCount = practiceRepository.getIdsPracticeBySkillUser(username, 2l)!=null?practiceRepository.getIdsPracticeBySkillUser(username, 2l):1;
-
-		Integer kanjiScore = practiceRepository.getIdsPracticeBySkillUserScore(username, 3l)!=null?practiceRepository.getIdsPracticeBySkillUserScore(username, 3l):0;
-		Integer kanjiCount = practiceRepository.getIdsPracticeBySkillUser(username, 3l)!=null?practiceRepository.getIdsPracticeBySkillUser(username, 3l):1;
-
-		Double voca = (vocaScore * 1.0)
-				/ vocaCount;
-		Double grammar = (gramarScore * 1.0)
-				/ gramarCount;
-		Double kanji = (kanjiScore * 1.0)
-				/ kanjiCount;
-
-		progressDTO.setVocaProgress(voca);
-		progressDTO.setGrammarProgess(grammar);
-		progressDTO.setKanjiProgress(kanji);
-		Double progressAll = (Double) ((voca + grammar + kanji) * 100 / 3);
+		progressDTO.setVocaProgress(countLessonVocaPass);
+		progressDTO.setGrammarProgess(countLessonGramarPass);
+		progressDTO.setKanjiProgress(countLessonKanjiPass);
+		Double progressAll = (countLessonVocaPass + countLessonGramarPass + countLessonKanjiPass)*1.0 / 21;
 		progressDTO.setProgressAll(progressAll);
 		//Chúa tể ngôn từ
-		if(voca==7){
+		if(countLessonVocaPass==7){
 			UserEntity user = userRepository.getUserByUserName(username);
 			AchievenmentEntity achievenment = new AchievenmentEntity();
 			achievenment.setId(5l);
@@ -305,7 +296,7 @@ public class PracticeService {
 			userAchienmentRepository.save(userAchievenment);
 		}
 		//Vị thần ngữ pháp
-		if(grammar==7){
+		if(countLessonGramarPass==7){
 			UserEntity user = userRepository.getUserByUserName(username);
 			AchievenmentEntity achievenment = new AchievenmentEntity();
 			achievenment.setId(4l);
@@ -315,7 +306,7 @@ public class PracticeService {
 			userAchievenment.setDateCreate(new java.sql.Date((new Date()).getTime()));
 			userAchienmentRepository.save(userAchievenment);
 		}//Bậc thầy chữ hán
-		if(kanji==7){
+		if(countLessonKanjiPass==7){
 			UserEntity user = userRepository.getUserByUserName(username);
 			AchievenmentEntity achievenment = new AchievenmentEntity();
 			achievenment.setId(3l);
@@ -389,7 +380,7 @@ public class PracticeService {
 			userAchienmentRepository.save(userAchievenment);
 		}
 		//Than thoai level(level 15)
-		if(score==1000){
+		if(score==30000){
 			UserEntity user = userRepository.getUserByUserName(username);
 			AchievenmentEntity achievenment = new AchievenmentEntity();
 			achievenment.setId(11l);

@@ -12,18 +12,18 @@ import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/practice")
+@RequestMapping("")
 public class PracticeController {
 	@Autowired
 	PracticeService practiceService;
 
-	@PostMapping()
+	@PostMapping("/practice")
 	public ResponseEntity<HashMap<String, Object>> getExam(@RequestBody QuestionRequireDTO questionRequireDTO) {
 		return new ResponseEntity<HashMap<String, Object>>(practiceService.questionExamDTOList(questionRequireDTO),
 				HttpStatus.OK);
 	}
 
-	@PostMapping("/result")
+	@PostMapping("/practice/result")
 	public ResponseEntity<QuestionResultDetailDTO> getResultDetailQuestion(
 			@RequestBody QuestionResultDTO questionResultDTO) {
 		return new ResponseEntity<QuestionResultDetailDTO>(practiceService.getResultDetailQuestion(questionResultDTO),
