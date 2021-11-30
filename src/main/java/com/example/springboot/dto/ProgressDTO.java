@@ -4,12 +4,12 @@ public class ProgressDTO {
 	private Integer vocaProgress;
 	private Integer kanjiProgress;
 	private Integer grammarProgess;
-	private Double progressAll;
+	private Integer progressAll;
 
 	public ProgressDTO() {
 	}
 
-	public ProgressDTO(Integer vocaProgress, Integer kanjiProgress, Integer grammarProgess, Double progressAll) {
+	public ProgressDTO(Integer vocaProgress, Integer kanjiProgress, Integer grammarProgess, Integer progressAll) {
 		super();
 		this.vocaProgress = vocaProgress;
 		this.kanjiProgress = kanjiProgress;
@@ -41,13 +41,14 @@ public class ProgressDTO {
 		this.grammarProgess = grammarProgess;
 	}
 
-	public Double getProgressAll() {
+	public Integer getProgressAll() {
 		return progressAll;
 	}
 
-	public void setProgressAll(Double progressAll) {
+	public void setProgressAll(Integer progressAll) {
 		this.progressAll = progressAll;
 	}
 
+	
 	
 }

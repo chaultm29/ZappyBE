@@ -282,7 +282,7 @@ public class PracticeService {
 		progressDTO.setVocaProgress(countLessonVocaPass);
 		progressDTO.setGrammarProgess(countLessonGramarPass);
 		progressDTO.setKanjiProgress(countLessonKanjiPass);
-		Double progressAll = (countLessonVocaPass + countLessonGramarPass + countLessonKanjiPass)*1.0 / 21;
+		Integer progressAll = countLessonVocaPass + countLessonGramarPass + countLessonKanjiPass;
 		progressDTO.setProgressAll(progressAll);
 		//Chúa tể ngôn từ
 		if(countLessonVocaPass==7){
@@ -317,7 +317,7 @@ public class PracticeService {
 			userAchienmentRepository.save(userAchievenment);
 		}
 		//Thần đồng ngôn ngữ
-		if(progressAll==100){
+		if(progressAll==21){
 			UserEntity user = userRepository.getUserByUserName(username);
 			AchievenmentEntity achievenment = new AchievenmentEntity();
 			achievenment.setId(6l);
