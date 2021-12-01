@@ -258,26 +258,34 @@ public class PracticeService {
 		questionAnswer.setCorrect(correct);
 		questionAnswer.setNumberOfCorrect(numberOfCorrect);
 		questionAnswer.setScore((numberOfCorrect * 100 / numberOfQuestion));
+		
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		List<PracticeEntiry> examEntities = practiceRepository.getPracticeByUserName(username);
+		PracticeEntiry practiceEntiry = examEntities.get(0);
+		practiceEntiry.setScore(numberOfCorrect * 100 /  numberOfQuestion);
+		practiceRepository.save(practiceEntiry);
+		getProgress();
+		getLevel();
 		return questionAnswer;
 	}
 
 	public ProgressDTO getProgress() {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		ProgressDTO progressDTO = new ProgressDTO();
-		Double voca = (practiceRepository.getIdsPracticeBySkillUserScore(username, 1l) * 1.0)
-				/ practiceRepository.getIdsPracticeBySkillUser(username, 1l);
-		Double grammar = (practiceRepository.getIdsPracticeBySkillUserScore(username, 2l) * 1.0)
-				/ practiceRepository.getIdsPracticeBySkillUser(username, 2l);
-		Double kanji = (practiceRepository.getIdsPracticeBySkillUserScore(username, 3l) * 1.0)
-				/ practiceRepository.getIdsPracticeBySkillUser(username, 3l);
+		Integer countLessonVocaPass = (practiceRepository.getIdsPracticeBySkillUserScore(username, 1l)!=null?practiceRepository.getIdsPracticeBySkillUserScore(username, 1l):0);
+		
+		Integer countLessonGramarPass = practiceRepository.getIdsPracticeBySkillUserScore(username, 2l)!=null?practiceRepository.getIdsPracticeBySkillUserScore(username, 2l):0;
+		
+		Integer countLessonKanjiPass = practiceRepository.getIdsPracticeBySkillUserScore(username, 3l)!=null?practiceRepository.getIdsPracticeBySkillUserScore(username, 3l):0;
+		
 
-		progressDTO.setVocaProgress(voca);
-		progressDTO.setGrammarProgess(grammar);
-		progressDTO.setKanjiProgress(kanji);
-		Double progressAll = (Double) ((voca + grammar + kanji) * 100 / 3);
+		progressDTO.setVocaProgress(countLessonVocaPass);
+		progressDTO.setGrammarProgess(countLessonGramarPass);
+		progressDTO.setKanjiProgress(countLessonKanjiPass);
+		Integer progressAll = countLessonVocaPass + countLessonGramarPass + countLessonKanjiPass;
 		progressDTO.setProgressAll(progressAll);
 		//Chúa tể ngôn từ
-		if(voca==7){
+		if(countLessonVocaPass==7){
 			UserEntity user = userRepository.getUserByUserName(username);
 			AchievenmentEntity achievenment = new AchievenmentEntity();
 			achievenment.setId(5l);
@@ -288,7 +296,7 @@ public class PracticeService {
 			userAchienmentRepository.save(userAchievenment);
 		}
 		//Vị thần ngữ pháp
-		if(grammar==7){
+		if(countLessonGramarPass==7){
 			UserEntity user = userRepository.getUserByUserName(username);
 			AchievenmentEntity achievenment = new AchievenmentEntity();
 			achievenment.setId(4l);
@@ -298,7 +306,7 @@ public class PracticeService {
 			userAchievenment.setDateCreate(new java.sql.Date((new Date()).getTime()));
 			userAchienmentRepository.save(userAchievenment);
 		}//Bậc thầy chữ hán
-		if(kanji==7){
+		if(countLessonKanjiPass==7){
 			UserEntity user = userRepository.getUserByUserName(username);
 			AchievenmentEntity achievenment = new AchievenmentEntity();
 			achievenment.setId(3l);
@@ -309,7 +317,7 @@ public class PracticeService {
 			userAchienmentRepository.save(userAchievenment);
 		}
 		//Thần đồng ngôn ngữ
-		if(progressAll==100){
+		if(progressAll==21){
 			UserEntity user = userRepository.getUserByUserName(username);
 			AchievenmentEntity achievenment = new AchievenmentEntity();
 			achievenment.setId(6l);
@@ -372,7 +380,7 @@ public class PracticeService {
 			userAchienmentRepository.save(userAchievenment);
 		}
 		//Than thoai level(level 15)
-		if(score==1000){
+		if(score==30000){
 			UserEntity user = userRepository.getUserByUserName(username);
 			AchievenmentEntity achievenment = new AchievenmentEntity();
 			achievenment.setId(11l);
@@ -390,7 +398,7 @@ public class PracticeService {
 		for (int i = levelScore.length - 1; i > 0; i--) {
 			if (score > levelScore[i]) {
 				levelDTO.setLevel(i);
-				levelDTO.setPercentage((score - levelScore[i - 1]) * 100 / (levelScore[i + 1] - levelScore[i]));
+				levelDTO.setPercentage((score - levelScore[i]) * 100 / (levelScore[i + 1] - levelScore[i]));
 				break;
 			} else if (score == levelScore[i]) {
 				levelDTO.setLevel(i);

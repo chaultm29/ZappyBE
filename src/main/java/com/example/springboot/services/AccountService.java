@@ -1,5 +1,6 @@
 package com.example.springboot.services;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -127,17 +128,16 @@ public class AccountService {
 	}
 
 	public AccountDTO get(Long id) {
-		AccountEntity accountEntity = accountRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Account not exist with id :" + id));
-		AccountDTO accountDTO = accountConverter.toDTO(accountEntity);
+		AccountEntity accountEntity = accountRepository.getAccountEnableByID(id);
+		AccountDTO accountDTO = (accountEntity != null ) ? accountConverter.toDTO(accountEntity) : new AccountDTO();
 		accountDTO.setPasswordNew("");
 		accountDTO.setPasswordOld("");
 		return accountDTO;
 	}
 
 	public List<AccountDTO> get() {
-		List<AccountEntity> accountEntities = accountRepository.findAll();
-		List<AccountDTO> accountDTOS = accountConverter.toDTOs(accountEntities);
+		List<AccountEntity> accountEntities = accountRepository.getAllAccountEnable();
+		List<AccountDTO> accountDTOS =(accountEntities != null && accountEntities.size()!=0 ) ? accountConverter.toDTOs(accountEntities) : new ArrayList<>();
 		for(AccountDTO accountDTO : accountDTOS){
 			accountDTO.setPasswordNew("");
 			accountDTO.setPasswordOld("");
