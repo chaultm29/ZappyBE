@@ -23,6 +23,7 @@ import com.example.springboot.config.JWTResponse;
 import com.example.springboot.config.JWTTokenUtil;
 import com.example.springboot.config.JwtRequest;
 import com.example.springboot.dto.AccountDTO;
+import com.example.springboot.dto.PasswordDTO;
 import com.example.springboot.exception.ResourceNotFoundException;
 import com.example.springboot.services.AccountService;
 import com.example.springboot.services.MyUserDetailsService;
@@ -79,5 +80,11 @@ public class AccountController {
 		} catch (ResourceNotFoundException e) {
 			return new ResponseEntity<Boolean>(false, HttpStatus.NOT_FOUND);
 		}
+	}
+	
+	//change password
+	@PostMapping("/changePassword")
+	public ResponseEntity<Boolean> changePasswordAccountEntity(@RequestBody PasswordDTO passwordDTO) {
+		return new ResponseEntity<Boolean>(accountService.changePassword(passwordDTO), HttpStatus.OK);
 	}
 }
