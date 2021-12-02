@@ -13,7 +13,7 @@ import java.util.List;
 public interface PracticeRepository extends JpaRepository<PracticeEntiry, Long> {
     @Query("select  pa from  AccountEntity a inner join  a.userEntity u inner join  u.paPracticeEntiries pa where a.username = :username order by pa.id desc ")
     List<PracticeEntiry> getPracticeByUserName(@Param("username") String username);
-    @Query("select COUNT(p) from AccountEntity a inner join  a.userEntity u inner join u.paPracticeEntiries p inner join p.questionEntities q where a.username=:username and q.skillEntity.id=:idSkill and p.score>= 80")
+    @Query("select COUNT( distinct  l.id ) from AccountEntity a inner join  a.userEntity u inner join u.paPracticeEntiries p inner join p.questionEntities q inner join q.lessonEntity l where a.username=:username and q.skillEntity.id=:idSkill and p.score>= 80")
     Integer getIdsPracticeBySkillUserScore(@Param("username")String username, @Param("idSkill") Long idSkill);
     @Query("select COUNT(p) from AccountEntity a inner join  a.userEntity u inner join u.paPracticeEntiries p inner join p.questionEntities q where a.username=:username and q.skillEntity.id=:idSkill ")
     Integer getIdsPracticeBySkillUser(@Param("username")String username, @Param("idSkill") Long idSkill);
