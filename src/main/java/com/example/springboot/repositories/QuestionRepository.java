@@ -45,6 +45,6 @@ public interface QuestionRepository extends JpaRepository<QuestionEntity, Long> 
 	@Query("select q from QuestionEntity q where q.question = :question and q.isEnabled=true")
 	QuestionEntity getQuestion(@Param("question") String question);
 
-	@Query(value = "select * from questions q where  q.type_id = 1 order by RAND() limit 1", nativeQuery = true)
+	@Query(value = "select * from questions q where  q.type_id = 1 and q.enabled = 1 order by RAND() limit 1", nativeQuery = true)
 	QuestionEntity getQuestionBingoGame();
 }

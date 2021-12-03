@@ -20,6 +20,7 @@ import com.example.springboot.dto.QuestionGameDTO;
 import com.example.springboot.dto.RequireBingoQuestionDTO;
 import com.example.springboot.services.GameRecordService;
 import com.example.springboot.services.GameService;
+import com.example.springboot.services.UserService;
 
 import javassist.NotFoundException;
 
@@ -30,6 +31,9 @@ public class GameController {
 	
 	@Autowired
 	GameService gameService;
+	
+	@Autowired
+	UserService userService;
 	
 	@Autowired
 	GameRecordService gameRecordService;
@@ -54,6 +58,7 @@ public class GameController {
 	
 	@PostMapping("/saving")
 	public ResponseEntity<Boolean> save(@RequestBody GameRecordDTO gameRecordDTO){
+			userService.saveExp(gameRecordDTO.getGameName(), gameRecordDTO.getScore());
 			return new ResponseEntity<Boolean>(gameRecordService.save(gameRecordDTO), HttpStatus.OK);			
 	}
 	

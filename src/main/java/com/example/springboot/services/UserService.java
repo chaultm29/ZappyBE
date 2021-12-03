@@ -29,4 +29,24 @@ public class UserService {
 		UserEntity userEntity = userRepository.getUserByUserName(username);
 		return userConverter.toDTO(userEntity);
 	}
+	
+	public UserDTO saveExp(String activity, Long score) {
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		UserEntity userEntity = userRepository.getUserByUserName(username);
+		Long exp = 0l;
+		switch(activity) {
+		case "Bingo Game":
+			exp = score * 1/40;
+			break;
+		case "Memory Game":
+			exp = score * 1/33;
+			break;
+		case "exam":
+		case "practice":
+			exp = score;
+			break;
+		}
+		userEntity.setExp(userEntity.getExp()+exp);
+		return userConverter.toDTO(userEntity);
+	}
 }
