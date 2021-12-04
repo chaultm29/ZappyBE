@@ -334,7 +334,7 @@ public class PracticeService {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		LevelDTO levelDTO = new LevelDTO();
 		Integer score = practiceRepository.totalScorePracticeByUsername(username)
-				+ examRepositoty.totalScoreExamByUsername(username);
+				+ examRepositoty.totalScoreExamByUsername(username);		
 		//Ho ve level(level 6)
 		if(score==1000){
 			UserEntity user = userRepository.getUserByUserName(username);
@@ -398,11 +398,12 @@ public class PracticeService {
 		for (int i = levelScore.length - 1; i > 0; i--) {
 			if (score > levelScore[i]) {
 				levelDTO.setLevel(i);
-				levelDTO.setPercentage((score - levelScore[i]) * 100 / (levelScore[i + 1] - levelScore[i]));
+				levelDTO.setCurentExp((levelScore[i + 1] - levelScore[i]));
+				levelDTO.setLevelExp(score - levelScore[i]);
+//				levelDTO.setPercentage((score - levelScore[i]) * 100 / (levelScore[i + 1] - levelScore[i]));
 				break;
 			} else if (score == levelScore[i]) {
 				levelDTO.setLevel(i);
-				levelDTO.setPercentage(0);
 				break;
 			}
 		}

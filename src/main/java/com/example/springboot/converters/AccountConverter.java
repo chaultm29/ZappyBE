@@ -32,7 +32,7 @@ public class AccountConverter {
     // UPDATE
     public AccountEntity toEntity(AccountDTO accountDTO, AccountEntity accountEntity) {
         accountEntity.setUsername(accountDTO.getUsername());
-        accountEntity.setPassword(accountDTO.getPasswordNew());
+  //      accountEntity.setPassword(accountDTO.getPasswordNew());
         accountEntity.setRoleEntity(roleRepository.getById(accountDTO.getRoleDTO().getId()));
         accountEntity.setIsEnabled(true);
         UserEntity userEntity = accountEntity.getUserEntity();
