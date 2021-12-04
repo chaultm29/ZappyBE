@@ -8,6 +8,8 @@ import com.example.springboot.converters.UserConverter;
 import com.example.springboot.dto.UserDTO;
 import com.example.springboot.entities.UserEntity;
 import com.example.springboot.repositories.UserRepository;
+//import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.springboot.converters.AccountConverter;
 import com.example.springboot.dto.AccountDTO;
+import com.example.springboot.dto.PasswordDTO;
 import com.example.springboot.entities.AccountEntity;
 import com.example.springboot.entities.RoleEntity;
 import com.example.springboot.exception.ResourceNotFoundException;
@@ -26,10 +29,10 @@ import javax.transaction.Transactional;
 
 @Service
 public class AccountService {
-	
+
 	@Autowired
 	AccountRepository accountRepository;
-	
+
 	@Autowired
 	RoleRepository roleRepository;
 
@@ -60,8 +63,8 @@ public class AccountService {
 	@Transactional
 	public String save(AccountDTO accountDTO) {
 		AccountEntity accountEntity1 = accountRepository.findByUsername(accountDTO.getUsername());
-		if(accountEntity1 != null){
-			return "Username: " + accountEntity1.getUsername() + " đã tồn tại trong hệ thống!" ;
+		if (accountEntity1 != null) {
+			return "Username: " + accountEntity1.getUsername() + " đã tồn tại trong hệ thống!";
 		}
 		UserDTO userDTO = new UserDTO();
 		userDTO.setAvatar(accountDTO.getAvatar());
@@ -71,51 +74,35 @@ public class AccountService {
 		userDTO.setFullName(accountDTO.getFullName());
 		UserEntity userEntity = userConverter.toEntity(userDTO);
 
-
 		AccountEntity accountEntity = accountConverter.toEntity(accountDTO);
 		accountEntity.setUserEntity(userEntity);
 
 		AccountEntity afterSave = saveAccount(accountEntity);
-		return "Tạo tài khoản " + afterSave.getUsername() +" thành công" ;
+		return "Tạo tài khoản " + afterSave.getUsername() + " thành công";
 	}
 
 	public HashMap<String, Object> update(Long id, AccountDTO accountDetails) {
-		HashMap<String,Object> stringObjectHashMap = new HashMap<>();
+		HashMap<String, Object> stringObjectHashMap = new HashMap<>();
 		String mess = "";
 		AccountEntity accountEntity = accountRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Account not exist with id :" + id));
-		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		if(username.equals(accountEntity.getUsername())){
-			if(!passwordEncoder.matches(accountDetails.getPasswordOld(),accountEntity.getPassword())){
-				mess = "Bạn nhập sai mật khẩu cũ. Xin mời nhập lại mật khẩu cũ";
-				stringObjectHashMap.put("data",null);
-				stringObjectHashMap.put("message",mess);
-			}else{
-				AccountEntity updatAccountEntity = accountConverter.toEntity(accountDetails, accountEntity);
-				AccountEntity  afterSave = saveAccount(updatAccountEntity);
-				afterSave.setPassword("");
-				mess = "Cập nhật account " + afterSave.getUsername() + " thành công";
-				stringObjectHashMap.put("data",afterSave);
-				stringObjectHashMap.put("message",mess);
-			}
-		}else{
-			mess = "Bạn không có quyền đổi mật khẩu account này";
-			stringObjectHashMap.put("data",null);
-			stringObjectHashMap.put("message",mess);
-		}
-
+		AccountEntity updatAccountEntity = accountConverter.toEntity(accountDetails, accountEntity);
+		AccountEntity afterSave = accountRepository.save(updatAccountEntity);
+		afterSave.setPassword("");
+		mess = "Cập nhật account " + afterSave.getUsername() + " thành công";
+		stringObjectHashMap.put("message", mess);
 		return stringObjectHashMap;
 	}
 
 	public HashMap<String, Object> resetPassword(String username) {
-		HashMap<String,Object> stringObjectHashMap = new HashMap<>();
+		HashMap<String, Object> stringObjectHashMap = new HashMap<>();
 		String mess = "";
 		AccountEntity accountEntity = accountRepository.findByUsername(username);
 
 		accountEntity.setPassword("123456");
-		AccountEntity  afterSave = saveAccount(accountEntity);
+		AccountEntity afterSave = saveAccount(accountEntity);
 		mess = "Cập nhật account " + afterSave.getUsername() + " thành công";
-		stringObjectHashMap.put("message",mess);
+		stringObjectHashMap.put("message", mess);
 		return stringObjectHashMap;
 	}
 
@@ -129,7 +116,7 @@ public class AccountService {
 
 	public AccountDTO get(Long id) {
 		AccountEntity accountEntity = accountRepository.getAccountEnableByID(id);
-		AccountDTO accountDTO = (accountEntity != null ) ? accountConverter.toDTO(accountEntity) : new AccountDTO();
+		AccountDTO accountDTO = (accountEntity != null) ? accountConverter.toDTO(accountEntity) : new AccountDTO();
 		accountDTO.setPasswordNew("");
 		accountDTO.setPasswordOld("");
 		return accountDTO;
@@ -137,11 +124,27 @@ public class AccountService {
 
 	public List<AccountDTO> get() {
 		List<AccountEntity> accountEntities = accountRepository.getAllAccountEnable();
-		List<AccountDTO> accountDTOS =(accountEntities != null && accountEntities.size()!=0 ) ? accountConverter.toDTOs(accountEntities) : new ArrayList<>();
-		for(AccountDTO accountDTO : accountDTOS){
+		List<AccountDTO> accountDTOS = (accountEntities != null && accountEntities.size() != 0)
+				? accountConverter.toDTOs(accountEntities)
+				: new ArrayList<>();
+		for (AccountDTO accountDTO : accountDTOS) {
 			accountDTO.setPasswordNew("");
 			accountDTO.setPasswordOld("");
 		}
-		return accountDTOS ;
+		return accountDTOS;
+	}
+
+	public boolean changePassword(PasswordDTO passwordDTO) {
+		if (!passwordDTO.isEqual()) {
+			String username = SecurityContextHolder.getContext().getAuthentication().getName();
+			AccountEntity accountEntity = accountRepository.findByUsername(username);
+			if (passwordEncoder.matches(passwordDTO.getOldPassword(), accountEntity.getPassword())) {
+				accountEntity.setPassword(passwordEncoder.encode(passwordDTO.getNewPassword()));
+				accountRepository.save(accountEntity);
+				return true;
+			}
+		}
+		return false;
+
 	}
 }
