@@ -8,12 +8,12 @@ public class GameRecordDTO {
 	private String gameName;
 	private Date timeCreated;
 	private Long timePlayed;
-	private Double score;
+	private Long score;
 	
 	public GameRecordDTO() {
 	}
 
-	public GameRecordDTO(String gameName, Date timeCreated, Long timePlayed, Double score) {
+	public GameRecordDTO(String gameName, Date timeCreated, Long timePlayed, Long score) {
 		super();
 		this.gameName = gameName;
 		this.timeCreated = timeCreated;
@@ -45,11 +45,11 @@ public class GameRecordDTO {
 		this.timePlayed = timePlayed;
 	}
 
-	public Double getScore() {
+	public Long getScore() {
 		return score;
 	}
 
-	public void setScore(Double score) {
+	public void setScore(Long score) {
 		this.score = score;
 	}
 
