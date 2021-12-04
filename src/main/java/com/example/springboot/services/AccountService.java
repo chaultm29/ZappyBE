@@ -8,6 +8,8 @@ import com.example.springboot.converters.UserConverter;
 import com.example.springboot.dto.UserDTO;
 import com.example.springboot.entities.UserEntity;
 import com.example.springboot.repositories.UserRepository;
+//import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -84,26 +86,11 @@ public class AccountService {
 		String mess = "";
 		AccountEntity accountEntity = accountRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Account not exist with id :" + id));
-		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		if (username.equals(accountEntity.getUsername())) {
-			if (!passwordEncoder.matches(accountDetails.getPasswordOld(), accountEntity.getPassword())) {
-				mess = "Bạn nhập sai mật khẩu cũ. Xin mời nhập lại mật khẩu cũ";
-				stringObjectHashMap.put("data", null);
-				stringObjectHashMap.put("message", mess);
-			} else {
-				AccountEntity updatAccountEntity = accountConverter.toEntity(accountDetails, accountEntity);
-				AccountEntity afterSave = saveAccount(updatAccountEntity);
-				afterSave.setPassword("");
-				mess = "Cập nhật account " + afterSave.getUsername() + " thành công";
-				stringObjectHashMap.put("data", afterSave);
-				stringObjectHashMap.put("message", mess);
-			}
-		} else {
-			mess = "Bạn không có quyền đổi mật khẩu account này";
-			stringObjectHashMap.put("data", null);
-			stringObjectHashMap.put("message", mess);
-		}
-
+		AccountEntity updatAccountEntity = accountConverter.toEntity(accountDetails, accountEntity);
+		AccountEntity afterSave = accountRepository.save(updatAccountEntity);
+		afterSave.setPassword("");
+		mess = "Cập nhật account " + afterSave.getUsername() + " thành công";
+		stringObjectHashMap.put("message", mess);
 		return stringObjectHashMap;
 	}
 
@@ -129,7 +116,7 @@ public class AccountService {
 
 	public AccountDTO get(Long id) {
 		AccountEntity accountEntity = accountRepository.getAccountEnableByID(id);
-		AccountDTO accountDTO = (accountEntity != null ) ? accountConverter.toDTO(accountEntity) : new AccountDTO();
+		AccountDTO accountDTO = (accountEntity != null) ? accountConverter.toDTO(accountEntity) : new AccountDTO();
 		accountDTO.setPasswordNew("");
 		accountDTO.setPasswordOld("");
 		return accountDTO;
@@ -137,8 +124,10 @@ public class AccountService {
 
 	public List<AccountDTO> get() {
 		List<AccountEntity> accountEntities = accountRepository.getAllAccountEnable();
-		List<AccountDTO> accountDTOS =(accountEntities != null && accountEntities.size()!=0 ) ? accountConverter.toDTOs(accountEntities) : new ArrayList<>();
-		for(AccountDTO accountDTO : accountDTOS){
+		List<AccountDTO> accountDTOS = (accountEntities != null && accountEntities.size() != 0)
+				? accountConverter.toDTOs(accountEntities)
+				: new ArrayList<>();
+		for (AccountDTO accountDTO : accountDTOS) {
 			accountDTO.setPasswordNew("");
 			accountDTO.setPasswordOld("");
 		}
@@ -149,10 +138,10 @@ public class AccountService {
 		if (!passwordDTO.isEqual()) {
 			String username = SecurityContextHolder.getContext().getAuthentication().getName();
 			AccountEntity accountEntity = accountRepository.findByUsername(username);
-			if(passwordEncoder.matches(passwordDTO.getOldPassword(), accountEntity.getPassword())) {
-				 accountEntity.setPassword(passwordEncoder.encode(passwordDTO.getNewPassword()));
-				 accountRepository.save(accountEntity);
-				 return true;
+			if (passwordEncoder.matches(passwordDTO.getOldPassword(), accountEntity.getPassword())) {
+				accountEntity.setPassword(passwordEncoder.encode(passwordDTO.getNewPassword()));
+				accountRepository.save(accountEntity);
+				return true;
 			}
 		}
 		return false;

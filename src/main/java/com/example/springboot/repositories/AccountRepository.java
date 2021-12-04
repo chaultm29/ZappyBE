@@ -17,4 +17,8 @@ public interface AccountRepository extends JpaRepository<AccountEntity, Long>{
 
 	@Query("select q from AccountEntity q where q.isEnabled=true and q.id = :id order by q.id")
 	AccountEntity getAccountEnableByID(@Param("id") Long id);
+	
+	
+	@Query("select q from AccountEntity q where q.isEnabled=true and q.username = :username order by q.id")
+	AccountEntity getAccountEnableByUsername(@Param("username") String  username);
 }
