@@ -404,7 +404,6 @@ public class PracticeService {
 				break;
 			} else if (score == levelScore[i]) {
 				levelDTO.setLevel(i);
-//				levelDTO.setPercentage(0);
 				break;
 			}
 		}
