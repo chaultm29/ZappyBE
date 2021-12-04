@@ -395,7 +395,7 @@ public class PracticeService {
 		if (score > levelScore[levelScore.length - 1]) {
 			return levelDTO;
 		}
-		for (int i = levelScore.length - 1; i >= 0; i--) {
+		for (int i = levelScore.length - 1; i > 0; i--) {
 			if (score > levelScore[i]) {
 				levelDTO.setLevel(i);
 				levelDTO.setCurentExp((levelScore[i + 1] - levelScore[i]));
@@ -404,7 +404,6 @@ public class PracticeService {
 				break;
 			} else if (score == levelScore[i]) {
 				levelDTO.setLevel(i);
-//				levelDTO.setPercentage(0);
 				break;
 			}
 		}

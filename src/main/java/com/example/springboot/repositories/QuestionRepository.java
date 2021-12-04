@@ -17,7 +17,7 @@ public interface QuestionRepository extends JpaRepository<QuestionEntity, Long> 
 	List<QuestionBaseDTO> getAllQuestion();
 
 
-	@Query("select q from QuestionEntity q left  join q.answerEntities a left join q.lessonEntity l left  join q.questionTypeEntity qt left  join q.skillEntity sk where q.isEnabled=true  order by q.id")
+	@Query("select DISTINCT q from QuestionEntity q left  join q.answerEntities a left join q.lessonEntity l left  join q.questionTypeEntity qt left  join q.skillEntity sk where q.isEnabled=true  order by q.id")
 	List<QuestionEntity> getAllQuestionEnable();
 
 	@Query("select q from QuestionEntity q left  join q.answerEntities a left join q.lessonEntity l left  join q.questionTypeEntity qt left  join q.skillEntity sk where q.isEnabled=true and q.id = :id order by q.id")
