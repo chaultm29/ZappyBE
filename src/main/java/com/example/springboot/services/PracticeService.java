@@ -265,7 +265,7 @@ public class PracticeService {
 		practiceEntiry.setScore(numberOfCorrect * 100 /  numberOfQuestion);
 		practiceRepository.save(practiceEntiry);
 		getProgress();
-		getLevel();
+//		getLevel();
 		return questionAnswer;
 	}
 
@@ -330,84 +330,85 @@ public class PracticeService {
 		return progressDTO;
 	}
 
-	public LevelDTO getLevel() {
-		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		LevelDTO levelDTO = new LevelDTO();
-		Integer score = practiceRepository.totalScorePracticeByUsername(username)
-				+ examRepositoty.totalScoreExamByUsername(username);		
-		//Ho ve level(level 6)
-		if(score==1000){
-			UserEntity user = userRepository.getUserByUserName(username);
-			AchievenmentEntity achievenment = new AchievenmentEntity();
-			achievenment.setId(7l);
-			UserAchievenmentEntity userAchievenment = new UserAchievenmentEntity();
-			userAchievenment.setAchievenmentEntity(achievenment);
-			userAchievenment.setUser(user);
-			userAchievenment.setDateCreate(new java.sql.Date((new Date()).getTime()));
-			userAchienmentRepository.save(userAchievenment);
-		}
-		//Tho san level (level 9)
-		if(score==5000){
-			UserEntity user = userRepository.getUserByUserName(username);
-			AchievenmentEntity achievenment = new AchievenmentEntity();
-			achievenment.setId(8l);
-			UserAchievenmentEntity userAchievenment = new UserAchievenmentEntity();
-			userAchievenment.setAchievenmentEntity(achievenment);
-			userAchievenment.setUser(user);
-			userAchievenment.setDateCreate(new java.sql.Date((new Date()).getTime()));
-			userAchienmentRepository.save(userAchievenment);
-		}
-		//Quai thu level(level 11)
-		if(score==10000){
-			UserEntity user = userRepository.getUserByUserName(username);
-			AchievenmentEntity achievenment = new AchievenmentEntity();
-			achievenment.setId(9l);
-			UserAchievenmentEntity userAchievenment = new UserAchievenmentEntity();
-			userAchievenment.setAchievenmentEntity(achievenment);
-			userAchievenment.setUser(user);
-			userAchievenment.setDateCreate(new java.sql.Date((new Date()).getTime()));
-			userAchienmentRepository.save(userAchievenment);
-		}
-		//Ke huy diet level(level 13)
-		if(score==20000){
-			UserEntity user = userRepository.getUserByUserName(username);
-			AchievenmentEntity achievenment = new AchievenmentEntity();
-			achievenment.setId(10l);
-			UserAchievenmentEntity userAchievenment = new UserAchievenmentEntity();
-			userAchievenment.setAchievenmentEntity(achievenment);
-			userAchievenment.setUser(user);
-			userAchievenment.setDateCreate(new java.sql.Date((new Date()).getTime()));
-			userAchienmentRepository.save(userAchievenment);
-		}
-		//Than thoai level(level 15)
-		if(score==30000){
-			UserEntity user = userRepository.getUserByUserName(username);
-			AchievenmentEntity achievenment = new AchievenmentEntity();
-			achievenment.setId(11l);
-			UserAchievenmentEntity userAchievenment = new UserAchievenmentEntity();
-			userAchievenment.setAchievenmentEntity(achievenment);
-			userAchievenment.setUser(user);
-			userAchievenment.setDateCreate(new java.sql.Date((new Date()).getTime()));
-			userAchienmentRepository.save(userAchievenment);
-		}
-		Integer[] levelScore = { 0, 50, 100, 200, 300, 500, 1000, 2000, 3000, 5000, 7000, 10000, 15000, 20000, 25000,
-				30000 };
-		if (score > levelScore[levelScore.length - 1]) {
-			return levelDTO;
-		}
-		for (int i = levelScore.length - 1; i > 0; i--) {
-			if (score > levelScore[i]) {
-				levelDTO.setLevel(i);
-				levelDTO.setCurentExp((levelScore[i + 1] - levelScore[i]));
-				levelDTO.setLevelExp(score - levelScore[i]);
-//				levelDTO.setPercentage((score - levelScore[i]) * 100 / (levelScore[i + 1] - levelScore[i]));
-				break;
-			} else if (score == levelScore[i]) {
-				levelDTO.setLevel(i);
-				break;
-			}
-		}
-		return levelDTO;
-	}
+//	public LevelDTO getLevel() {
+//		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+//		LevelDTO levelDTO = new LevelDTO();
+//		Integer score = practiceRepository.totalScorePracticeByUsername(username)
+//				+ examRepositoty.totalScoreExamByUsername(username);		
+//		//Ho ve level(level 6)
+//		if(score==1000){
+//			UserEntity user = userRepository.getUserByUserName(username);
+//			AchievenmentEntity achievenment = new AchievenmentEntity();
+//			achievenment.setId(7l);
+//			UserAchievenmentEntity userAchievenment = new UserAchievenmentEntity();
+//			userAchievenment.setAchievenmentEntity(achievenment);
+//			userAchievenment.setUser(user);
+//			userAchievenment.setDateCreate(new java.sql.Date((new Date()).getTime()));
+//			userAchienmentRepository.save(userAchievenment);
+//		}
+//		//Tho san level (level 9)
+//		if(score==5000){
+//			UserEntity user = userRepository.getUserByUserName(username);
+//			AchievenmentEntity achievenment = new AchievenmentEntity();
+//			achievenment.setId(8l);
+//			UserAchievenmentEntity userAchievenment = new UserAchievenmentEntity();
+//			userAchievenment.setAchievenmentEntity(achievenment);
+//			userAchievenment.setUser(user);
+//			userAchievenment.setDateCreate(new java.sql.Date((new Date()).getTime()));
+//			userAchienmentRepository.save(userAchievenment);
+//		}
+//		//Quai thu level(level 11)
+//		if(score==10000){
+//			UserEntity user = userRepository.getUserByUserName(username);
+//			AchievenmentEntity achievenment = new AchievenmentEntity();
+//			achievenment.setId(9l);
+//			UserAchievenmentEntity userAchievenment = new UserAchievenmentEntity();
+//			userAchievenment.setAchievenmentEntity(achievenment);
+//			userAchievenment.setUser(user);
+//			userAchievenment.setDateCreate(new java.sql.Date((new Date()).getTime()));
+//			userAchienmentRepository.save(userAchievenment);
+//		}
+//		//Ke huy diet level(level 13)
+//		if(score==20000){
+//			UserEntity user = userRepository.getUserByUserName(username);
+//			AchievenmentEntity achievenment = new AchievenmentEntity();
+//			achievenment.setId(10l);
+//			UserAchievenmentEntity userAchievenment = new UserAchievenmentEntity();
+//			userAchievenment.setAchievenmentEntity(achievenment);
+//			userAchievenment.setUser(user);
+//			userAchievenment.setDateCreate(new java.sql.Date((new Date()).getTime()));
+//			userAchienmentRepository.save(userAchievenment);
+//		}
+//		//Than thoai level(level 15)
+//		if(score==30000){
+//			UserEntity user = userRepository.getUserByUserName(username);
+//			AchievenmentEntity achievenment = new AchievenmentEntity();
+//			achievenment.setId(11l);
+//			UserAchievenmentEntity userAchievenment = new UserAchievenmentEntity();
+//			userAchievenment.setAchievenmentEntity(achievenment);
+//			userAchievenment.setUser(user);
+//			userAchievenment.setDateCreate(new java.sql.Date((new Date()).getTime()));
+//			userAchienmentRepository.save(userAchievenment);
+//		}
+//		Integer[] levelScore = { 0, 50, 100, 200, 300, 500, 1000, 2000, 3000, 5000, 7000, 10000, 15000, 20000, 25000,
+//				30000 };
+//		if (score > levelScore[levelScore.length - 1]) {
+//			return levelDTO;
+//		}
+//		for (int i = levelScore.length - 1; i > 0; i--) {
+//			if (score > levelScore[i]) {
+//				levelDTO.setLevel(i);
+//				levelDTO.setCurentExp((levelScore[i + 1] - levelScore[i]));
+//				levelDTO.setLevelExp(score - levelScore[i]);
+////				levelDTO.setPercentage((score - levelScore[i]) * 100 / (levelScore[i + 1] - levelScore[i]));
+//				break;
+//			} else if (score == levelScore[i]) {
+//				levelDTO.setLevel(i);
+//				break;
+//			}
+//		}
+//		return levelDTO;
+//	}
 
+	
 }

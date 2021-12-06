@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class GameRecordDTO {
 
-	
+	private Integer activityId;
 	private String gameName;
 	private Date timeCreated;
 	private Long timePlayed;
@@ -19,6 +19,14 @@ public class GameRecordDTO {
 		this.timeCreated = timeCreated;
 		this.timePlayed = timePlayed;
 		this.score = score;
+	}
+
+	public Integer getActivityId() {
+		return activityId;
+	}
+
+	public void setActivityId(Integer activityId) {
+		this.activityId = activityId;
 	}
 
 	public String getGameName() {

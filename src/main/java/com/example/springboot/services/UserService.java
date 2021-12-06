@@ -5,6 +5,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.example.springboot.converters.UserConverter;
+import com.example.springboot.dto.LevelDTO;
 import com.example.springboot.dto.UserDTO;
 import com.example.springboot.entities.UserEntity;
 import com.example.springboot.repositories.UserRepository;
@@ -29,24 +30,17 @@ public class UserService {
 		UserEntity userEntity = userRepository.getUserByUserName(username);
 		return userConverter.toDTO(userEntity);
 	}
+
+	public UserDTO saveExp(Integer activityId, Long score) {
+		CommonService common = new CommonService();
+		return userConverter.toDTO(common.saveExp(activityId, score, userRepository));
+	}
 	
-	public UserDTO saveExp(String activity, Long score) {
+	public LevelDTO getLevel() {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		UserEntity userEntity = userRepository.getUserByUserName(username);
-		Long exp = 0l;
-		switch(activity) {
-		case "Bingo Game":
-			exp = score * 1/40;
-			break;
-		case "Memory Game":
-			exp = score * 1/33;
-			break;
-		case "exam":
-		case "practice":
-			exp = score;
-			break;
-		}
-		userEntity.setExp(userEntity.getExp()+exp);
-		return userConverter.toDTO(userEntity);
+		UserEntity userEntity = userRepository.getUserByUserName(username);	
+		LevelDTO levelDTO = new LevelDTO();
+		levelDTO.analysisExp(userEntity.getExp());
+		return levelDTO;
 	}
 }
