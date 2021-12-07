@@ -35,7 +35,9 @@ public class QuestionService {
 
 	public List<QuestionDTO> get() {
 		List<QuestionEntity> questionEntities = questionRepository.getAllQuestionEnable();
-		List<QuestionDTO> questionDTOS = (questionEntities != null && questionEntities.size()!=0)? questionConverter.toDTOs(questionEntities): new ArrayList<>();
+		List<QuestionDTO> questionDTOS = (questionEntities != null && questionEntities.size() != 0)
+				? questionConverter.toDTOs(questionEntities)
+				: new ArrayList<>();
 		return questionDTOS;
 	}
 
@@ -53,18 +55,19 @@ public class QuestionService {
 					answerEntity.getImage_link(), answerEntity.getAnswer(), afterSave)));
 		}
 		if (afterSave != null) {
-			return "Thêm "+ questionDTO.getQuestion()+" thành công";
+			return "Thêm " + questionDTO.getQuestion() + " thành công";
 		}
 
-		return "Không thể thêm "+ questionDTO.getQuestion();
+		return "Không thể thêm " + questionDTO.getQuestion();
 	}
 
 	public QuestionDTO update(QuestionDTO questionDTO, Long id) {
 		QuestionEntity questionEntityBase = questionRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Question not exist with id :" + id));
 		QuestionEntity questionEntity = questionConverter.toEntity(questionDTO);
-		questionEntityBase.setImage_link(questionEntity.getImage_link());
+		questionEntityBase.setImage_link(questionDTO.getImgeLink());
 		questionEntityBase.setQuestion(questionEntity.getQuestion());
+		
 		questionEntityBase.setQuestionTypeEntity(questionEntity.getQuestionTypeEntity());
 		questionEntityBase.setSkillEntity(questionEntity.getSkillEntity());
 		questionEntityBase.setRoomEntities(questionEntity.getRoomEntities());
@@ -72,7 +75,7 @@ public class QuestionService {
 		questionEntityBase.setExamEntities(questionEntity.getExamEntities());
 		QuestionEntity afterSave = questionRepository.save(questionEntityBase);
 		Set<AnswerEntity> answerEntitySet = new HashSet<>();
-		answerRepository.deleteByIdQuestion(id);
+		// answerRepository.deleteByIdQuestion(id);
 		for (AnswerEntity answerEntity : questionDTO.getAnswer()) {
 			answerEntitySet.add(answerRepository.save(new AnswerEntity(answerEntity.getId(), answerEntity.isCorrect(),
 					answerEntity.getImage_link(), answerEntity.getAnswer(), afterSave)));
@@ -88,13 +91,14 @@ public class QuestionService {
 //		answerRepository.deleteByIdQuestion(id);
 
 //		questionRepository.delete(questionEntity);
-			questionEntity.setEnabled(false);
-			questionRepository.save(questionEntity);
+		questionEntity.setEnabled(false);
+		questionRepository.save(questionEntity);
 	}
 
 	public QuestionDTO get(Long id) {
 		QuestionEntity questionEntity = questionRepository.getQuestionEnableByID(id);
-		QuestionDTO questionDTO =(questionEntity != null)? questionConverter.toDTO(questionEntity): new QuestionDTO();
+		QuestionDTO questionDTO = (questionEntity != null) ? questionConverter.toDTO(questionEntity)
+				: new QuestionDTO();
 		return questionDTO;
 	}
 

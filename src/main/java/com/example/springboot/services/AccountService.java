@@ -66,6 +66,11 @@ public class AccountService {
 		if (accountEntity1 != null) {
 			return "Username: " + accountEntity1.getUsername() + " đã tồn tại trong hệ thống!";
 		}
+		
+		UserEntity userEntity1 = userRepository.getUserByEmail(accountDTO.getEmail());
+		if(userEntity1!=null){
+			return "Email: " + accountDTO.getEmail() + " đã tồn tại trong hệ thống!" ;
+		}
 		UserDTO userDTO = new UserDTO();
 		userDTO.setAvatar(accountDTO.getAvatar());
 		userDTO.setEmail(accountDTO.getEmail());
