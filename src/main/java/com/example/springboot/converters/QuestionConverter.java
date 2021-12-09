@@ -33,6 +33,7 @@ public class QuestionConverter {
 	public QuestionEntity toEntity(QuestionDTO questionDTO) {
 		QuestionEntity questionEntity = new QuestionEntity();
 		questionEntity.setQuestion(questionDTO.getQuestion());
+		questionEntity.setImage_link(questionDTO.getImgeLink());
 		questionEntity.setQuestionTypeEntity(questionTypeRepository.getByName(questionDTO.getTypeName()));
 		questionEntity.setLessonEntity(lessonRepository.getByName(questionDTO.getLessonName()));
 		questionEntity.setSkillEntity(skillRepository.getByName(questionDTO.getSkillName()));
