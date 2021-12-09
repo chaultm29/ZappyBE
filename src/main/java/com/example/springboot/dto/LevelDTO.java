@@ -2,17 +2,30 @@ package com.example.springboot.dto;
 
 public class LevelDTO {
     private Integer level;
-    private Integer  curentExp;
-    private Integer  levelExp;
+    private Long  currentExp;
+    private Long  levelExp;
 
     public LevelDTO() {
     }
 
-	public LevelDTO(Integer level, Integer curentExp, Integer levelExp) {
+	public LevelDTO(Integer level, Long curentExp, Long levelExp) {
 		super();
 		this.level = level;
-		this.curentExp = curentExp;
+		this.currentExp = curentExp;
 		this.levelExp = levelExp;
+	}
+	
+	//{0, 100, 300, 600, 1000, 1500, 2100, 2800, 3600, 4500, 5500, 6600, 7800, 9100};
+	public void analysisExp(Long totalExp) {
+		if (totalExp == null) return;
+		int _level = 0;
+		int sumExp = 0;
+		while ((_level+1) * 100 + sumExp <= totalExp) {
+			sumExp += ++_level * 100;			
+		}
+		this.level = _level;
+		this.currentExp = totalExp - sumExp;
+		this.levelExp = (_level+1) * 100l;
 	}
 
 	public Integer getLevel() {
@@ -23,21 +36,20 @@ public class LevelDTO {
 		this.level = level;
 	}
 
-	public Integer getCurentExp() {
-		return curentExp;
+	public Long getCurrentExp() {
+		return currentExp;
 	}
 
-	public void setCurentExp(Integer curentExp) {
-		this.curentExp = curentExp;
+	public void setCurrentExp(Long currentExp) {
+		this.currentExp = currentExp;
 	}
 
-	public Integer getLevelExp() {
+	public Long getLevelExp() {
 		return levelExp;
 	}
 
-	public void setLevelExp(Integer levelExp) {
+	public void setLevelExp(Long levelExp) {
 		this.levelExp = levelExp;
 	}
-
     
 }

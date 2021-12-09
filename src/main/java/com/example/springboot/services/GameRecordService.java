@@ -26,9 +26,16 @@ public class GameRecordService {
 	UserRepository userRepository;
 
 	public boolean save(GameRecordDTO gameRecordDTO) {
+		try {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		Long uid = userRepository.getUserByUserName(username).getId();
-		GameRecordEntity entity = gameRecordRepository.save(gameRecordConverter.toEntity(uid, gameRecordDTO));
+		gameRecordRepository.save(gameRecordConverter.toEntity(uid, gameRecordDTO));
+		CommonService common = new CommonService();
+		common.saveExp(gameRecordDTO.getActivityId(), gameRecordDTO.getScore(), userRepository);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 		return true;
 	}
 

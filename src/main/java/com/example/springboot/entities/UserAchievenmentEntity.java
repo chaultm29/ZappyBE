@@ -3,6 +3,8 @@ package com.example.springboot.entities;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.ZoneId;
 
 @Entity
 @Table(name = "users_achievenment")
@@ -12,21 +14,22 @@ public class UserAchievenmentEntity {
     private Long id;
 
     @Column(name = "date_created")
-    private Date dateCreate;
+    private Date dateCreated;
 
 
     @ManyToOne
     private UserEntity user;
 
     @ManyToOne
-    private AchievenmentEntity achievenmentEntity;
+    private AchievementEntity achievenmentEntity;
 
     public UserAchievenmentEntity() {
+    	this.dateCreated = Date.valueOf(LocalDate.now(ZoneId.of("GMT+07:00")));
     }
 
-    public UserAchievenmentEntity(Long id, Date dateCreate, UserEntity user, AchievenmentEntity achievenmentEntity) {
+    public UserAchievenmentEntity(Long id, UserEntity user, AchievementEntity achievenmentEntity) {
         this.id = id;
-        this.dateCreate = dateCreate;
+        this.dateCreated = Date.valueOf(LocalDate.now(ZoneId.of("GMT+07:00")));
         this.user = user;
         this.achievenmentEntity = achievenmentEntity;
     }
@@ -39,12 +42,12 @@ public class UserAchievenmentEntity {
         this.id = id;
     }
 
-    public Date getDateCreate() {
-        return dateCreate;
+    public Date getDateCreated() {
+        return dateCreated;
     }
 
-    public void setDateCreate(Date dateOfBirth) {
-        this.dateCreate = dateOfBirth;
+    public void setDateCreated(Date dateOfBirth) {
+        this.dateCreated = dateOfBirth;
     }
 
     public UserEntity getUser() {
@@ -55,11 +58,11 @@ public class UserAchievenmentEntity {
         this.user = user;
     }
 
-    public AchievenmentEntity getAchievenmentEntity() {
+    public AchievementEntity getAchievenmentEntity() {
         return achievenmentEntity;
     }
 
-    public void setAchievenmentEntity(AchievenmentEntity achievenmentEntity) {
+    public void setAchievenmentEntity(AchievementEntity achievenmentEntity) {
         this.achievenmentEntity = achievenmentEntity;
     }
 }

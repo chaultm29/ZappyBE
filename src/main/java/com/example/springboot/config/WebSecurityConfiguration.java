@@ -53,7 +53,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
 		return super.userDetailsService();
 	}
 	protected void configure(HttpSecurity http) throws Exception{
-		http.cors().and().csrf().disable().authorizeRequests().antMatchers("/login", "/register").permitAll()
+		http.cors().and().csrf().disable().authorizeRequests().antMatchers("/login", "/register", "/ping", "/forgotPassword").permitAll()
 		.anyRequest().authenticated().and()
 		.exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
 		.sessionCreationPolicy(SessionCreationPolicy.STATELESS);

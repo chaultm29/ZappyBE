@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "achievements")
-public class AchievenmentEntity {
+public class AchievementEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -22,14 +22,17 @@ public class AchievenmentEntity {
 	@Column(name = "achieve_condition")
 	private String condition;
 
+	@Column(name = "image_link")
+	private String imageLink;
+	
 	@JsonIgnore
 	@OneToMany(mappedBy = "achievenmentEntity",cascade = CascadeType.ALL)
 	private Set<UserAchievenmentEntity> userAchievenmentEntities;
 	
-	public AchievenmentEntity() {
+	public AchievementEntity() {
 	}
 
-	public AchievenmentEntity(Long id, String name, String desciption, String condition, Set<UserAchievenmentEntity> userAchievenmentEntities) {
+	public AchievementEntity(Long id, String name, String desciption, String condition, Set<UserAchievenmentEntity> userAchievenmentEntities) {
 		this.id = id;
 		this.name = name;
 		this.desciption = desciption;
@@ -67,6 +70,14 @@ public class AchievenmentEntity {
 
 	public void setCondition(String condition) {
 		this.condition = condition;
+	}
+
+	public String getImageLink() {
+		return imageLink;
+	}
+
+	public void setImageLink(String imageLink) {
+		this.imageLink = imageLink;
 	}
 
 	public Set<UserAchievenmentEntity> getUserAchievenmentEntities() {

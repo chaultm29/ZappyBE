@@ -1,6 +1,5 @@
 package com.example.springboot.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.springboot.dto.GameRecordDTO;
-import com.example.springboot.dto.QuestionDTO;
 import com.example.springboot.dto.QuestionGameDTO;
 import com.example.springboot.dto.RequireBingoQuestionDTO;
 import com.example.springboot.services.GameRecordService;
 import com.example.springboot.services.GameService;
-import com.example.springboot.services.UserService;
-
 import javassist.NotFoundException;
 
 @CrossOrigin(origins = "*")
@@ -33,10 +29,9 @@ public class GameController {
 	GameService gameService;
 	
 	@Autowired
-	UserService userService;
-	
-	@Autowired
 	GameRecordService gameRecordService;
+	
+	
 	
 	@PostMapping("bingo/currentQuestion")
 	public ResponseEntity<QuestionGameDTO> getCurrentQuestion(@RequestBody RequireBingoQuestionDTO requireBingo) {
@@ -58,7 +53,6 @@ public class GameController {
 	
 	@PostMapping("/saving")
 	public ResponseEntity<Boolean> save(@RequestBody GameRecordDTO gameRecordDTO){
-			userService.saveExp(gameRecordDTO.getGameName(), gameRecordDTO.getScore());
 			return new ResponseEntity<Boolean>(gameRecordService.save(gameRecordDTO), HttpStatus.OK);			
 	}
 	
