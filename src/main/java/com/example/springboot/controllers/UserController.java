@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.springboot.dto.LevelDTO;
 import com.example.springboot.dto.UserDTO;
 import com.example.springboot.exception.ResourceNotFoundException;
 import com.example.springboot.services.UserService;
@@ -43,5 +44,22 @@ public class UserController {
 		} catch (Exception e) {
 			return new ResponseEntity<UserDTO>(userDTO, HttpStatus.NOT_FOUND);
 		}
+	}
+	
+//	@GetMapping("/experience")
+//	public ResponseEntity<UserDTO> getExp() {
+//		UserDTO userDTO = null;
+//		try {
+//			userDTO = userService.getProfile();
+//			if(userDTO==null) throw new Exception();
+//			return new ResponseEntity<UserDTO>(userDTO, HttpStatus.OK);
+//		} catch (Exception e) {
+//			return new ResponseEntity<UserDTO>(userDTO, HttpStatus.NOT_FOUND);
+//		}
+//	}
+	
+	@GetMapping("/level")
+	public ResponseEntity<LevelDTO> getLevel() {
+		return new ResponseEntity<LevelDTO>(userService.getLevel(), HttpStatus.OK);
 	}
 }

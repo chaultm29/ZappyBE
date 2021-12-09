@@ -30,6 +30,9 @@ public class AccountEntity {
 
 	@Column(name = "enabled")
 	private Boolean isEnabled;
+	
+	@Column(name = "pw_token")
+	private String pwToken;
 
 	@ManyToOne
 	@JoinColumn(name = "role_id")
@@ -100,6 +103,14 @@ public class AccountEntity {
 
 	public void setUserEntity(UserEntity userEntity) {
 		this.userEntity = userEntity;
+	}
+
+	public String getPwToken() {
+		return pwToken;
+	}
+
+	public void setPwToken(String pwToken) {
+		this.pwToken = pwToken;
 	}
 
 }

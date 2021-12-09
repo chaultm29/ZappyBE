@@ -37,6 +37,7 @@ public class QuestionConverter {
 		questionEntity.setQuestionTypeEntity(questionTypeRepository.getByName(questionDTO.getTypeName()));
 		questionEntity.setLessonEntity(lessonRepository.getByName(questionDTO.getLessonName()));
 		questionEntity.setSkillEntity(skillRepository.getByName(questionDTO.getSkillName()));
+		questionEntity.setImage_link(questionDTO.getImgeLink());
 		return questionEntity;
 	}
 

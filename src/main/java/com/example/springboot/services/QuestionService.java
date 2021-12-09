@@ -35,7 +35,11 @@ public class QuestionService {
 
 	public List<QuestionDTO> get() {
 		List<QuestionEntity> questionEntities = questionRepository.getAllQuestionEnable();
+<<<<<<< HEAD
 		List<QuestionDTO> questionDTOS = (questionEntities != null && questionEntities.size() != 0)
+=======
+		List<QuestionDTO> questionDTOS = (questionEntities != null && questionEntities.size()!=0)
+>>>>>>> 0e3291c06eab041487e3f1e02921c89b3610601a
 				? questionConverter.toDTOs(questionEntities)
 				: new ArrayList<>();
 		return questionDTOS;
@@ -75,7 +79,11 @@ public class QuestionService {
 		questionEntityBase.setExamEntities(questionEntity.getExamEntities());
 		QuestionEntity afterSave = questionRepository.save(questionEntityBase);
 		Set<AnswerEntity> answerEntitySet = new HashSet<>();
+<<<<<<< HEAD
 		// answerRepository.deleteByIdQuestion(id);
+=======
+		//answerRepository.deleteByIdQuestion(id);
+>>>>>>> 0e3291c06eab041487e3f1e02921c89b3610601a
 		for (AnswerEntity answerEntity : questionDTO.getAnswer()) {
 			answerEntitySet.add(answerRepository.save(new AnswerEntity(answerEntity.getId(), answerEntity.isCorrect(),
 					answerEntity.getImage_link(), answerEntity.getAnswer(), afterSave)));
@@ -97,7 +105,11 @@ public class QuestionService {
 
 	public QuestionDTO get(Long id) {
 		QuestionEntity questionEntity = questionRepository.getQuestionEnableByID(id);
+<<<<<<< HEAD
 		QuestionDTO questionDTO = (questionEntity != null) ? questionConverter.toDTO(questionEntity)
+=======
+		QuestionDTO questionDTO =(questionEntity != null)? questionConverter.toDTO(questionEntity)
+>>>>>>> 0e3291c06eab041487e3f1e02921c89b3610601a
 				: new QuestionDTO();
 		return questionDTO;
 	}

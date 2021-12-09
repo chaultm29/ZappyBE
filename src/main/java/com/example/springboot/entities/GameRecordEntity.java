@@ -29,7 +29,7 @@ public class GameRecordEntity {
 	private Long timePlayed;
 	
 	@Column(name = "score")
-	private Double score;
+	private Long score;
 	
 	@Column(name = "game_name")
 	private String gameName;
@@ -41,7 +41,7 @@ public class GameRecordEntity {
 		this.timeCreated = Date.valueOf(LocalDate.now(ZoneId.of("GMT+07:00")));
 	}
 
-	public GameRecordEntity(Long id, Long timePlayed, Double score, String gameName, Long userId) {
+	public GameRecordEntity(Long id, Long timePlayed, Long score, String gameName, Long userId) {
 		super();
 		this.id = id;
 		this.timeCreated = Date.valueOf(LocalDate.now(ZoneId.of("GMT+07:00")));;
@@ -75,11 +75,11 @@ public class GameRecordEntity {
 		this.timePlayed = timePlayed;
 	}
 
-	public Double getScore() {
+	public Long getScore() {
 		return score;
 	}
 
-	public void setScore(Double score) {
+	public void setScore(Long score) {
 		this.score = score;
 	}
 

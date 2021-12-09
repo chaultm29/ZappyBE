@@ -29,6 +29,17 @@ public class UserEntity {
 
 	@Column(name = "avatar")
 	private String avatar;
+	
+	@Column(name = "exp")
+	private Long exp;
+
+	public Long getExp() {
+		return exp;
+	}
+
+	public void setExp(Long exp) {
+		this.exp = exp;
+	}
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
