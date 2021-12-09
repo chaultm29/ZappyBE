@@ -13,7 +13,7 @@ import java.util.List;
 @Repository
 public interface ExamRepositoty extends JpaRepository<ExamEntity, Long> {
 
-	@Query("select  e from  AccountEntity a inner join  a.userEntity u inner join  u.examEntities e where a.username = :username order by e.id desc ")
+	@Query("select  e from  AccountEntity a inner join  a.userEntity u inner join  u.examEntities e where a.username = :username order by e.createdDate desc ")
 	List<ExamEntity> getExamByUserName(@Param("username") String username);
 
 	@Query("select sum(e.score) from AccountEntity a inner join  a.userEntity u inner  join u.examEntities e where a.username=:username  group by a.username")
@@ -21,5 +21,4 @@ public interface ExamRepositoty extends JpaRepository<ExamEntity, Long> {
 
 	@Query("select e.score from AccountEntity a inner join  a.userEntity u inner  join u.examEntities e where a.username=:username order by e.createdDate desc ")
 	List<Integer> totalScore10ExamByUsername(@Param("username") String username, Pageable pageable);
-
 }

@@ -1,6 +1,8 @@
 package com.example.springboot.entities;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -32,15 +34,14 @@ public class ExamEntity {
 	private UserEntity user;
 
 	public ExamEntity() {
-		super();
-		// TODO Auto-generated constructor stub
+		this.createdDate = Date.valueOf(LocalDate.now(ZoneId.of("GMT+07:00")));
 	}
 
-	public ExamEntity(Long id, int score, Date createdDate, Integer time, Set<QuestionEntity> questionEntities,UserEntity user) {
+	public ExamEntity(Long id, int score, Integer time, Set<QuestionEntity> questionEntities,UserEntity user) {
 		super();
 		this.id = id;
 		this.score = score;
-		this.createdDate = createdDate;
+		this.createdDate = Date.valueOf(LocalDate.now(ZoneId.of("GMT+07:00")));;
 		this.time = time;
 		this.questionEntities = questionEntities;
 		this.user = user;

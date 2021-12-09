@@ -1,8 +1,9 @@
 package com.example.springboot.controllers;
 
 import com.example.springboot.dto.AccountDTO;
-import com.example.springboot.dto.UserAchievenmentDTO;
-import com.example.springboot.services.AchievenmentService;
+import com.example.springboot.dto.AchievementDTO;
+import com.example.springboot.dto.UserAchievementDTO;
+import com.example.springboot.services.AchievementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +19,16 @@ import java.util.List;
 @RequestMapping("/achievement")
 public class AchievementController {
     @Autowired
-    AchievenmentService achievenmentService;
+    AchievementService achievementService;
+    
     @GetMapping("")
-    public ResponseEntity<List<UserAchievenmentDTO>> getAchievement() {
-        return new ResponseEntity<List<UserAchievenmentDTO>>(achievenmentService.getAchievement(), HttpStatus.OK);
+    public ResponseEntity<List<UserAchievementDTO>> getAchievement() {
+        return new ResponseEntity<List<UserAchievementDTO>>(achievementService.getUserAchievement(), HttpStatus.OK);
     }
-
+    
+    @GetMapping("/check")
+    public ResponseEntity<List<AchievementDTO>> checkAchievement() {
+        return new ResponseEntity<List<AchievementDTO>>(achievementService.checkAllAchievement(), HttpStatus.OK);
+    }
 
 }

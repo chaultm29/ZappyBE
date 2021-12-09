@@ -46,17 +46,17 @@ public class UserController {
 		}
 	}
 	
-	@GetMapping("/experience")
-	public ResponseEntity<UserDTO> getExp() {
-		UserDTO userDTO = null;
-		try {
-			userDTO = userService.getProfile();
-			if(userDTO==null) throw new Exception();
-			return new ResponseEntity<UserDTO>(userDTO, HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<UserDTO>(userDTO, HttpStatus.NOT_FOUND);
-		}
-	}
+//	@GetMapping("/experience")
+//	public ResponseEntity<UserDTO> getExp() {
+//		UserDTO userDTO = null;
+//		try {
+//			userDTO = userService.getProfile();
+//			if(userDTO==null) throw new Exception();
+//			return new ResponseEntity<UserDTO>(userDTO, HttpStatus.OK);
+//		} catch (Exception e) {
+//			return new ResponseEntity<UserDTO>(userDTO, HttpStatus.NOT_FOUND);
+//		}
+//	}
 	
 	@GetMapping("/level")
 	public ResponseEntity<LevelDTO> getLevel() {

@@ -8,6 +8,7 @@ import com.example.springboot.repositories.UserRepository;
 public class CommonService {
 	enum eACTIVITY{Practice, Exam, GBingo, GMemory}
 	
+	
 	public UserEntity saveExp(Integer index, Long score, UserRepository userRepository) {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		UserEntity userEntity = userRepository.getUserByUserName(username);
@@ -21,8 +22,10 @@ public class CommonService {
 			exp = score * 1/33;
 			break;
 		case Exam:
+			exp = score * 5;
+			break;
 		case Practice:
-			exp = score;
+			exp = score * 2;
 			break;
 		}
 		userEntity.setExp(userEntity.getExp()+exp);

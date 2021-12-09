@@ -2,14 +2,14 @@ package com.example.springboot.dto;
 
 import java.util.Date;
 
-public class UserAchievenmentDTO {
+public class UserAchievementDTO {
     private String name;
     private Date dateCreate;
 
-    public UserAchievenmentDTO() {
+    public UserAchievementDTO() {
     }
 
-    public UserAchievenmentDTO(String name, Date dateCreate) {
+    public UserAchievementDTO(String name, Date dateCreate) {
         this.name = name;
         this.dateCreate = dateCreate;
     }

@@ -254,24 +254,8 @@ public class ExamService {
 		ExamEntity examEntity = examEntities.get(0);
 		int score = (count*100)/questionResultDTO.getAnswerDTOs().size();
 		examEntity.setScore(score);
-		Pageable pageable = PageRequest.of(0,10);
-		int totalScore = 0;
-		List<Integer> listScore = examRepositoty.totalScore10ExamByUsername(username,pageable);
-		for(int i=0;i<listScore.size();i++){
-			totalScore= +listScore.get(i);
-		}
-		///test 10 exam lien tuc dc 100 = quai vat
-		if((totalScore+score)==1000){
-			UserEntity user = userRepository.getUserByUserName(username);
-			AchievenmentEntity achievenment = new AchievenmentEntity();
-			achievenment.setId(1l);
-			UserAchievenmentEntity userAchievenment = new UserAchievenmentEntity();
-			userAchievenment.setAchievenmentEntity(achievenment);
-			userAchievenment.setUser(user);
-			userAchievenment.setDateCreate(new java.sql.Date((new Date()).getTime()));
-			userAchienmentRepository.save(userAchievenment);
-		}
-
+		CommonService common = new CommonService();
+		common.saveExp(1, (long) count, userRepository);
 		examRepositoty.save(examEntity);
 		return idQuestion;
 	}
