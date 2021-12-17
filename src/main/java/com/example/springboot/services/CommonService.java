@@ -28,7 +28,8 @@ public class CommonService {
 			exp = score * 2;
 			break;
 		}
-		userEntity.setExp(userEntity.getExp()+exp);
+		Long userExp = userEntity.getExp();
+		userEntity.setExp(userExp==null?0:userExp+exp);
 		return userRepository.save(userEntity);
 	}
 

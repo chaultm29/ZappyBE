@@ -29,7 +29,7 @@ import com.example.springboot.services.MyUserDetailsService;
 import javassist.NotFoundException;
 import net.bytebuddy.utility.RandomString;
 
-@CrossOrigin(origins = { "http://localhost:3000", "https://www.zappy-nihongo.com" })
+@CrossOrigin(origins = "*")
 @RestController
 public class AuthenticationController {
 
@@ -88,7 +88,7 @@ public class AuthenticationController {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Gửi mail bị lỗi", HttpStatus.OK);
 		}
-		return new ResponseEntity<String>("Gửi mail thành công", HttpStatus.OK);
+		return new ResponseEntity<String>("Gửi mail thành công! Vui lòng kiểm tra email và làm theo hướng dẫn", HttpStatus.OK);
 	}
 
 	// check forgot password

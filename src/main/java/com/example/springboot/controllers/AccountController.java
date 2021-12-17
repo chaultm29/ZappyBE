@@ -28,7 +28,7 @@ import com.example.springboot.exception.ResourceNotFoundException;
 import com.example.springboot.services.AccountService;
 import com.example.springboot.services.MyUserDetailsService;
 
-@CrossOrigin(origins =  {"http://localhost:3000", "https://www.zappy-nihongo.com"} )
+@CrossOrigin(origins =  "*" )
 @RestController
 @RequestMapping("")
 public class AccountController {
@@ -67,8 +67,8 @@ public class AccountController {
 
 	// update account rest api
 	@PutMapping("/account/{id}")
-	public ResponseEntity<HashMap<String, Object>> updateAccEntity(@PathVariable Long id, @RequestBody AccountDTO accountDTO) {
-		return new ResponseEntity<HashMap<String, Object>>(accountService.update(id, accountDTO), HttpStatus.OK);
+	public ResponseEntity<String>  updateAccEntity(@PathVariable Long id, @RequestBody AccountDTO accountDTO) {
+		return new ResponseEntity<String> (accountService.update(id, accountDTO), HttpStatus.OK);
 	}
 
 	// delete account rest api

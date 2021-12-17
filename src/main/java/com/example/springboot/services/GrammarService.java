@@ -38,10 +38,10 @@ public class GrammarService {
 	}
 
 	public String addGrammar(GrammarBaseDTO grammarBaseDTO) {
-		GrammarEntity grammarEntity = grammarRepository.getGrammar(grammarBaseDTO.getGrammar());
-		if(grammarEntity != null){
-			return "Đã tồn tại "+ grammarEntity.getGrammar()+" trong hệ thống";
-		}
+//		GrammarEntity grammarEntity = grammarRepository.getGrammar(grammarBaseDTO.getGrammar());
+//		if(grammarEntity != null){
+//			return "Đã tồn tại "+ grammarEntity.getGrammar()+" trong hệ thống";
+//		}
 		GrammarEntity grammar = new GrammarEntity();
 		LessonEntity lessonEntity = new LessonEntity();
 		lessonEntity.setId(lessonRepository.getIdLessonByName(grammarBaseDTO.getLessonName()));
@@ -51,7 +51,6 @@ public class GrammarService {
 		grammar.setGrammarMeaning(grammarBaseDTO.getGrammarMeaning());
 		grammar.setExample(grammarBaseDTO.getExample());
 		grammar.setExplanation(grammarBaseDTO.getExplanation());
-		grammar.setExampleImageLink(grammarBaseDTO.getExampleImageLink());
 		grammar.setExampleImageLink(grammarBaseDTO.getExampleImageLink());
 		grammarRepository.save(grammar);
 		return "Thêm " + grammarBaseDTO.getGrammar() + " thành công";
@@ -67,7 +66,6 @@ public class GrammarService {
 		grammar.setGrammarMeaning(grammarBaseDTO.getGrammarMeaning());
 		grammar.setExample(grammarBaseDTO.getExample());
 		grammar.setExplanation(grammarBaseDTO.getExplanation());
-		grammar.setExampleImageLink(grammarBaseDTO.getExampleImageLink());
 		grammar.setExampleImageLink(grammarBaseDTO.getExampleImageLink());
 		grammarRepository.save(grammar);
 	}

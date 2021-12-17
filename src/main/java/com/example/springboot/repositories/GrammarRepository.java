@@ -20,11 +20,11 @@ public interface GrammarRepository extends JpaRepository<GrammarEntity, Long> {
 	public List<GrammarEntity> getByLessonId(Long lesson_id);
 
 	@Query("select new com.example.springboot.dto.GrammarBaseDTO(g.id,l.lessonName,g.grammar,"
-			+ "g.explanation,g.grammarMeaning,g.example,g.grammarMeaning,g.exampleImageLink)  from GrammarEntity g left join g.lessonEntity l")
+			+ "g.explanation,g.grammarMeaning,g.example,g.exampleMeaning,g.exampleImageLink)  from GrammarEntity g left join g.lessonEntity l")
 	List<GrammarBaseDTO> getAllGrammar();
 
 	@Query("select new com.example.springboot.dto.GrammarBaseDTO(g.id,l.lessonName,g.grammar,"
-			+ "g.explanation,g.grammarMeaning,g.example,g.grammarMeaning,g.exampleImageLink)  from GrammarEntity g left join g.lessonEntity l where g.id=:id")
+			+ "g.explanation,g.grammarMeaning,g.example,g.exampleMeaning,g.exampleImageLink)  from GrammarEntity g left join g.lessonEntity l where g.id=:id")
 	GrammarBaseDTO getGrammarDTOById(@Param("id") Long id);
 
 	@Query("select g from GrammarEntity g left join g.lessonEntity l where g.id=:id")

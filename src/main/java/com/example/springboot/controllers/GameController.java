@@ -30,8 +30,7 @@ public class GameController {
 	
 	@Autowired
 	GameRecordService gameRecordService;
-	
-	
+
 	
 	@PostMapping("bingo/currentQuestion")
 	public ResponseEntity<QuestionGameDTO> getCurrentQuestion(@RequestBody RequireBingoQuestionDTO requireBingo) {
