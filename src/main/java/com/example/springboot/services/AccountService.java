@@ -214,7 +214,7 @@ public class AccountService {
 			String token = RandomString.make(45);
 			accountEntity.setPwToken(token);
 			accountRepository.save(accountEntity);
-			sendEmail(email, "http://localhost:3000/forgot?email=" + email + "&token=" + token);
+			sendEmail(email, "https://www.zappy-js.com/forgot?email=" + email + "&token=" + token);
 		} else {
 			throw new NotFoundException("Could not find any user with this email");
 		}
