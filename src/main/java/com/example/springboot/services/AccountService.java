@@ -127,7 +127,7 @@ public class AccountService {
 		String mess = "";
 		AccountEntity accountEntity = accountRepository.findByUsername(username);
 
-		accountEntity.setPassword("123456");
+		accountEntity.setPassword("12345678");
 		AccountEntity afterSave = saveAccount(accountEntity);
 		mess = "Cập nhật account " + afterSave.getUsername() + " thành công";
 		stringObjectHashMap.put("message", mess);

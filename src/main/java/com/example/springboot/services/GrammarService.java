@@ -50,6 +50,7 @@ public class GrammarService {
 		grammar.setGrammar(grammarBaseDTO.getGrammar());
 		grammar.setGrammarMeaning(grammarBaseDTO.getGrammarMeaning());
 		grammar.setExample(grammarBaseDTO.getExample());
+		grammar.setExampleMeaning(grammarBaseDTO.getExampleMeaning());
 		grammar.setExplanation(grammarBaseDTO.getExplanation());
 		grammar.setExampleImageLink(grammarBaseDTO.getExampleImageLink());
 		grammarRepository.save(grammar);
@@ -65,6 +66,7 @@ public class GrammarService {
 		grammar.setGrammar(grammarBaseDTO.getGrammar());
 		grammar.setGrammarMeaning(grammarBaseDTO.getGrammarMeaning());
 		grammar.setExample(grammarBaseDTO.getExample());
+		grammar.setExampleMeaning(grammarBaseDTO.getExampleMeaning());
 		grammar.setExplanation(grammarBaseDTO.getExplanation());
 		grammar.setExampleImageLink(grammarBaseDTO.getExampleImageLink());
 		grammarRepository.save(grammar);
