@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import com.example.springboot.dto.KanjiDTO;
 import com.example.springboot.services.KanjiService;
 
-@CrossOrigin(origins = {"http://localhost:3000", "https://www.zappy-nihongo.com"})
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/kanji")
 public class KanjiController {

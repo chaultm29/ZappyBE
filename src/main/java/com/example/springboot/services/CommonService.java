@@ -16,10 +16,10 @@ public class CommonService {
 		eACTIVITY activity = eACTIVITY.values()[index];
 		switch(activity) {
 		case GBingo:
-			exp = score * 1/40;
+			exp = score * 1/31;
 			break;
 		case GMemory:
-			exp = score * 1/33;
+			exp = score * 1/23;
 			break;
 		case Exam:
 			exp = score * 5;
@@ -28,7 +28,8 @@ public class CommonService {
 			exp = score * 2;
 			break;
 		}
-		userEntity.setExp(userEntity.getExp()+exp);
+		Long userExp = userEntity.getExp();
+		userEntity.setExp(userExp==null?0:userExp+exp);
 		return userRepository.save(userEntity);
 	}
 

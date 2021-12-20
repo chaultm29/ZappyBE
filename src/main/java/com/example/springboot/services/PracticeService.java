@@ -208,7 +208,6 @@ public class PracticeService {
 
 	public List<Long> getResultQuestion(QuestionResultDTO questionResultDTO) {
 		List<Long> idQuestion = new ArrayList<>();
-		List<Long> idQuestionUserchoose = new ArrayList<>();
 		int count = 0;
 		for (AnswerDTO id : questionResultDTO.getAnswerDTOs()) {
 			QuestionEntity questionEntities = questionRepository.getAllQuestionByAnswer(id.getId(), id.getAnswer());
@@ -229,7 +228,6 @@ public class PracticeService {
 		QuestionResultDetailDTO questionAnswer = new QuestionResultDetailDTO();
 		int numberOfCorrect = 0;
 		int numberOfQuestion = questionResultDTO.getAnswerDTOs().size();
-		int score = 0;
 		List<AnswerDTO> correct = new ArrayList<>();
 		List<Long> idQuestionUserchoose = new ArrayList<>();
 		for (AnswerDTO id : questionResultDTO.getAnswerDTOs()) {

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import com.example.springboot.dto.QuestionDTO;
 import com.example.springboot.services.QuestionService;
 
-@CrossOrigin(origins = {"http://localhost:3000", "https://www.zappy-nihongo.com"})
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("")
 public class QuestionController {

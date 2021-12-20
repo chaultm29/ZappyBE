@@ -30,10 +30,10 @@ public class VocabularyService {
 	}
 
 	public String addVocabulary(VocabularyBaseDTO addVocabularyDTO) {
-		VocabularyEntity vocabularyEntity = vocabularyRepository.getVocabulary(addVocabularyDTO.getVocabulary());
-		if(vocabularyEntity != null){
-			return "Đã tồn tại " + vocabularyEntity.getVocabulary() + " trong hệ thống";
-		}
+//		VocabularyEntity vocabularyEntity = vocabularyRepository.getVocabulary(addVocabularyDTO.getVocabulary());
+//		if(vocabularyEntity != null){
+//			return "Đã tồn tại " + vocabularyEntity.getVocabulary() + " trong hệ thống";
+//		}
 		VocabularyEntity vo = new VocabularyEntity();
 		LessonEntity lessonEntity = new LessonEntity();
 		lessonEntity.setId(lessonRepository.getIdLessonByName(addVocabularyDTO.getLessonName()));

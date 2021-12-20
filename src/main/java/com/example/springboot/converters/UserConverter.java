@@ -23,6 +23,15 @@ public class UserConverter {
 		userEntity.setAvatar(userDTO.getAvatar());
 		return userEntity;
 	}
+	
+	public UserEntity toEntity(UserDTO userDTO, UserEntity oldEntity) {
+		oldEntity.setFullName(userDTO.getFullName());
+		oldEntity.setPhone(userDTO.getPhone());
+		oldEntity.setEmail(userDTO.getEmail());
+		oldEntity.setDateOfBirth(userDTO.getDateOfBirth());
+		oldEntity.setAvatar(userDTO.getAvatar());
+		return oldEntity;
+	}
 
 	public UserDTO toDTO(UserEntity userEntity) {
 		UserDTO userDTO = new UserDTO();

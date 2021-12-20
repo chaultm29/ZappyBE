@@ -16,36 +16,43 @@ import com.example.springboot.dto.UserDTO;
 import com.example.springboot.exception.ResourceNotFoundException;
 import com.example.springboot.services.UserService;
 
-@CrossOrigin(origins =  {"http://localhost:3000", "https://www.zappy-nihongo.com"} )
+import javassist.bytecode.DuplicateMemberException;
+
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/user")
 public class UserController {
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@GetMapping("/profile")
 	public ResponseEntity<UserDTO> getProfile() {
 		UserDTO userDTO = null;
 		try {
 			userDTO = userService.getProfile();
-			if(userDTO==null) throw new Exception();
+			if (userDTO == null)
+				throw new Exception();
 			return new ResponseEntity<UserDTO>(userDTO, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<UserDTO>(userDTO, HttpStatus.NOT_FOUND);
 		}
 	}
-	
+
 	@PutMapping("/profile")
-	public ResponseEntity<UserDTO> updateProfile(@RequestBody UserDTO userDTO) {
+	public ResponseEntity<String> updateProfile(@RequestBody UserDTO userDTO) {
 		try {
 			userDTO = userService.save(userDTO);
-			return new ResponseEntity<UserDTO>(userDTO, HttpStatus.OK);
+			if (userDTO == null)
+				throw new DuplicateMemberException("");
+			return new ResponseEntity<String>("Cập nhật thành công!", HttpStatus.OK);
+		}catch(DuplicateMemberException de) {
+			return new ResponseEntity<String>("Email này đã tồn tại!", HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<UserDTO>(userDTO, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>("Account không tìm thấy!", HttpStatus.NOT_FOUND);
 		}
 	}
-	
+
 //	@GetMapping("/experience")
 //	public ResponseEntity<UserDTO> getExp() {
 //		UserDTO userDTO = null;
@@ -57,7 +64,7 @@ public class UserController {
 //			return new ResponseEntity<UserDTO>(userDTO, HttpStatus.NOT_FOUND);
 //		}
 //	}
-	
+
 	@GetMapping("/level")
 	public ResponseEntity<LevelDTO> getLevel() {
 		return new ResponseEntity<LevelDTO>(userService.getLevel(), HttpStatus.OK);

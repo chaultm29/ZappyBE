@@ -17,7 +17,7 @@ public class LevelDTO {
 	
 	//{0, 100, 300, 600, 1000, 1500, 2100, 2800, 3600, 4500, 5500, 6600, 7800, 9100};
 	public void analysisExp(Long totalExp) {
-		if (totalExp == null) return;
+		if (totalExp == null) totalExp = 0l;
 		int _level = 0;
 		int sumExp = 0;
 		while ((_level+1) * 100 + sumExp <= totalExp) {
