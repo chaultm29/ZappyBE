@@ -1,13 +1,10 @@
 package com.example.springboot.entities;
 
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -29,22 +26,20 @@ public class AlphabetEntity {
 	@Column(name = "is_hiragana")
 	private Boolean isHiragana;
 
-	@ManyToMany(mappedBy = "alphabetEntities")
-	private Set<UserEntity> userEntities;
+//	@ManyToMany(mappedBy = "alphabetEntities")
+//	private Set<UserEntity> userEntities;
 
 	public AlphabetEntity() {
 		super();
 	}
 
-	public AlphabetEntity(Long id, String character, String imageLink, String description, Boolean isHiragana,
-			Set<UserEntity> userEntities) {
+	public AlphabetEntity(Long id, String character, String imageLink, String description, Boolean isHiragana) {
 		super();
 		this.id = id;
 		this.character = character;
 		this.imageLink = imageLink;
 		this.description = description;
 		this.isHiragana = isHiragana;
-		this.userEntities = userEntities;
 	}
 
 	public Long getId() {
@@ -87,12 +82,12 @@ public class AlphabetEntity {
 		this.isHiragana = isHiragana;
 	}
 
-	public Set<UserEntity> getUserEntities() {
-		return userEntities;
-	}
-
-	public void setUserEntities(Set<UserEntity> userEntities) {
-		this.userEntities = userEntities;
-	}
+//	public Set<UserEntity> getUserEntities() {
+//		return userEntities;
+//	}
+//
+//	public void setUserEntities(Set<UserEntity> userEntities) {
+//		this.userEntities = userEntities;
+//	}
 
 }

@@ -1,5 +1,6 @@
 package com.example.springboot.entities;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -40,7 +41,6 @@ public class LessonEntity {
 	@ManyToMany(mappedBy = "lessonEntities")
 	private Set<RoomEntity> roomEntities;
 	
-
 	public LessonEntity() {
 		super();
 	}

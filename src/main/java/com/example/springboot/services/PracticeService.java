@@ -20,10 +20,6 @@ public class PracticeService {
 	private PracticeConverter practiceConverter;
 	@Autowired
 	private UserRepository userRepository;
-	@Autowired
-	private ExamRepositoty examRepositoty;
-	@Autowired
-	private UserAchienmentRepository userAchienmentRepository;
 
 	public HashMap<String, Object> questionExamDTOList(QuestionRequireDTO questionRequireDTO) {
 		Random rd = new Random();

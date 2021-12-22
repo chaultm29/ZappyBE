@@ -3,13 +3,16 @@ package com.example.springboot.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.example.springboot.converters.LessonConverter;
 import com.example.springboot.dto.LessonDTO;
 import com.example.springboot.entities.LessonEntity;
+import com.example.springboot.entities.UserEntity;
 import com.example.springboot.exception.ResourceNotFoundException;
 import com.example.springboot.repositories.LessonRepository;
+import com.example.springboot.repositories.UserRepository;
 
 @Service
 public class LessonService {
@@ -18,6 +21,9 @@ public class LessonService {
 
 	@Autowired
 	LessonConverter lessonConverter;
+	
+	@Autowired
+	UserRepository userRepository;
 
 	public LessonDTO get(Long id) {
 		LessonEntity lessonEntity = lessonRepository.findById(id)
@@ -25,8 +31,11 @@ public class LessonService {
 		return lessonConverter.toDTO(lessonEntity);
 	}
 
-	public List<LessonDTO> get() {
+	public List<LessonDTO> getLessonBySkill(Long skid) {
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		UserEntity userEntity = userRepository.getUserByUserName(username);
 		List<LessonEntity> lessonEntities = lessonRepository.findAll();
-		return lessonConverter.toDTOs(lessonEntities);
+		List<Long> lessonLearnt = lessonRepository.getLearntLesson(userEntity.getId(), skid);
+		return lessonConverter.toDTOs(lessonEntities, lessonLearnt);
 	}
 }

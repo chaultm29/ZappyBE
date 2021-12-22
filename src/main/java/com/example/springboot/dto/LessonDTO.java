@@ -3,6 +3,7 @@ package com.example.springboot.dto;
 public class LessonDTO {
 	private Long id;
 	private String lessonName;
+	private Boolean isLearnt;
 
 	public LessonDTO() {
 		super();
@@ -12,6 +13,14 @@ public class LessonDTO {
 		super();
 		this.id = id;
 		this.lessonName = lessonName;
+	}
+
+	public Boolean getIsLearnt() {
+		return isLearnt;
+	}
+
+	public void setIsLearnt(Boolean isLearnt) {
+		this.isLearnt = isLearnt;
 	}
 
 	public Long getId() {

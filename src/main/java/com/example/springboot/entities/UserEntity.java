@@ -3,6 +3,7 @@ package com.example.springboot.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.sql.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -45,21 +46,21 @@ public class UserEntity {
 	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
 	private Set<UserAchievenmentEntity> userAchievenmentEntities;
 
-	@ManyToMany
-	@JoinTable(name = "user_alphabet_rf", joinColumns = @JoinColumn(name = "alphabet_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
-	private Set<AlphabetEntity> alphabetEntities;
-
-	@ManyToMany
-	@JoinTable(name = "user_kanji_rf", joinColumns = @JoinColumn(name = "kanji_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
-	private Set<KanjiEntity> kanjiEntities;
-
-	@ManyToMany
-	@JoinTable(name = "user_vocabulary_rf", joinColumns = @JoinColumn(name = "vocabulary_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
-	private Set<VocabularyEntity> vocabularyEntities;
-
-	@ManyToMany
-	@JoinTable(name = "user_grammar_rf", joinColumns = @JoinColumn(name = "grammar_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
-	private Set<GrammarEntity> grammarEntities;
+//	@ManyToMany
+//	@JoinTable(name = "user_alphabet_rf", joinColumns = @JoinColumn(name = "alphabet_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+//	private Set<AlphabetEntity> alphabetEntities;
+//
+//	@ManyToMany
+//	@JoinTable(name = "user_kanji_rf", joinColumns = @JoinColumn(name = "kanji_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+//	private Set<KanjiEntity> kanjiEntities;
+//
+//	@ManyToMany
+//	@JoinTable(name = "user_vocabulary_rf", joinColumns = @JoinColumn(name = "vocabulary_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+//	private Set<VocabularyEntity> vocabularyEntities;
+//
+//	@ManyToMany
+//	@JoinTable(name = "user_grammar_rf", joinColumns = @JoinColumn(name = "grammar_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+//	private Set<GrammarEntity> grammarEntities;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
@@ -68,25 +69,25 @@ public class UserEntity {
 	@JsonIgnore
 	@OneToMany(mappedBy = "userEntities", cascade = CascadeType.ALL)
 	private Set<PracticeEntiry> paPracticeEntiries;
-
+	
 	public UserEntity() {
 	}
 
-	public UserEntity(Long id, String fullName, String phone, String email, Date dateOfBirth, String avatar, Set<UserAchievenmentEntity> userAchievenmentEntities, Set<AlphabetEntity> alphabetEntities, Set<KanjiEntity> kanjiEntities, Set<VocabularyEntity> vocabularyEntities, Set<GrammarEntity> grammarEntities, Set<ExamEntity> examEntities, Set<PracticeEntiry> paPracticeEntiries) {
-		this.id = id;
-		this.fullName = fullName;
-		this.phone = phone;
-		this.email = email;
-		this.dateOfBirth = dateOfBirth;
-		this.avatar = avatar;
-		this.userAchievenmentEntities = userAchievenmentEntities;
-		this.alphabetEntities = alphabetEntities;
-		this.kanjiEntities = kanjiEntities;
-		this.vocabularyEntities = vocabularyEntities;
-		this.grammarEntities = grammarEntities;
-		this.examEntities = examEntities;
-		this.paPracticeEntiries = paPracticeEntiries;
-	}
+//	public UserEntity(Long id, String fullName, String phone, String email, Date dateOfBirth, String avatar, Set<UserAchievenmentEntity> userAchievenmentEntities, Set<AlphabetEntity> alphabetEntities, Set<KanjiEntity> kanjiEntities, Set<VocabularyEntity> vocabularyEntities, Set<GrammarEntity> grammarEntities, Set<ExamEntity> examEntities, Set<PracticeEntiry> paPracticeEntiries) {
+//		this.id = id;
+//		this.fullName = fullName;
+//		this.phone = phone;
+//		this.email = email;
+//		this.dateOfBirth = dateOfBirth;
+//		this.avatar = avatar;
+//		this.userAchievenmentEntities = userAchievenmentEntities;
+////		this.alphabetEntities = alphabetEntities;
+////		this.kanjiEntities = kanjiEntities;
+////		this.vocabularyEntities = vocabularyEntities;
+////		this.grammarEntities = grammarEntities;
+//		this.examEntities = examEntities;
+//		this.paPracticeEntiries = paPracticeEntiries;
+//	}
 
 	public Set<ExamEntity> getExamEntities() {
 		return examEntities;
@@ -160,36 +161,36 @@ public class UserEntity {
 		this.paPracticeEntiries = paPracticeEntiries;
 	}
 
-	public Set<AlphabetEntity> getAlphabetEntities() {
-		return alphabetEntities;
-	}
-
-	public void setAlphabetEntities(Set<AlphabetEntity> alphabetEntities) {
-		this.alphabetEntities = alphabetEntities;
-	}
-
-	public Set<KanjiEntity> getKanjiEntities() {
-		return kanjiEntities;
-	}
-
-	public void setKanjiEntities(Set<KanjiEntity> kanjiEntities) {
-		this.kanjiEntities = kanjiEntities;
-	}
-
-	public Set<VocabularyEntity> getVocabularyEntities() {
-		return vocabularyEntities;
-	}
-
-	public void setVocabularyEntities(Set<VocabularyEntity> vocabularyEntities) {
-		this.vocabularyEntities = vocabularyEntities;
-	}
-
-	public Set<GrammarEntity> getGrammarEntities() {
-		return grammarEntities;
-	}
-
-	public void setGrammarEntities(Set<GrammarEntity> grammarEntities) {
-		this.grammarEntities = grammarEntities;
-	}
+//	public Set<AlphabetEntity> getAlphabetEntities() {
+//		return alphabetEntities;
+//	}
+//
+//	public void setAlphabetEntities(Set<AlphabetEntity> alphabetEntities) {
+//		this.alphabetEntities = alphabetEntities;
+//	}
+//
+//	public Set<KanjiEntity> getKanjiEntities() {
+//		return kanjiEntities;
+//	}
+//
+//	public void setKanjiEntities(Set<KanjiEntity> kanjiEntities) {
+//		this.kanjiEntities = kanjiEntities;
+//	}
+//
+//	public Set<VocabularyEntity> getVocabularyEntities() {
+//		return vocabularyEntities;
+//	}
+//
+//	public void setVocabularyEntities(Set<VocabularyEntity> vocabularyEntities) {
+//		this.vocabularyEntities = vocabularyEntities;
+//	}
+//
+//	public Set<GrammarEntity> getGrammarEntities() {
+//		return grammarEntities;
+//	}
+//
+//	public void setGrammarEntities(Set<GrammarEntity> grammarEntities) {
+//		this.grammarEntities = grammarEntities;
+//	}
 
 }
