@@ -122,12 +122,13 @@ public class AccountService {
 		}
 	}
 
-	public HashMap<String, Object> resetPassword(String username) {
+	public HashMap<String, Object> resetPassword(String username) throws UnsupportedEncodingException, MessagingException {
 		HashMap<String, Object> stringObjectHashMap = new HashMap<>();
 		String mess = "";
 		AccountEntity accountEntity = accountRepository.findByUsername(username);
-
-		accountEntity.setPassword("12345678");
+		String newPassword = RandomString.make(8);
+		accountEntity.setPassword(newPassword);
+		sendResetPwEmail(accountEntity.getUserEntity().getEmail(), newPassword);
 		AccountEntity afterSave = saveAccount(accountEntity);
 		mess = "Cập nhật account " + afterSave.getUsername() + " thành công";
 		stringObjectHashMap.put("message", mess);
@@ -246,6 +247,22 @@ public class AccountService {
 //				+ "<p>パスワードを変更するには、以下のリンクをクリックしてください。</p>"
 //				+ "<p><a href=\""+ resetPasswordLink + "\">パスワードを変更</a><b></p>"
 //				+ "<p>パスワードを覚えている場合、またはあなたがリクエストを行っている人ではない場合は、このメールを無視してください。</p>"
+		helper.setSubject(subject);
+		helper.setText(content, true);
+		mailSender.send(message);
+	}
+	private void sendResetPwEmail(String email, String randomPassword)
+			throws UnsupportedEncodingException, MessagingException {
+		MimeMessage message = mailSender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(message);
+		helper.setTo(email);
+
+		String subject = "[ZAPPY]Reset password";
+
+		String content = "<p>Hello,<p>" + "<p>You have requested to reset your password.</p>"
+				+ "<p>Here is your new password: " + randomPassword + "</p>"
+				+ "<p>Thank you for use our service.</p>";
+			
 		helper.setSubject(subject);
 		helper.setText(content, true);
 		mailSender.send(message);

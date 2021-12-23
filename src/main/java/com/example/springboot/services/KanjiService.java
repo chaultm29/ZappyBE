@@ -63,6 +63,10 @@ public class KanjiService {
 
 	public void updateKanji(GetAllKanjiDTO kanjiDTO, Long id) {
 		KanjiEntity kanji = kanjiRepository.getKanjiEntityById(id);
+		KanjiEntity kanjiEntity = kanjiRepository.getCharacter(kanjiDTO.getCharacter());
+		if(!kanjiEntity.getId().equals(kanji.getId())) {
+			return;
+		}
 		LessonEntity lessonEntity = new LessonEntity();
 		lessonEntity.setId(lessonRepository.getIdLessonByName(kanjiDTO.getLessonName()));
 		lessonEntity.setLessonName(kanjiDTO.getLessonName());

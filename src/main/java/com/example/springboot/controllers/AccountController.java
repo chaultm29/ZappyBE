@@ -1,7 +1,10 @@
 package com.example.springboot.controllers;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
+
+import javax.mail.MessagingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -62,7 +65,13 @@ public class AccountController {
 
 	@PostMapping("/resetaccount/{username}")
 	public ResponseEntity<HashMap<String, Object>> resetPasswordAccountEntity(@PathVariable String username) {
-		return new ResponseEntity<HashMap<String, Object>>(accountService.resetPassword(username), HttpStatus.OK);
+		try {
+			return new ResponseEntity<HashMap<String, Object>>(accountService.resetPassword(username), HttpStatus.OK);
+		} catch (UnsupportedEncodingException | MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	// update account rest api
