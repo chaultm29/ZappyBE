@@ -27,14 +27,18 @@ public class GameService {
 	@Autowired
 	AnswerRepository answerRepository;
 	
-	public QuestionGameDTO getCurrentQuestion(RequireBingoQuestionDTO requireBingo) throws NotFoundException {
+	public QuestionGameDTO getCurrentQuestion(RequireBingoQuestionDTO requireBingo) throws Exception {
 		if(requireBingo.getLessonIds().isEmpty()) throw new NotFoundException("list lessons can not be empty"); 
 		QuestionEntity currentQuestion;
+		List<Long> listLessionId = questionRepository.getIDLessonExit();
+		if (!doesExist(listLessionId, requireBingo.getLessonIds())) throw new Exception();
 		do {
-			currentQuestion = questionRepository.getQuestionBingoGame();
+			currentQuestion = questionRepository.getQuestionBingoGame()
+					.orElseThrow(() -> new Exception());
 		}
 		while(doesExist(currentQuestion.getId().intValue(), requireBingo.getQuestionIds()) ||
-				!doesExist(currentQuestion.getLessonEntity().getId().intValue(), requireBingo.getLessonIds()));
+				!doesExist(currentQuestion.getLessonEntity().getId().intValue(), requireBingo.getLessonIds()) ||
+				!hasAnswers(currentQuestion));
 		return questionConverter.toQuestionGameDTOs(currentQuestion);
 	}
 	
@@ -46,6 +50,19 @@ public class GameService {
 			}
 		}
 		return false;
+	}
+	
+	private boolean doesExist(List<Long> listIdRepo ,List<Integer> listId) {
+		for (Long id : listIdRepo) {
+			if (doesExist(id.intValue(), listId)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private boolean hasAnswers(QuestionEntity questionEntity) {
+		return questionEntity.getAnswerEntities().size()==4;
 	}
 	
 	public boolean isCorrect(Long questionId, Long answerId) throws NotFoundException {

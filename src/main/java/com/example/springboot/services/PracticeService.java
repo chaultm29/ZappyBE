@@ -204,19 +204,12 @@ public class PracticeService {
 
 	public List<Long> getResultQuestion(QuestionResultDTO questionResultDTO) {
 		List<Long> idQuestion = new ArrayList<>();
-		int count = 0;
-		for (AnswerDTO id : questionResultDTO.getAnswerDTOs()) {
-			QuestionEntity questionEntities = questionRepository.getAllQuestionByAnswer(id.getId(), id.getAnswer());
+		for (AnswerDTO answer : questionResultDTO.getAnswerDTOs()) {
+			QuestionEntity questionEntities = questionRepository.getAllQuestionByAnswer(answer.getId(), answer.getAnswer());
 			if (questionEntities != null) {
-				idQuestion.add(id.getId());
-				count++;
+				idQuestion.add(answer.getId());
 			}
 		}
-		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		List<PracticeEntiry> examEntities = practiceRepository.getPracticeByUserName(username);
-		PracticeEntiry practiceEntiry = examEntities.get(0);
-		practiceEntiry.setScore(count * 100 / questionResultDTO.getAnswerDTOs().size());
-		practiceRepository.save(practiceEntiry);
 		return idQuestion;
 	}
 
@@ -224,6 +217,9 @@ public class PracticeService {
 		QuestionResultDetailDTO questionAnswer = new QuestionResultDetailDTO();
 		int numberOfCorrect = 0;
 		int numberOfQuestion = questionResultDTO.getAnswerDTOs().size();
+		List<Long> listQId = getResultQuestion(questionResultDTO);
+		questionAnswer.setQuestionIds(listQId);
+		
 		List<AnswerDTO> correct = new ArrayList<>();
 		List<Long> idQuestionUserchoose = new ArrayList<>();
 		for (AnswerDTO id : questionResultDTO.getAnswerDTOs()) {
@@ -261,7 +257,6 @@ public class PracticeService {
 		getProgress();
 		CommonService common = new CommonService();
 		common.saveExp(0, (long) numberOfCorrect, userRepository);
-//		getLevel();
 		return questionAnswer;
 	}
 

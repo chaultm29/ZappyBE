@@ -7,7 +7,7 @@ public class QuestionResultDetailDTO {
 	private Integer numberOfCorrect;
 	private Integer score;
 	private List<AnswerDTO> correct = new ArrayList<>();
-
+	private List<Long> questionIds = new ArrayList<>();
 	public QuestionResultDetailDTO() {
 	}
 
@@ -40,4 +40,13 @@ public class QuestionResultDetailDTO {
 	public void setCorrect(List<AnswerDTO> correct) {
 		this.correct = correct;
 	}
+
+	public List<Long> getQuestionIds() {
+		return questionIds;
+	}
+
+	public void setQuestionIds(List<Long> questionIds) {
+		this.questionIds = questionIds;
+	}
+
 }

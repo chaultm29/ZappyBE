@@ -41,32 +41,10 @@ public class KanjiService {
 
 	public String addKanji(GetAllKanjiDTO kanjiDTO) {
 		KanjiEntity kanjiEntity = kanjiRepository.getCharacter(kanjiDTO.getCharacter());
-		if(kanjiEntity != null){
-			return "Đã tồn tại "+ kanjiEntity.getCharacter() +" trong hệ thống";
+		if (kanjiEntity != null) {
+			return "Đã tồn tại " + kanjiEntity.getCharacter() + " trong hệ thống";
 		}
 		KanjiEntity kanji = new KanjiEntity();
-		LessonEntity lessonEntity = new LessonEntity();
-		lessonEntity.setId(lessonRepository.getIdLessonByName(kanjiDTO.getLessonName()));
-		lessonEntity.setLessonName(kanjiDTO.getLessonName());
-		kanji.setLessonEntity(lessonEntity);
-		kanji.setCharacter(kanjiDTO.getCharacter());
-		kanji.setChinese(kanjiDTO.getChinese());		
-		kanji.setVietnamese(kanjiDTO.getVietnamese());
-		kanji.setDescription(kanjiDTO.getDescription());
-		kanji.setOnyomi(kanjiDTO.getOnyomi());
-		kanji.setKunyomi(kanjiDTO.getKunyomi());
-		kanji.setGifLink(kanjiDTO.getGifLink());
-		kanji.setImageLink(kanjiDTO.getImageLink());
-		kanjiRepository.save(kanji);
-		return "Thêm "+ kanjiDTO.getCharacter() +" thành công";
-	}
-
-	public void updateKanji(GetAllKanjiDTO kanjiDTO, Long id) {
-		KanjiEntity kanji = kanjiRepository.getKanjiEntityById(id);
-		KanjiEntity kanjiEntity = kanjiRepository.getCharacter(kanjiDTO.getCharacter());
-		if(!kanjiEntity.getId().equals(kanji.getId())) {
-			return;
-		}
 		LessonEntity lessonEntity = new LessonEntity();
 		lessonEntity.setId(lessonRepository.getIdLessonByName(kanjiDTO.getLessonName()));
 		lessonEntity.setLessonName(kanjiDTO.getLessonName());
@@ -80,6 +58,30 @@ public class KanjiService {
 		kanji.setGifLink(kanjiDTO.getGifLink());
 		kanji.setImageLink(kanjiDTO.getImageLink());
 		kanjiRepository.save(kanji);
+		return "Thêm " + kanjiDTO.getCharacter() + " thành công";
+	}
+
+	public void updateKanji(GetAllKanjiDTO kanjiDTO, Long id) throws Exception {
+		KanjiEntity kanjiEntity = kanjiRepository.getCharacter(kanjiDTO.getCharacter());
+		if (kanjiEntity == null || kanjiEntity.getId().equals(id)) {
+			KanjiEntity kanji = kanjiRepository.getKanjiEntityById(id);
+			LessonEntity lessonEntity = new LessonEntity();
+			lessonEntity.setId(lessonRepository.getIdLessonByName(kanjiDTO.getLessonName()));
+			lessonEntity.setLessonName(kanjiDTO.getLessonName());
+			kanji.setLessonEntity(lessonEntity);
+			kanji.setCharacter(kanjiDTO.getCharacter());
+			kanji.setChinese(kanjiDTO.getChinese());
+			kanji.setVietnamese(kanjiDTO.getVietnamese());
+			kanji.setDescription(kanjiDTO.getDescription());
+			kanji.setOnyomi(kanjiDTO.getOnyomi());
+			kanji.setKunyomi(kanjiDTO.getKunyomi());
+			kanji.setGifLink(kanjiDTO.getGifLink());
+			kanji.setImageLink(kanjiDTO.getImageLink());
+			kanjiRepository.save(kanji);
+		}
+		else {
+			throw new Exception("Chữ kanji này đã tồn tại");
+		}
 	}
 
 	public void deleteKanji(Long id) {
