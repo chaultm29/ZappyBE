@@ -1,5 +1,7 @@
 package com.example.springboot.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.springboot.dto.LevelDTO;
 import com.example.springboot.dto.UserDTO;
+import com.example.springboot.entities.UserEntity;
 import com.example.springboot.exception.ResourceNotFoundException;
 import com.example.springboot.services.UserService;
 
@@ -68,5 +71,10 @@ public class UserController {
 	@GetMapping("/level")
 	public ResponseEntity<LevelDTO> getLevel() {
 		return new ResponseEntity<LevelDTO>(userService.getLevel(), HttpStatus.OK);
+	}
+	
+	@GetMapping("/ranking")
+	public ResponseEntity<List<UserEntity>> getRanking() {
+		return new ResponseEntity<List<UserEntity>>(userService.getTop10Ranking(), HttpStatus.OK);
 	}
 }

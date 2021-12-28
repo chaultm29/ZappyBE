@@ -52,4 +52,8 @@ public class UserService {
 		levelDTO.analysisExp(userEntity.getExp());
 		return levelDTO;
 	}
+	
+	public List<UserEntity> getTop10Ranking(){
+		return userRepository.getTopRanking();
+	}
 }

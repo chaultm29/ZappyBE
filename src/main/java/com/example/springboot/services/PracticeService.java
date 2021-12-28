@@ -2,7 +2,10 @@ package com.example.springboot.services;
 
 import com.example.springboot.converters.PracticeConverter;
 import com.example.springboot.dto.*;
-import com.example.springboot.entities.*;
+import com.example.springboot.entities.AnswerEntity;
+import com.example.springboot.entities.PracticeEntiry;
+import com.example.springboot.entities.QuestionEntity;
+import com.example.springboot.entities.UserEntity;
 import com.example.springboot.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,6 +17,8 @@ import java.util.*;
 public class PracticeService {
 	@Autowired
 	PracticeRepository practiceRepository;
+	@Autowired
+	private AnswerRepository answerRepository;
 	@Autowired
 	private QuestionRepository questionRepository;
 	@Autowired
@@ -205,9 +210,13 @@ public class PracticeService {
 	public List<Long> getResultQuestion(QuestionResultDTO questionResultDTO) {
 		List<Long> idQuestion = new ArrayList<>();
 		for (AnswerDTO answer : questionResultDTO.getAnswerDTOs()) {
-			QuestionEntity questionEntities = questionRepository.getAllQuestionByAnswer(answer.getId(), answer.getAnswer());
-			if (questionEntities != null) {
-				idQuestion.add(answer.getId());
+			QuestionEntity questionEntity = questionRepository.findById(answer.getId()).orElse(null);
+			if(questionEntity!=null) {
+				for (AnswerEntity anEntity : questionEntity.getAnswerEntities()) {
+					if(anEntity.isCorrect() && anEntity.getAnswer().equals(answer.getAnswer())) {
+						idQuestion.add(answer.getId());
+					}
+				}
 			}
 		}
 		return idQuestion;
