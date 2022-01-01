@@ -17,4 +17,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 	UserEntity getUserByEmail(@Param("email") String email);
 	
 	List<UserEntity> findByEmail(String email);
+	
+	@Query(value="select * from users inner join accounts where accounts.user_id = users.id and role_id = 3 order by exp desc limit 10", nativeQuery = true)
+	List<UserEntity> getTopRanking();
 }

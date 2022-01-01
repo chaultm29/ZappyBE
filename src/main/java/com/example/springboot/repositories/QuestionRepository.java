@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface QuestionRepository extends JpaRepository<QuestionEntity, Long> {
 	@Query("select new com.example.springboot.dto.QuestionBaseDTO(q.id,qt.typeName,l.lessonName,sk.skillName,q.question,"
@@ -46,5 +47,5 @@ public interface QuestionRepository extends JpaRepository<QuestionEntity, Long> 
 	QuestionEntity getQuestion(@Param("question") String question);
 
 	@Query(value = "select * from questions q where  q.type_id = 1 and q.enabled = 1 order by RAND() limit 1", nativeQuery = true)
-	QuestionEntity getQuestionBingoGame();
+	Optional<QuestionEntity> getQuestionBingoGame();
 }

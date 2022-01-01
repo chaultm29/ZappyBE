@@ -30,5 +30,22 @@ public class LessonConverter {
 		}
 		return lessonDTOs;
 	}
+	
+	public LessonDTO toDTO(LessonEntity lessonEntity, boolean learnt) {
+		LessonDTO lessonDTO = new LessonDTO();
+		lessonDTO.setId(lessonEntity.getId());
+		lessonDTO.setLessonName(lessonEntity.getLessonName());
+		lessonDTO.setIsLearnt(learnt);
+		return lessonDTO;
+	}
+	
+	public List<LessonDTO> toDTOs(List<LessonEntity> listEntities, List<Long> listLearnt) {
+		ArrayList<LessonDTO> lessonDTOs = new ArrayList<LessonDTO>();
+		for (LessonEntity lessonEntity : listEntities) {
+			boolean learnt = listLearnt.contains(lessonEntity.getId());
+			lessonDTOs.add(toDTO(lessonEntity, learnt));
+		}
+		return lessonDTOs;
+	}
 
 }

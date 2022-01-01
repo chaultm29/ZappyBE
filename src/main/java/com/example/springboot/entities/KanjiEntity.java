@@ -43,8 +43,8 @@ public class KanjiEntity {
 	@Column(name = "gif_link")
 	private String gifLink;
 
-	@ManyToMany(mappedBy = "kanjiEntities")
-	private Set<UserEntity> userEntities;
+//	@ManyToMany(mappedBy = "kanjiEntities")
+//	private Set<UserEntity> userEntities;
 
 	@ManyToOne
 	@JoinColumn(name = "lesson_id")
@@ -139,13 +139,13 @@ public class KanjiEntity {
 		this.gifLink = gifLink;
 	}
 
-	public Set<UserEntity> getUserEntities() {
-		return userEntities;
-	}
-
-	public void setUserEntities(Set<UserEntity> userEntities) {
-		this.userEntities = userEntities;
-	}
+//	public Set<UserEntity> getUserEntities() {
+//		return userEntities;
+//	}
+//
+//	public void setUserEntities(Set<UserEntity> userEntities) {
+//		this.userEntities = userEntities;
+//	}
 
 	public LessonEntity getLessonEntity() {
 		return lessonEntity;

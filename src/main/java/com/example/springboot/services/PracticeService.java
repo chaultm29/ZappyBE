@@ -2,7 +2,10 @@ package com.example.springboot.services;
 
 import com.example.springboot.converters.PracticeConverter;
 import com.example.springboot.dto.*;
-import com.example.springboot.entities.*;
+import com.example.springboot.entities.AnswerEntity;
+import com.example.springboot.entities.PracticeEntiry;
+import com.example.springboot.entities.QuestionEntity;
+import com.example.springboot.entities.UserEntity;
 import com.example.springboot.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,15 +18,13 @@ public class PracticeService {
 	@Autowired
 	PracticeRepository practiceRepository;
 	@Autowired
+	private AnswerRepository answerRepository;
+	@Autowired
 	private QuestionRepository questionRepository;
 	@Autowired
 	private PracticeConverter practiceConverter;
 	@Autowired
 	private UserRepository userRepository;
-	@Autowired
-	private ExamRepositoty examRepositoty;
-	@Autowired
-	private UserAchienmentRepository userAchienmentRepository;
 
 	public HashMap<String, Object> questionExamDTOList(QuestionRequireDTO questionRequireDTO) {
 		Random rd = new Random();
@@ -208,19 +209,16 @@ public class PracticeService {
 
 	public List<Long> getResultQuestion(QuestionResultDTO questionResultDTO) {
 		List<Long> idQuestion = new ArrayList<>();
-		int count = 0;
-		for (AnswerDTO id : questionResultDTO.getAnswerDTOs()) {
-			QuestionEntity questionEntities = questionRepository.getAllQuestionByAnswer(id.getId(), id.getAnswer());
-			if (questionEntities != null) {
-				idQuestion.add(id.getId());
-				count++;
+		for (AnswerDTO answer : questionResultDTO.getAnswerDTOs()) {
+			QuestionEntity questionEntity = questionRepository.findById(answer.getId()).orElse(null);
+			if(questionEntity!=null) {
+				for (AnswerEntity anEntity : questionEntity.getAnswerEntities()) {
+					if(anEntity.isCorrect() && anEntity.getAnswer().equals(answer.getAnswer())) {
+						idQuestion.add(answer.getId());
+					}
+				}
 			}
 		}
-		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		List<PracticeEntiry> examEntities = practiceRepository.getPracticeByUserName(username);
-		PracticeEntiry practiceEntiry = examEntities.get(0);
-		practiceEntiry.setScore(count * 100 / questionResultDTO.getAnswerDTOs().size());
-		practiceRepository.save(practiceEntiry);
 		return idQuestion;
 	}
 
@@ -228,6 +226,9 @@ public class PracticeService {
 		QuestionResultDetailDTO questionAnswer = new QuestionResultDetailDTO();
 		int numberOfCorrect = 0;
 		int numberOfQuestion = questionResultDTO.getAnswerDTOs().size();
+		List<Long> listQId = getResultQuestion(questionResultDTO);
+		questionAnswer.setQuestionIds(listQId);
+		
 		List<AnswerDTO> correct = new ArrayList<>();
 		List<Long> idQuestionUserchoose = new ArrayList<>();
 		for (AnswerDTO id : questionResultDTO.getAnswerDTOs()) {
@@ -265,7 +266,6 @@ public class PracticeService {
 		getProgress();
 		CommonService common = new CommonService();
 		common.saveExp(0, (long) numberOfCorrect, userRepository);
-//		getLevel();
 		return questionAnswer;
 	}
 

@@ -50,7 +50,7 @@ public class MyUserDetailsService implements UserDetailsService {
 //	}
 	 public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         AccountEntity accountEntity = accountRepository.findByUsername(username);
-        if (accountEntity == null) throw new UsernameNotFoundException("Account is not found!");
+        if (accountEntity == null||accountEntity.getIsEnabled()==false) throw new UsernameNotFoundException("Account is not found!");
         return new User(accountEntity.getUsername(), accountEntity.getPassword(), new ArrayList<GrantedAuthority>());
     }
 

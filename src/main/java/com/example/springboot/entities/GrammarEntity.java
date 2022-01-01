@@ -37,8 +37,8 @@ public class GrammarEntity {
 	@Column(name = "example_image_link")
 	private String exampleImageLink;
 
-	@ManyToMany(mappedBy = "grammarEntities")
-	private Set<UserEntity> userEntities;
+//	@ManyToMany(mappedBy = "grammarEntities")
+//	private Set<UserEntity> userEntities;
 
 	@ManyToOne
 	@JoinColumn(name = "lesson_id")
@@ -49,7 +49,7 @@ public class GrammarEntity {
 	}
 
 	public GrammarEntity(Long id, String grammar, String explanation, String grammarMeaning, String example,
-			String exampleMeaning, String exampleImageLink, Set<UserEntity> userEntities, LessonEntity lessonEntity) {
+			String exampleMeaning, String exampleImageLink, LessonEntity lessonEntity) {
 		super();
 		this.id = id;
 		this.grammar = grammar;
@@ -58,7 +58,7 @@ public class GrammarEntity {
 		this.example = example;
 		this.exampleMeaning = exampleMeaning;
 		this.exampleImageLink = exampleImageLink;
-		this.userEntities = userEntities;
+//		this.userEntities = userEntities;
 		this.lessonEntity = lessonEntity;
 	}
 
@@ -118,13 +118,13 @@ public class GrammarEntity {
 		this.exampleImageLink = exampleImageLink;
 	}
 
-	public Set<UserEntity> getUserEntities() {
-		return userEntities;
-	}
-
-	public void setUserEntities(Set<UserEntity> userEntities) {
-		this.userEntities = userEntities;
-	}
+//	public Set<UserEntity> getUserEntities() {
+//		return userEntities;
+//	}
+//
+//	public void setUserEntities(Set<UserEntity> userEntities) {
+//		this.userEntities = userEntities;
+//	}
 
 	public LessonEntity getLessonEntity() {
 		return lessonEntity;

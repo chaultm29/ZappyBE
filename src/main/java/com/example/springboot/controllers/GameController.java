@@ -36,8 +36,8 @@ public class GameController {
 	public ResponseEntity<QuestionGameDTO> getCurrentQuestion(@RequestBody RequireBingoQuestionDTO requireBingo) {
 		try {
 			return new ResponseEntity<QuestionGameDTO>(gameService.getCurrentQuestion(requireBingo), HttpStatus.OK);
-		} catch (NotFoundException e) {
-			return new ResponseEntity<QuestionGameDTO>(new QuestionGameDTO(), HttpStatus.NOT_FOUND);
+		} catch (Exception e) {
+			return new ResponseEntity<QuestionGameDTO>(new QuestionGameDTO(), HttpStatus.OK);
 		}
 	}
 	

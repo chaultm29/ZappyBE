@@ -48,7 +48,11 @@ public class KanjiController {
 
 	@PutMapping("/{id}")
 	public ResponseEntity<?> updateKanji(@PathVariable Long id, @RequestBody GetAllKanjiDTO kanjiDTO) {
-		kanjiService.updateKanji(kanjiDTO, id);
+		try {
+			kanjiService.updateKanji(kanjiDTO, id);
+		} catch (Exception e) {
+			return new ResponseEntity(e.getMessage(),HttpStatus.OK);
+		}
 		return new ResponseEntity(HttpStatus.OK);
 	}
 

@@ -1,9 +1,5 @@
 package com.example.springboot.controllers;
 
-import java.io.UnsupportedEncodingException;
-
-import javax.mail.MessagingException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +23,6 @@ import com.example.springboot.services.AccountService;
 import com.example.springboot.services.MyUserDetailsService;
 
 import javassist.NotFoundException;
-import net.bytebuddy.utility.RandomString;
 
 @CrossOrigin(origins = "*")
 @RestController

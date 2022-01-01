@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.springboot.dto.LessonDTO;
@@ -21,7 +22,7 @@ public class LessonController {
 	private LessonService lessonService;
 
 	@GetMapping("")
-	public ResponseEntity<List<LessonDTO>> getAllLesson() {
-		return new ResponseEntity<List<LessonDTO>>(lessonService.get(), HttpStatus.OK);
+	public ResponseEntity<List<LessonDTO>> getLesson(@RequestParam Long skid) {
+		return new ResponseEntity<List<LessonDTO>>(lessonService.getLessonBySkill(skid), HttpStatus.OK);
 	}
 }
