@@ -242,11 +242,15 @@ public class ExamService {
 		List<Long> idQuestion = new ArrayList<>();
 		List<Long> idQuestionUserchoose = new ArrayList<>();
 		int count = 0;
-		for (AnswerDTO id : questionResultDTO.getAnswerDTOs()) {
-			QuestionEntity questionEntities = questionRepository.getAllQuestionByAnswer(id.getId(), id.getAnswer());
-			if (questionEntities != null) {
-				idQuestion.add(id.getId());
-				count++;
+		for (AnswerDTO answer : questionResultDTO.getAnswerDTOs()) {
+			QuestionEntity questionEntity = questionRepository.findById(answer.getId()).orElse(null);
+			if(questionEntity!=null) {
+				for (AnswerEntity anEntity : questionEntity.getAnswerEntities()) {
+					if(anEntity.isCorrect() && anEntity.getAnswer().equals(answer.getAnswer())) {
+						idQuestion.add(answer.getId());
+						count++;
+					}
+				}
 			}
 		}
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
